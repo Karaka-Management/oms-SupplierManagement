@@ -12,19 +12,14 @@
  */
 declare(strict_types=1);
 
-
-$footerView   = new \phpOMS\Views\PaginationView($this->l11nManager, $this->request, $this->response);
-$footerView->setTemplate('/Web/Templates/Lists/Footer/PaginationBig');
-$footerView->setPages(20);
-$footerView->setPage(1);
-
+/** @var \phpOMS\Views\View $this */
 echo $this->getData('nav')->render(); ?>
 
 <div class="row">
     <div class="col-xs-12">
-        <div class="box wf-100">
+        <section class="portlet">
+            <div class="portlet-head"><?= $this->getHtml('Suppliers'); ?><i class="fa fa-download floatRight download btn"></i></div>
             <table class="default">
-                <caption><?= $this->getHtml('Suppliers'); ?><i class="fa fa-download floatRight download btn"></i></caption>
                 <thead>
                 <tr>
                     <td><?= $this->getHtml('ID', '0', '0'); ?>
@@ -35,16 +30,13 @@ echo $this->getData('nav')->render(); ?>
                     <td><?= $this->getHtml('Zip') ?>
                     <td><?= $this->getHtml('Address') ?>
                     <td><?= $this->getHtml('Country') ?>
-                <tfoot>
-                <tr>
-                    <td colspan="8">
                 <tbody>
                 <?php $count = 0; foreach ([] as $key => $value) : ++$count; ?>
                 <?php endforeach; ?>
                 <?php if ($count === 0) : ?>
-                <tr><td colspan="8" class="empty"><?= $this->getHtml('Empty', '0', '0'); ?>
-                        <?php endif; ?>
+                    <tr><td colspan="8" class="empty"><?= $this->getHtml('Empty', '0', '0'); ?>
+                <?php endif; ?>
             </table>
-        </div>
+        </section>
     </div>
 </div>
