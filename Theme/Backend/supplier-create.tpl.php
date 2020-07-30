@@ -30,7 +30,7 @@ echo $this->getData('nav')->render(); ?>
         </ul>
     </div>
     <div class="tab-content">
-        <input type="radio" id="c-tab-1" name="tabular-2" checked>
+        <input type="radio" id="c-tab-1" name="tabular-2"<?= $this->request->getUri()->getFragment() === 'c-tab-1' ? ' checked' : '' ?>>
         <div class="tab">
             <section class="box w-33 floatLeft">
                 <header><h1><?= $this->getHtml('Supplier'); ?></h1></header>
@@ -51,7 +51,7 @@ echo $this->getData('nav')->render(); ?>
                 </div>
             </section>
         </div>
-        <input type="radio" id="c-tab-2" name="tabular-2">
+        <input type="radio" id="c-tab-2" name="tabular-2"<?= $this->request->getUri()->getFragment() === 'c-tab-2' ? ' checked' : '' ?>>
         <div class="tab">
             <section class="box w-33 floatLeft">
                 <header><h1><?= $this->getHtml('Contact'); ?></h1></header>
@@ -82,7 +82,7 @@ echo $this->getData('nav')->render(); ?>
                 </div>
             </section>
         </div>
-        <input type="radio" id="c-tab-3" name="tabular-2">
+        <input type="radio" id="c-tab-3" name="tabular-2"<?= $this->request->getUri()->getFragment() === 'c-tab-3' ? ' checked' : '' ?>>
         <div class="tab">
             <section class="box w-33 floatLeft">
                 <header><h1><?= $this->getHtml('Address'); ?></h1></header>
@@ -110,7 +110,7 @@ echo $this->getData('nav')->render(); ?>
                 </div>
             </section>
         </div>
-        <input type="radio" id="c-tab-4" name="tabular-2">
+        <input type="radio" id="c-tab-4" name="tabular-2"<?= $this->request->getUri()->getFragment() === 'c-tab-4' ? ' checked' : '' ?>>
         <div class="tab">
             <section class="box w-33 floatLeft">
                 <header><h1><?= $this->getHtml('PaymentTerm'); ?></h1></header>
@@ -138,7 +138,7 @@ echo $this->getData('nav')->render(); ?>
                 </div>
             </section>
         </div>
-        <input type="radio" id="c-tab-5" name="tabular-2">
+        <input type="radio" id="c-tab-5" name="tabular-2"<?= $this->request->getUri()->getFragment() === 'c-tab-5' ? ' checked' : '' ?>>
         <div class="tab">
             <section class="box w-33 floatLeft">
                 <header><h1><?= $this->getHtml('Payment'); ?></h1></header>
@@ -156,10 +156,10 @@ echo $this->getData('nav')->render(); ?>
                 </div>
             </section>
         </div>
-        <input type="radio" id="c-tab-6" name="tabular-2">
+        <input type="radio" id="c-tab-6" name="tabular-2"<?= $this->request->getUri()->getFragment() === 'c-tab-6' ? ' checked' : '' ?>>
         <div class="tab">
         </div>
-        <input type="radio" id="c-tab-7" name="tabular-2">
+        <input type="radio" id="c-tab-7" name="tabular-2"<?= $this->request->getUri()->getFragment() === 'c-tab-7' ? ' checked' : '' ?>>
         <div class="tab">
             <?php
             $footerView = new \phpOMS\Views\PaginationView($this->l11nManager, $this->request, $this->response);
