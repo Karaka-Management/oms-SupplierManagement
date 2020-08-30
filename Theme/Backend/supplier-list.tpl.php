@@ -23,13 +23,13 @@ echo $this->getData('nav')->render(); ?>
                 <thead>
                 <tr>
                     <td><?= $this->getHtml('ID', '0', '0'); ?>
-                    <td><?= $this->getHtml('Name1') ?>
-                    <td><?= $this->getHtml('Name2') ?>
-                    <td class="wf-100"><?= $this->getHtml('Name3') ?>
-                    <td><?= $this->getHtml('City') ?>
-                    <td><?= $this->getHtml('Zip') ?>
-                    <td><?= $this->getHtml('Address') ?>
-                    <td><?= $this->getHtml('Country') ?>
+                    <td><?= $this->getHtml('Name1'); ?>
+                    <td><?= $this->getHtml('Name2'); ?>
+                    <td class="wf-100"><?= $this->getHtml('Name3'); ?>
+                    <td><?= $this->getHtml('City'); ?>
+                    <td><?= $this->getHtml('Zip'); ?>
+                    <td><?= $this->getHtml('Address'); ?>
+                    <td><?= $this->getHtml('Country'); ?>
                 <tbody>
                 <?php $count = 0; foreach ([] as $key => $value) : ++$count; ?>
                 <?php endforeach; ?>

@@ -30,7 +30,7 @@ echo $this->getData('nav')->render(); ?>
         </ul>
     </div>
     <div class="tab-content">
-        <input type="radio" id="c-tab-1" name="tabular-2"<?= $this->request->getUri()->getFragment() === 'c-tab-1' ? ' checked' : '' ?>>
+        <input type="radio" id="c-tab-1" name="tabular-2"<?= $this->request->getUri()->getFragment() === 'c-tab-1' ? ' checked' : ''; ?>>
         <div class="tab">
             <section class="box w-33 floatLeft">
                 <header><h1><?= $this->getHtml('Supplier'); ?></h1></header>
@@ -39,11 +39,11 @@ echo $this->getData('nav')->render(); ?>
                         <table class="layout wf-100">
                             <tr><td><label for="iId"><?= $this->getHtml('ID', '0', '0'); ?></label>
                             <tr><td><span class="input"><button type="button" formaction=""><i class="fa fa-book"></i></button><input type="number" id="iId" min="1" name="id" required></span>
-                            <tr><td><label for="iName1"><?= $this->getHtml('Name1') ?></label>
+                            <tr><td><label for="iName1"><?= $this->getHtml('Name1'); ?></label>
                             <tr><td><input type="text" id="iName1" name="name1" placeholder="&#xf040;" required>
-                            <tr><td><label for="iName2"><?= $this->getHtml('Name2') ?></label>
+                            <tr><td><label for="iName2"><?= $this->getHtml('Name2'); ?></label>
                             <tr><td><input type="text" id="iName2" name="name2" placeholder="&#xf040;">
-                            <tr><td><label for="iName3"><?= $this->getHtml('Name3') ?></label>
+                            <tr><td><label for="iName3"><?= $this->getHtml('Name3'); ?></label>
                             <tr><td><input type="text" id="iName3" name="name3" placeholder="&#xf040;">
                             <tr><td colspan="2"><input type="submit" value="<?= $this->getHtml('Create', '0', '0'); ?>">
                         </table>
@@ -51,30 +51,30 @@ echo $this->getData('nav')->render(); ?>
                 </div>
             </section>
         </div>
-        <input type="radio" id="c-tab-2" name="tabular-2"<?= $this->request->getUri()->getFragment() === 'c-tab-2' ? ' checked' : '' ?>>
+        <input type="radio" id="c-tab-2" name="tabular-2"<?= $this->request->getUri()->getFragment() === 'c-tab-2' ? ' checked' : ''; ?>>
         <div class="tab">
             <section class="box w-33 floatLeft">
                 <header><h1><?= $this->getHtml('Contact'); ?></h1></header>
                 <div class="inner">
                     <form>
                         <table class="layout wf-100">
-                            <tr><td><label for="iCType"><?= $this->getHtml('Type') ?></label>
+                            <tr><td><label for="iCType"><?= $this->getHtml('Type'); ?></label>
                             <tr><td><select id="iCType" name="actype">
-                                        <option><?= $this->getHtml('Email') ?>
-                                        <option><?= $this->getHtml('Fax') ?>
-                                        <option><?= $this->getHtml('Phone') ?>
+                                        <option><?= $this->getHtml('Email'); ?>
+                                        <option><?= $this->getHtml('Fax'); ?>
+                                        <option><?= $this->getHtml('Phone'); ?>
                                     </select>
-                            <tr><td><label for="iCStype"><?= $this->getHtml('Subtype') ?></label>
+                            <tr><td><label for="iCStype"><?= $this->getHtml('Subtype'); ?></label>
                             <tr><td><select id="iCStype" name="acstype">
-                                        <option><?= $this->getHtml('Office') ?>
-                                        <option><?= $this->getHtml('Sales') ?>
-                                        <option><?= $this->getHtml('Purchase') ?>
-                                        <option><?= $this->getHtml('Accounting') ?>
-                                        <option><?= $this->getHtml('Support') ?>
+                                        <option><?= $this->getHtml('Office'); ?>
+                                        <option><?= $this->getHtml('Sales'); ?>
+                                        <option><?= $this->getHtml('Purchase'); ?>
+                                        <option><?= $this->getHtml('Accounting'); ?>
+                                        <option><?= $this->getHtml('Support'); ?>
                                     </select>
-                            <tr><td><label for="iCInfo"><?= $this->getHtml('Info') ?></label>
+                            <tr><td><label for="iCInfo"><?= $this->getHtml('Info'); ?></label>
                             <tr><td><input type="text" id="iCInfo" name="cinfo">
-                            <tr><td><label for="iCData"><?= $this->getHtml('Contact') ?></label>
+                            <tr><td><label for="iCData"><?= $this->getHtml('Contact'); ?></label>
                             <tr><td><input type="text" id="iCData" name="cdata">
                             <tr><td colspan="2"><input type="submit" value="<?= $this->getHtml('Add', '0', '0'); ?>">
                         </table>
@@ -82,35 +82,35 @@ echo $this->getData('nav')->render(); ?>
                 </div>
             </section>
         </div>
-        <input type="radio" id="c-tab-3" name="tabular-2"<?= $this->request->getUri()->getFragment() === 'c-tab-3' ? ' checked' : '' ?>>
+        <input type="radio" id="c-tab-3" name="tabular-2"<?= $this->request->getUri()->getFragment() === 'c-tab-3' ? ' checked' : ''; ?>>
         <div class="tab">
             <section class="box w-33 floatLeft">
                 <header><h1><?= $this->getHtml('Address'); ?></h1></header>
                 <div class="inner">
                     <form>
                         <table class="layout wf-100">
-                            <tr><td><label for="iAType"><?= $this->getHtml('Type') ?></label>
+                            <tr><td><label for="iAType"><?= $this->getHtml('Type'); ?></label>
                             <tr><td><select id="iAType" name="atype">
-                                        <option><?= $this->getHtml('Default') ?>
-                                        <option><?= $this->getHtml('Delivery') ?>
-                                        <option><?= $this->getHtml('Invoice') ?>
+                                        <option><?= $this->getHtml('Default'); ?>
+                                        <option><?= $this->getHtml('Delivery'); ?>
+                                        <option><?= $this->getHtml('Invoice'); ?>
                                     </select>
-                            <tr><td><label for="iAddress"><?= $this->getHtml('Address') ?></label>
+                            <tr><td><label for="iAddress"><?= $this->getHtml('Address'); ?></label>
                             <tr><td><input type="text" id="iAddress" name="address">
-                            <tr><td><label for="iZip"><?= $this->getHtml('Zip') ?></label>
+                            <tr><td><label for="iZip"><?= $this->getHtml('Zip'); ?></label>
                             <tr><td><input type="text" id="iZip" name="zip">
-                            <tr><td><label for="iCountry"><?= $this->getHtml('Country') ?></label>
+                            <tr><td><label for="iCountry"><?= $this->getHtml('Country'); ?></label>
                             <tr><td><input type="text" id="iCountry" name="country">
-                            <tr><td><label for="iAInfo"><?= $this->getHtml('Info') ?></label>
+                            <tr><td><label for="iAInfo"><?= $this->getHtml('Info'); ?></label>
                             <tr><td><input type="text" id="iAInfo" name="ainfo">
-                            <tr><td><span class="check"><input type="checkbox" id="iDefault" name="default" checked><label for="iDefault"><?= $this->getHtml('IsDefault') ?></label></span>
+                            <tr><td><span class="check"><input type="checkbox" id="iDefault" name="default" checked><label for="iDefault"><?= $this->getHtml('IsDefault'); ?></label></span>
                             <tr><td colspan="2"><input type="submit" value="<?= $this->getHtml('Add', '0', '0'); ?>">
                         </table>
                     </form>
                 </div>
             </section>
         </div>
-        <input type="radio" id="c-tab-4" name="tabular-2"<?= $this->request->getUri()->getFragment() === 'c-tab-4' ? ' checked' : '' ?>>
+        <input type="radio" id="c-tab-4" name="tabular-2"<?= $this->request->getUri()->getFragment() === 'c-tab-4' ? ' checked' : ''; ?>>
         <div class="tab">
             <section class="box w-33 floatLeft">
                 <header><h1><?= $this->getHtml('PaymentTerm'); ?></h1></header>
@@ -138,17 +138,17 @@ echo $this->getData('nav')->render(); ?>
                 </div>
             </section>
         </div>
-        <input type="radio" id="c-tab-5" name="tabular-2"<?= $this->request->getUri()->getFragment() === 'c-tab-5' ? ' checked' : '' ?>>
+        <input type="radio" id="c-tab-5" name="tabular-2"<?= $this->request->getUri()->getFragment() === 'c-tab-5' ? ' checked' : ''; ?>>
         <div class="tab">
             <section class="box w-33 floatLeft">
                 <header><h1><?= $this->getHtml('Payment'); ?></h1></header>
                 <div class="inner">
                     <form>
                         <table class="layout wf-100">
-                            <tr><td><label for="iACType"><?= $this->getHtml('Type') ?></label>
+                            <tr><td><label for="iACType"><?= $this->getHtml('Type'); ?></label>
                             <tr><td><select id="iACType" name="actype">
-                                        <option><?= $this->getHtml('Wire') ?>
-                                        <option><?= $this->getHtml('Creditcard') ?>
+                                        <option><?= $this->getHtml('Wire'); ?>
+                                        <option><?= $this->getHtml('Creditcard'); ?>
                                     </select>
                             <tr><td colspan="2"><input type="submit" value="<?= $this->getHtml('Add', '0', '0'); ?>">
                         </table>
@@ -156,10 +156,10 @@ echo $this->getData('nav')->render(); ?>
                 </div>
             </section>
         </div>
-        <input type="radio" id="c-tab-6" name="tabular-2"<?= $this->request->getUri()->getFragment() === 'c-tab-6' ? ' checked' : '' ?>>
+        <input type="radio" id="c-tab-6" name="tabular-2"<?= $this->request->getUri()->getFragment() === 'c-tab-6' ? ' checked' : ''; ?>>
         <div class="tab">
         </div>
-        <input type="radio" id="c-tab-7" name="tabular-2"<?= $this->request->getUri()->getFragment() === 'c-tab-7' ? ' checked' : '' ?>>
+        <input type="radio" id="c-tab-7" name="tabular-2"<?= $this->request->getUri()->getFragment() === 'c-tab-7' ? ' checked' : ''; ?>>
         <div class="tab">
             <?php
             $footerView = new \phpOMS\Views\PaginationView($this->l11nManager, $this->request, $this->response);
@@ -174,9 +174,9 @@ echo $this->getData('nav')->render(); ?>
                     <tr>
                         <td>IP
                         <td><?= $this->getHtml('ID', '0', '0'); ?>
-                        <td><?= $this->getHtml('Name') ?>
-                        <td class="wf-100"><?= $this->getHtml('Log') ?>
-                        <td><?= $this->getHtml('Date') ?>
+                        <td><?= $this->getHtml('Name'); ?>
+                        <td class="wf-100"><?= $this->getHtml('Log'); ?>
+                        <td><?= $this->getHtml('Date'); ?>
                     <tfoot>
                     <tr>
                         <td colspan="6">
