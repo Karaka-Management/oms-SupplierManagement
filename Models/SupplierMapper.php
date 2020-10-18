@@ -18,7 +18,7 @@ use Modules\Media\Models\MediaMapper;
 use Modules\Profile\Models\ContactElementMapper;
 use Modules\Profile\Models\ProfileMapper;
 use phpOMS\DataStorage\Database\DataMapperAbstract;
-use phpOMS\DataStorage\Database\Query\Column;
+use Modules\Admin\Models\AddressMapper;
 
 /**
  * Supplier mapper class.
@@ -45,7 +45,8 @@ final class SupplierMapper extends DataMapperAbstract
         'suppliermgmt_supplier_taxid'      => ['name' => 'suppliermgmt_supplier_taxid',      'type' => 'int',      'internal' => 'taxId'],
         'suppliermgmt_supplier_info'       => ['name' => 'suppliermgmt_supplier_info',       'type' => 'string',   'internal' => 'info'],
         'suppliermgmt_supplier_created_at' => ['name' => 'suppliermgmt_supplier_created_at', 'type' => 'DateTimeImmutable', 'internal' => 'createdAt', 'readonly' => true],
-        'suppliermgmt_supplier_account'    => ['name' => 'suppliermgmt_supplier_account',    'type' => 'int',      'internal' => 'profile'],
+        'suppliermgmt_supplier_profile'    => ['name' => 'suppliermgmt_supplier_profile',    'type' => 'int',      'internal' => 'profile'],
+        'suppliermgmt_supplier_address'    => ['name' => 'suppliermgmt_supplier_address',    'type' => 'int',      'internal' => 'mainAddress'],
     ];
 
     /**
@@ -81,7 +82,11 @@ final class SupplierMapper extends DataMapperAbstract
     protected static array $ownsOne = [
         'profile' => [
             'mapper' => ProfileMapper::class,
-            'self'   => 'suppliermgmt_supplier_account',
+            'self'   => 'suppliermgmt_supplier_profile',
+        ],
+        'mainAddress' => [
+            'mapper' => AddressMapper::class,
+            'self'   => 'suppliermgmt_supplier_address',
         ],
     ];
 
@@ -101,8 +106,8 @@ final class SupplierMapper extends DataMapperAbstract
         'contactElements' => [
             'mapper'   => ContactElementMapper::class,
             'table'    => 'suppliermgmt_supplier_contactelement',
-            'external' => 'suppliermgmt_supplier_contactelement_dst',
-            'self'     => 'suppliermgmt_supplier_contactelement_src',
+            'external' => 'suppliermgmt_supplier_contactelement_src',
+            'self'     => 'suppliermgmt_supplier_contactelement_dst',
         ],
     ];
 }

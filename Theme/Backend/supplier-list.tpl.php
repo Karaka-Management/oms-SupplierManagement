@@ -12,7 +12,11 @@
  */
 declare(strict_types=1);
 
+use phpOMS\Uri\UriFactory;
+
 /** @var \phpOMS\Views\View $this */
+$suppliers = $this->getData('supplier');
+
 echo $this->getData('nav')->render(); ?>
 
 <div class="row">
@@ -24,14 +28,22 @@ echo $this->getData('nav')->render(); ?>
                 <tr>
                     <td><?= $this->getHtml('ID', '0', '0'); ?>
                     <td><?= $this->getHtml('Name1'); ?>
-                    <td><?= $this->getHtml('Name2'); ?>
-                    <td class="wf-100"><?= $this->getHtml('Name3'); ?>
+                    <td class="wf-100"><?= $this->getHtml('Name2'); ?>
                     <td><?= $this->getHtml('City'); ?>
                     <td><?= $this->getHtml('Zip'); ?>
                     <td><?= $this->getHtml('Address'); ?>
                     <td><?= $this->getHtml('Country'); ?>
                 <tbody>
-                <?php $count = 0; foreach ([] as $key => $value) : ++$count; ?>
+                <?php $count = 0; foreach ($suppliers as $key => $value) : ++$count;
+                 $url        = UriFactory::build('{/prefix}purchase/supplier/profile?{?}&id=' . $value->getId()); ?>
+                <tr data-href="<?= $url; ?>">
+                    <td data-label="<?= $this->getHtml('ID', '0', '0'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->getNumber()); ?></a>
+                    <td data-label="<?= $this->getHtml('Name1'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->getProfile()->getAccount()->getName1()); ?></a>
+                    <td data-label="<?= $this->getHtml('Name2'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->getProfile()->getAccount()->getName2()); ?></a>
+                    <td data-label="<?= $this->getHtml('City'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->getMainAddress()->getCity()); ?></a>
+                    <td data-label="<?= $this->getHtml('Zip'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->getMainAddress()->getPostal()); ?></a>
+                    <td data-label="<?= $this->getHtml('Address'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->getMainAddress()->getAddress()); ?></a>
+                    <td data-label="<?= $this->getHtml('Country'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->getMainAddress()->getCountry()); ?></a>
                 <?php endforeach; ?>
                 <?php if ($count === 0) : ?>
                     <tr><td colspan="8" class="empty"><?= $this->getHtml('Empty', '0', '0'); ?>

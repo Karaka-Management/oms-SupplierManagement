@@ -18,6 +18,7 @@ use phpOMS\Contract\RenderableInterface;
 use phpOMS\Message\RequestAbstract;
 use phpOMS\Message\ResponseAbstract;
 use phpOMS\Views\View;
+use Modules\SupplierManagement\Models\SupplierMapper;
 
 /**
  * SupplierManagement controller class.
@@ -46,6 +47,9 @@ final class BackendController extends Controller
         $view = new View($this->app->l11nManager, $request, $response);
         $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/supplier-list');
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1003202001, $request, $response));
+
+        $supplier = SupplierMapper::getAll();
+        $view->addData('supplier', $supplier);
 
         return $view;
     }
@@ -88,6 +92,9 @@ final class BackendController extends Controller
         $view = new View($this->app->l11nManager, $request, $response);
         $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/supplier-profile');
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1003202001, $request, $response));
+
+        $supplier = SupplierMapper::get((int) $request->getData('id'));
+        $view->setData('supplier', $supplier);
 
         return $view;
     }

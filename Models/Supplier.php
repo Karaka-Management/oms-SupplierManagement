@@ -16,6 +16,9 @@ namespace Modules\SupplierManagement\Models;
 
 use Modules\Media\Models\Media;
 use Modules\Profile\Models\Profile;
+use Modules\Admin\Models\NullAddress;
+use Modules\Profile\Models\ContactElement;
+use Modules\Profile\Models\NullContactElement;
 
 /**
  * Supplier class.
@@ -57,6 +60,8 @@ class Supplier
 
     private $address = [];
 
+    private $mainAddress;
+
     /**
      * Constructor.
      *
@@ -66,6 +71,7 @@ class Supplier
     {
         $this->createdAt = new \DateTimeImmutable('now');
         $this->profile   = new Profile();
+        $this->mainAddress = new NullAddress();
     }
 
     /**
@@ -278,6 +284,16 @@ class Supplier
         $this->profile = $profile;
     }
 
+    public function setMainAddress($address) : void
+    {
+        $this->mainAddress = $address;
+    }
+
+    public function getMainAddress()
+    {
+        return $this->mainAddress;
+    }
+
     /**
      * Get media.
      *
@@ -326,5 +342,28 @@ class Supplier
     public function getContactElements() : array
     {
         return $this->contactElements;
+    }
+
+    private function orderContactElements(ContactElement $a, ContactElement $b) : int
+    {
+        return $a->getOrder() <=> $b->getOrder();
+    }
+
+    public function getMainContactElement(int $type) : ContactElement
+    {
+        \uasort($this->contactElements, [$this, 'orderContactElements']);
+
+        foreach ($this->contactElements as $element) {
+            if ($element->getType() === $type) {
+                return $element;
+            }
+        }
+
+        return new NullContactElement();
+    }
+
+    public function addContactElement($element) : void
+    {
+        $this->contactElements[] = $element;
     }
 }
