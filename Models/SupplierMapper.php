@@ -14,11 +14,11 @@ declare(strict_types=1);
 
 namespace Modules\SupplierManagement\Models;
 
+use Modules\Admin\Models\AddressMapper;
 use Modules\Media\Models\MediaMapper;
 use Modules\Profile\Models\ContactElementMapper;
 use Modules\Profile\Models\ProfileMapper;
 use phpOMS\DataStorage\Database\DataMapperAbstract;
-use Modules\Admin\Models\AddressMapper;
 
 /**
  * Supplier mapper class.

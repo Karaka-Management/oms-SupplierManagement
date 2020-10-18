@@ -14,11 +14,11 @@ declare(strict_types=1);
 
 namespace Modules\SupplierManagement\Models;
 
-use Modules\Media\Models\Media;
-use Modules\Profile\Models\Profile;
 use Modules\Admin\Models\NullAddress;
+use Modules\Media\Models\Media;
 use Modules\Profile\Models\ContactElement;
 use Modules\Profile\Models\NullContactElement;
+use Modules\Profile\Models\Profile;
 
 /**
  * Supplier class.
@@ -69,8 +69,8 @@ class Supplier
      */
     public function __construct()
     {
-        $this->createdAt = new \DateTimeImmutable('now');
-        $this->profile   = new Profile();
+        $this->createdAt   = new \DateTimeImmutable('now');
+        $this->profile     = new Profile();
         $this->mainAddress = new NullAddress();
     }
 
