@@ -81,11 +81,11 @@ final class SupplierMapper extends DataMapperAbstract
      */
     protected static array $ownsOne = [
         'profile' => [
-            'mapper' => ProfileMapper::class,
+            'mapper'     => ProfileMapper::class,
             'external'   => 'suppliermgmt_supplier_profile',
         ],
         'mainAddress' => [
-            'mapper' => AddressMapper::class,
+            'mapper'     => AddressMapper::class,
             'external'   => 'suppliermgmt_supplier_address',
         ],
     ];
