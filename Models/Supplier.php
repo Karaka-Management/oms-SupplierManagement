@@ -14,12 +14,12 @@ declare(strict_types=1);
 
 namespace Modules\SupplierManagement\Models;
 
+use Modules\Admin\Models\Address;
 use Modules\Admin\Models\NullAddress;
 use Modules\Media\Models\Media;
 use Modules\Profile\Models\ContactElement;
 use Modules\Profile\Models\NullContactElement;
 use Modules\Profile\Models\Profile;
-use Modules\Admin\Models\Address;
 
 /**
  * Supplier class.
