@@ -73,21 +73,21 @@ final class ApiController extends Controller
      */
     private function createSupplierFromRequest(RequestAbstract $request) : Supplier
     {
-        $account = new Account();
+        $account        = new Account();
         $account->name1 = $request->getData('name1') ?? '';
         $account->name2 = $request->getData('name2') ?? '';
 
         $profile = new Profile($account);
 
-        $supplier = new Supplier();
-        $supplier->number = $request->getData('number') ?? '';
+        $supplier          = new Supplier();
+        $supplier->number  = $request->getData('number') ?? '';
         $supplier->profile = $profile;
 
-        $addr = new Address();
+        $addr          = new Address();
         $addr->address = $request->getData('address') ?? '';
-        $addr->postal = $request->getData('postal') ?? '';
-        $addr->city = $request->getData('city') ?? '';
-        $addr->state = $request->getData('state') ?? '';
+        $addr->postal  = $request->getData('postal') ?? '';
+        $addr->city    = $request->getData('city') ?? '';
+        $addr->state   = $request->getData('state') ?? '';
         $addr->setCountry($request->getData('country') ?? '');
         $supplier->setMainAddress($addr);
 
