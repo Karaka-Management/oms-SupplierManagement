@@ -52,13 +52,13 @@ final class ApiController extends Controller
     {
         if (!empty($val = $this->validateSupplierCreate($request))) {
             $response->set('supplier_create', new FormValidation($val));
-            $response->getHeader()->setStatusCode(RequestStatusCode::R_400);
+            $response->header->status = RequestStatusCode::R_400;
 
             return;
         }
 
         $supplier = $this->createSupplierFromRequest($request);
-        $this->createModel($request->getHeader()->getAccount(), $supplier, SupplierMapper::class, 'supplier', $request->getOrigin());
+        $this->createModel($request->header->account, $supplier, SupplierMapper::class, 'supplier', $request->getOrigin());
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Supplier', 'Supplier successfully created', $supplier);
     }
 
@@ -74,21 +74,21 @@ final class ApiController extends Controller
     private function createSupplierFromRequest(RequestAbstract $request) : Supplier
     {
         $account = new Account();
-        $account->setName1($request->getData('name1') ?? '');
-        $account->setName2($request->getData('name2') ?? '');
+        $account->name1 = $request->getData('name1') ?? '';
+        $account->name2 = $request->getData('name2') ?? '';
 
         $profile = new Profile($account);
 
         $supplier = new Supplier();
-        $supplier->setNumber($request->getData('number') ?? '');
-        $supplier->setProfile($profile);
+        $supplier->number = $request->getData('number') ?? '';
+        $supplier->profile = $profile;
 
         $addr = new Address();
-        $addr->setAddress($request->getData('address') ?? '');
-        $addr->setPostal($request->getData('postal') ?? '');
-        $addr->setCity($request->getData('city') ?? '');
+        $addr->address = $request->getData('address') ?? '';
+        $addr->postal = $request->getData('postal') ?? '';
+        $addr->city = $request->getData('city') ?? '';
+        $addr->state = $request->getData('state') ?? '';
         $addr->setCountry($request->getData('country') ?? '');
-        $addr->setState($request->getData('state') ?? '');
         $supplier->setMainAddress($addr);
 
         return $supplier;
@@ -134,16 +134,16 @@ final class ApiController extends Controller
 
         if (!empty($val = $profileModule->validateContactElementCreate($request))) {
             $response->set('contact_element_create', new FormValidation($val));
-            $response->getHeader()->setStatusCode(RequestStatusCode::R_400);
+            $response->header->status = RequestStatusCode::R_400;
 
             return;
         }
 
         $contactElement = $profileModule->createContactElementFromRequest($request);
 
-        $this->createModel($request->getHeader()->getAccount(), $contactElement, ContactElementMapper::class, 'supplier-contactElement', $request->getOrigin());
+        $this->createModel($request->header->account, $contactElement, ContactElementMapper::class, 'supplier-contactElement', $request->getOrigin());
         $this->createModelRelation(
-            $request->getHeader()->getAccount(),
+            $request->header->account,
             (int) $request->getData('supplier'),
             $contactElement->getId(),
         SupplierMapper::class, 'contactElements', '', $request->getOrigin());

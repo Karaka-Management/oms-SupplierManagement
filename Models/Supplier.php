@@ -39,7 +39,7 @@ class Supplier
      */
     protected int $id = 0;
 
-    private string $number = '';
+    public string $number = '';
 
     private string $numberReverse = '';
 
@@ -53,7 +53,7 @@ class Supplier
 
     private $createdAt = null;
 
-    private $profile = null;
+    public $profile = null;
 
     private $files = [];
 
@@ -85,32 +85,6 @@ class Supplier
     public function getId() : int
     {
         return $this->id;
-    }
-
-    /**
-     * Get number.
-     *
-     * @return string
-     *
-     * @since 1.0.0
-     */
-    public function getNumber() : string
-    {
-        return $this->number;
-    }
-
-    /**
-     * Set number.
-     *
-     * @param string $number Number
-     *
-     * @return void
-     *
-     * @since 1.0.0
-     */
-    public function setNumber(string $number) : void
-    {
-        $this->number = $number;
     }
 
     /**
@@ -245,44 +219,6 @@ class Supplier
     public function setInfo(string $info) : void
     {
         $this->info = $info;
-    }
-
-    /**
-     * Get created at date time
-     *
-     * @return \DateTimeImmutable
-     *
-     * @since 1.0.0
-     */
-    public function getCreatedAt() : \DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * Get profile.
-     *
-     * @return Profile
-     *
-     * @since 1.0.0
-     */
-    public function getProfile() : Profile
-    {
-        return $this->profile;
-    }
-
-    /**
-     * Set profile.
-     *
-     * @param Profile $profile Profile
-     *
-     * @return void
-     *
-     * @since 1.0.0
-     */
-    public function setProfile(Profile $profile) : void
-    {
-        $this->profile = $profile;
     }
 
     /**
