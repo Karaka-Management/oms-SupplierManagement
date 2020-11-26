@@ -15,7 +15,6 @@ declare(strict_types=1);
 namespace Modules\SupplierManagement\Controller;
 
 use phpOMS\Module\ModuleAbstract;
-use phpOMS\Module\WebInterface;
 
 /**
  * SupplierManagement controller class.
