@@ -47,21 +47,19 @@ class Supplier
 
     private int $type = 0;
 
-    private $taxId = 0;
+    public string $info = '';
 
-    private $info = '';
+    private \DateTimeImmutable $createdAt;
 
-    private $createdAt = null;
+    public Profile $profile;
 
-    public $profile = null;
+    private array $files = [];
 
-    private $files = [];
+    private array $contactElements = [];
 
-    private $contactElements = [];
+    private array $address = [];
 
-    private $address = [];
-
-    private $mainAddress;
+    public Address $mainAddress;
 
     /**
      * Constructor.
@@ -170,32 +168,6 @@ class Supplier
     }
 
     /**
-     * Get tax id.
-     *
-     * @return int
-     *
-     * @since 1.0.0
-     */
-    public function getTaxId() : int
-    {
-        return $this->taxId;
-    }
-
-    /**
-     * Set tax id.
-     *
-     * @param int $taxId Tax id
-     *
-     * @return void
-     *
-     * @since 1.0.0
-     */
-    public function setTaxId(int $taxId) : void
-    {
-        $this->taxId = $taxId;
-    }
-
-    /**
      * Get info.
      *
      * @return string
@@ -219,32 +191,6 @@ class Supplier
     public function setInfo(string $info) : void
     {
         $this->info = $info;
-    }
-
-    /**
-     * Set main address
-     *
-     * @param int|Address $address Address
-     *
-     * @return void
-     *
-     * @since 1.0.0
-     */
-    public function setMainAddress($address) : void
-    {
-        $this->mainAddress = $address;
-    }
-
-    /**
-     * Get main address
-     *
-     * @return int|Address
-     *
-     * @since 1.0.0
-     */
-    public function getMainAddress()
-    {
-        return $this->mainAddress;
     }
 
     /**

@@ -17,6 +17,7 @@ namespace Modules\SupplierManagement\Controller;
 use Modules\Admin\Models\Account;
 use Modules\Admin\Models\Address;
 use Modules\Profile\Models\Profile;
+use Modules\Profile\Models\ContactElementMapper;
 use Modules\SupplierManagement\Models\Supplier;
 use Modules\SupplierManagement\Models\SupplierMapper;
 use phpOMS\Message\Http\RequestStatusCode;
@@ -89,7 +90,7 @@ final class ApiController extends Controller
         $addr->city    = $request->getData('city') ?? '';
         $addr->state   = $request->getData('state') ?? '';
         $addr->setCountry($request->getData('country') ?? '');
-        $supplier->setMainAddress($addr);
+        $supplier->mainAddress = $addr;
 
         return $supplier;
     }
