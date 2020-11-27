@@ -16,8 +16,8 @@ namespace Modules\SupplierManagement\Controller;
 
 use Modules\Admin\Models\Account;
 use Modules\Admin\Models\Address;
-use Modules\Profile\Models\Profile;
 use Modules\Profile\Models\ContactElementMapper;
+use Modules\Profile\Models\Profile;
 use Modules\SupplierManagement\Models\Supplier;
 use Modules\SupplierManagement\Models\SupplierMapper;
 use phpOMS\Message\Http\RequestStatusCode;
@@ -131,7 +131,7 @@ final class ApiController extends Controller
      */
     public function apiContactElementCreate(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
     {
-        $profileModule  = $this->app->moduleManager->get('Profile');
+        $profileModule = $this->app->moduleManager->get('Profile');
 
         if (!empty($val = $profileModule->validateContactElementCreate($request))) {
             $response->set('contact_element_create', new FormValidation($val));
