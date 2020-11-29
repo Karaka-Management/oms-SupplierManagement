@@ -29,11 +29,6 @@
                 "type": "TINYINT",
                 "null": false
             },
-            "suppliermgmt_supplier_taxid": {
-                "name": "suppliermgmt_supplier_taxid",
-                "type": "INT",
-                "null": false
-            },
             "suppliermgmt_supplier_info": {
                 "name": "suppliermgmt_supplier_info",
                 "type": "TEXT",
