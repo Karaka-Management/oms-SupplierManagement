@@ -67,20 +67,20 @@ echo $this->getData('nav')->render();
                                     <tr><td><label for="iName3"><?= $this->getHtml('Name3'); ?></label>
                                     <tr><td><input type="text" id="iName3" name="name3" value="<?= $this->printHtml($supplier->profile->account->name3); ?>">
                                     <tr><td><h3><?= $this->getHtml('Address'); ?></h3>
-                                    <?php if (!empty($supplier->getMainAddress()->addition)) : ?>
+                                    <?php if (!empty($supplier->mainAddress->addition)) : ?>
                                         <tr><td><label for="iName1"><?= $this->getHtml('Addition'); ?></label>
-                                    <tr><td><input type="text" id="iName1" name="name1" value="<?= $this->printHtml($supplier->getMainAddress()->addition); ?>">
+                                    <tr><td><input type="text" id="iName1" name="name1" value="<?= $this->printHtml($supplier->mainAddress->addition); ?>">
                                     <?php endif; ?>
                                     <tr><td><label for="iName1"><?= $this->getHtml('Address'); ?></label>
-                                    <tr><td><input type="text" id="iName1" name="name1" value="<?= $this->printHtml($supplier->getMainAddress()->address); ?>" required>
+                                    <tr><td><input type="text" id="iName1" name="name1" value="<?= $this->printHtml($supplier->mainAddress->address); ?>" required>
                                     <tr><td><label for="iName1"><?= $this->getHtml('Postal'); ?></label>
-                                    <tr><td><input type="text" id="iName1" name="name1" value="<?= $this->printHtml($supplier->getMainAddress()->postal); ?>" required>
+                                    <tr><td><input type="text" id="iName1" name="name1" value="<?= $this->printHtml($supplier->mainAddress->postal); ?>" required>
                                     <tr><td><label for="iName1"><?= $this->getHtml('City'); ?></label>
-                                    <tr><td><input type="text" id="iName1" name="name1" value="<?= $this->printHtml($supplier->getMainAddress()->city); ?>" required>
+                                    <tr><td><input type="text" id="iName1" name="name1" value="<?= $this->printHtml($supplier->mainAddress->city); ?>" required>
                                     <tr><td><label for="iName1"><?= $this->getHtml('Country'); ?></label>
                                     <tr><td><select>
                                         <?php foreach ($countryCodes as $code3 => $code2) : ?>
-                                            <option value="<?= $this->printHtml($code2); ?>"<?= $this->printHtml($code2 === $supplier->getMainAddress()->getCountry() ? ' selected' : ''); ?>><?= $this->printHtml($countries[$code3]); ?>
+                                            <option value="<?= $this->printHtml($code2); ?>"<?= $this->printHtml($code2 === $supplier->mainAddress->getCountry() ? ' selected' : ''); ?>><?= $this->printHtml($countries[$code3]); ?>
                                         <?php endforeach; ?>
                                     </select>
                                 </table>
