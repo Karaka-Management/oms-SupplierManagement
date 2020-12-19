@@ -20,6 +20,7 @@ use Modules\Profile\Models\ContactElementMapper;
 use Modules\Profile\Models\Profile;
 use Modules\SupplierManagement\Models\Supplier;
 use Modules\SupplierManagement\Models\SupplierMapper;
+use Modules\Media\Models\PathSettings;
 use phpOMS\Message\Http\RequestStatusCode;
 use phpOMS\Message\NotificationLevel;
 use phpOMS\Message\RequestAbstract;
@@ -149,5 +150,51 @@ final class ApiController extends Controller
             $contactElement->getId(),
         SupplierMapper::class, 'contactElements', '', $request->getOrigin());
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Contact Element', 'Contact element successfully created', $contactElement);
+    }
+
+    /**
+     * Api method to create item files
+     *
+     * @param RequestAbstract  $request  Request
+     * @param ResponseAbstract $response Response
+     * @param mixed            $data     Generic data
+     *
+     * @return void
+     *
+     * @api
+     *
+     * @since 1.0.0
+     */
+    public function apiFileCreate(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
+    {
+        $uploadedFiles = $request->getFiles() ?? [];
+
+        if (empty($uploadedFiles)) {
+            $this->fillJsonResponse($request, $response, NotificationLevel::ERROR, 'Item', 'Invalid supplier image', $uploadedFiles);
+            $response->header->status = RequestStatusCode::R_400;
+
+            return;
+        }
+
+        $uploaded = $this->app->moduleManager->get('Media')->uploadFiles(
+            $request->getData('name') ?? '',
+            $uploadedFiles,
+            $request->header->account,
+            'Modules/Media/Files/Modules/SupplierManagement/' . ($request->getData('supplier') ?? '0'),
+            '/Modules/SupplierManagement/' . ($request->getData('supplier') ?? '0'),
+            $request->getData('type') ?? '',
+            '',
+            '',
+            PathSettings::FILE_PATH
+        );
+
+        $this->createModelRelation(
+            $request->header->account,
+            (int) $request->getData('supplier'),
+            \reset($uploaded)->getId(),
+            SupplierMapper::class, 'files', '', $request->getOrigin()
+        );
+
+        $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Image', 'Image successfully updated', $uploaded);
     }
 }

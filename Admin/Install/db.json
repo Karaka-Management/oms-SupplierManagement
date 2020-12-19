@@ -105,11 +105,6 @@
                 "null": false,
                 "foreignTable": "suppliermgmt_supplier",
                 "foreignKey": "suppliermgmt_supplier_id"
-            },
-            "suppliermgmt_supplier_media_type": {
-                "name": "suppliermgmt_supplier_media_type",
-                "type": "TINYINT",
-                "null": false
             }
         }
     }

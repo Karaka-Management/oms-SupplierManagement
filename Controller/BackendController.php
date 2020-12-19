@@ -48,7 +48,7 @@ final class BackendController extends Controller
         $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/supplier-list');
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1003202001, $request, $response));
 
-        $supplier = SupplierMapper::getAll();
+        $supplier = SupplierMapper::getAfterPivot(0, null, 25);
         $view->addData('supplier', $supplier);
 
         return $view;

@@ -293,4 +293,45 @@ class Supplier
     {
         $this->contactElements[] = $element;
     }
+
+    /**
+     * Get media file by type
+     *
+     * @param string $type Media type
+     *
+     * @return Media
+     *
+     * @since 1.0.0
+     */
+    public function getFileByType(string $type) : Media
+    {
+        foreach ($this->files as $file) {
+            if ($file->type === $type) {
+                return $file;
+            }
+        }
+
+        return new NullMedia();
+    }
+
+    /**
+     * Get all media files by type
+     *
+     * @param string $type Media type
+     *
+     * @return Media[]
+     *
+     * @since 1.0.0
+     */
+    public function getFilesByType(string $type) : array
+    {
+        $files = [];
+        foreach ($this->files as $file) {
+            if ($file->type === $type) {
+                $files[] = $file;
+            }
+        }
+
+        return $files;
+    }
 }

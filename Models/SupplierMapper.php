@@ -99,8 +99,8 @@ final class SupplierMapper extends DataMapperAbstract
         'files'           => [
             'mapper'   => MediaMapper::class, /* mapper of the related object */
             'table'    => 'suppliermgmt_supplier_media', /* table of the related object, null if no relation table is used (many->1) */
-            'external' => 'suppliermgmt_supplier_media_src',
-            'self'     => 'suppliermgmt_supplier_media_dst',
+            'external' => 'suppliermgmt_supplier_media_dst',
+            'self'     => 'suppliermgmt_supplier_media_src',
         ],
         'contactElements' => [
             'mapper'   => ContactElementMapper::class,
