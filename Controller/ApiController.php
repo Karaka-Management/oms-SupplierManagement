@@ -16,11 +16,11 @@ namespace Modules\SupplierManagement\Controller;
 
 use Modules\Admin\Models\Account;
 use Modules\Admin\Models\Address;
+use Modules\Media\Models\PathSettings;
 use Modules\Profile\Models\ContactElementMapper;
 use Modules\Profile\Models\Profile;
 use Modules\SupplierManagement\Models\Supplier;
 use Modules\SupplierManagement\Models\SupplierMapper;
-use Modules\Media\Models\PathSettings;
 use phpOMS\Message\Http\RequestStatusCode;
 use phpOMS\Message\NotificationLevel;
 use phpOMS\Message\RequestAbstract;
