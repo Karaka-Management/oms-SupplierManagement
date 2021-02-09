@@ -180,7 +180,7 @@ final class ApiController extends Controller
             $request->getData('name') ?? '',
             $uploadedFiles,
             $request->header->account,
-            'Modules/Media/Files/Modules/SupplierManagement/' . ($request->getData('supplier') ?? '0'),
+            __DIR__ . '/../../../Modules/Media/Files/Modules/SupplierManagement/' . ($request->getData('supplier') ?? '0'),
             '/Modules/SupplierManagement/' . ($request->getData('supplier') ?? '0'),
             $request->getData('type') ?? '',
             '',
