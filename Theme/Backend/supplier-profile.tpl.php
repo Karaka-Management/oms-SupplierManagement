@@ -36,16 +36,16 @@ echo $this->getData('nav')->render();
             <li><label for="c-tab-6"><?= $this->getHtml('Prices'); ?></label></li>
             <li><label for="c-tab-7"><?= $this->getHtml('AreaManager'); ?></label></li>
             <li><label for="c-tab-8"><?= $this->getHtml('Files'); ?></label></li>
-            <li><label for="c-tab-10">Invoices</label>
-            <li><label for="c-tab-10">Articles</label>
-            <li><label for="c-tab-10">Messages</label>
-            <li><label for="c-tab-10">Support</label>
-            <li><label for="c-tab-10">Modules</label>
-            <li><label for="c-tab-10">Accounting</label>
-            <li><label for="c-tab-10">Notes</label>
-            <li><label for="c-tab-10">Tags</label>
-            <li><label for="c-tab-10">Calendar</label>
-            <li><label for="c-tab-10">Permission</label>
+            <li><label for="c-tab-10"><?= $this->getHtml('Invoices'); ?></label>
+            <li><label for="c-tab-10"><?= $this->getHtml('Articles'); ?></label>
+            <li><label for="c-tab-10"><?= $this->getHtml('Messages'); ?></label>
+            <li><label for="c-tab-10"><?= $this->getHtml('Support'); ?></label>
+            <li><label for="c-tab-10"><?= $this->getHtml('Modules'); ?></label>
+            <li><label for="c-tab-10"><?= $this->getHtml('Accounting'); ?></label>
+            <li><label for="c-tab-10"><?= $this->getHtml('Notes'); ?></label>
+            <li><label for="c-tab-10"><?= $this->getHtml('Tags'); ?></label>
+            <li><label for="c-tab-10"><?= $this->getHtml('Calendar'); ?></label>
+            <li><label for="c-tab-10"><?= $this->getHtml('Permission'); ?></label>
             <li><label for="c-tab-9"><?= $this->getHtml('Logs'); ?></label>
         </ul>
     </div>
@@ -98,18 +98,18 @@ echo $this->getData('nav')->render();
                     </section>
 
                     <section class="portlet">
-                        <div class="portlet-head">Contact</div>
+                        <div class="portlet-head"><?= $this->getHtml('Contact'); ?></div>
                         <div class="portlet-body">
                             <table>
-                                <tr><td>Main:
-                                <tr><td>Phone:
+                                <tr><td><?= $this->getHtml('Main'); ?>:
+                                <tr><td><?= $this->getHtml('Phone'); ?>:
                                     <td>
-                                <tr><td>Email:
+                                <tr><td><?= $this->getHtml('Email'); ?>:
                                     <td>
-                                <tr><td>Accounting:
-                                <tr><td>Phone:
+                                <tr><td><?= $this->getHtml('Accounting'); ?>:
+                                <tr><td><?= $this->getHtml('Phone'); ?>:
                                     <td>
-                                <tr><td>Email:
+                                <tr><td><?= $this->getHtml('Email'); ?>:
                                     <td>
                             </table>
                         </div>
@@ -121,13 +121,13 @@ echo $this->getData('nav')->render();
                             <section class="portlet highlight-1">
                                 <div class="portlet-body">
                                     <table>
-                                        <tr><td>YTD Sales:
+                                        <tr><td><?= $this->getHtml('YTDSales'); ?>:
                                             <td>
-                                        <tr><td>MTD Sales:
+                                        <tr><td><?= $this->getHtml('MTDSales'); ?>:
                                             <td>
-                                        <tr><td>CLV:
+                                        <tr><td><?= $this->getHtml('CLV'); ?>:
                                             <td>
-                                        <tr><td>MRR:
+                                        <tr><td><?= $this->getHtml('MRR'); ?>:
                                             <td>
                                     </table>
                                 </div>
@@ -138,13 +138,13 @@ echo $this->getData('nav')->render();
                             <section class="portlet highlight-2">
                                 <div class="portlet-body">
                                     <table>
-                                        <tr><td>Last Contact:
+                                        <tr><td><?= $this->getHtml('LastContact'); ?>:
                                             <td>
-                                        <tr><td>Last Order:
+                                        <tr><td><?= $this->getHtml('LastOrder'); ?>:
                                             <td>
-                                        <tr><td>Created:
+                                        <tr><td><?= $this->getHtml('Created'); ?>:
                                             <td>
-                                        <tr><td>Modified:
+                                        <tr><td><?= $this->getHtml('Modified'); ?>:
                                             <td>
                                     </table>
                                 </div>
@@ -155,13 +155,13 @@ echo $this->getData('nav')->render();
                             <section class="portlet highlight-3">
                                 <div class="portlet-body">
                                     <table>
-                                        <tr><td>DSO:
+                                        <tr><td><?= $this->getHtml('DSO'); ?>:
                                             <td>
-                                        <tr><td>Due:
+                                        <tr><td><?= $this->getHtml('DUE'); ?>:
                                             <td>
-                                        <tr><td>Balance:
+                                        <tr><td><?= $this->getHtml('Balance'); ?>:
                                             <td>
-                                        <tr><td>Credit Rating:
+                                        <tr><td><?= $this->getHtml('CreditRating'); ?>:
                                             <td>
                                     </table>
                                 </div>
@@ -172,14 +172,14 @@ echo $this->getData('nav')->render();
                     <div class="row">
                         <div class="col-xs-12 col-md-6">
                             <section class="portlet">
-                                <div class="portlet-head">Notes</div>
+                                <div class="portlet-head"><?= $this->getHtml('Notes'); ?></div>
                                 <div class="portlet-body"></div>
                             </section>
                         </div>
 
                         <div class="col-xs-12 col-md-6">
                             <section class="portlet">
-                                <div class="portlet-head">Documents</div>
+                                <div class="portlet-head"><?= $this->getHtml('Documents'); ?></div>
                                 <div class="portlet-body"></div>
                             </section>
                         </div>
@@ -188,7 +188,7 @@ echo $this->getData('nav')->render();
                     <div class="row">
                         <div class="col-xs-12">
                             <section class="portlet">
-                                <div class="portlet-head">Invoices</div>
+                                <div class="portlet-head"><?= $this->getHtml('Invoices'); ?></div>
                                 <div class="portlet-body"></div>
                             </section>
                         </div>
@@ -197,14 +197,14 @@ echo $this->getData('nav')->render();
                     <div class="row">
                         <div class="col-xs-12 col-md-6">
                             <section class="portlet">
-                                <div class="portlet-head">Segments</div>
+                                <div class="portlet-head"><?= $this->getHtml('Segments'); ?></div>
                                 <div class="portlet-body"></div>
                             </section>
                         </div>
 
                         <div class="col-xs-12 col-md-6">
                             <section class="portlet">
-                                <div class="portlet-head">Sales</div>
+                                <div class="portlet-head"><?= $this->getHtml('Sales'); ?></div>
                                 <div class="portlet-body"></div>
                             </section>
                         </div>
