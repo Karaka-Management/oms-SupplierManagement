@@ -4,13 +4,16 @@
  *
  * PHP Version 8.0
  *
- * @package   Modules\ClientManagement
+ * @package   Modules\SupplierManagement
  * @copyright Dennis Eichhorn
  * @license   OMS License 1.0
  * @version   1.0.0
  * @link      https://orange-management.org
  */
 declare(strict_types=1);
+
+use Modules\Profile\Models\ContactType;
+use phpOMS\Uri\UriFactory;
 
 $countryCodes = \phpOMS\Localization\ISO3166TwoEnum::getConstants();
 $countries    = \phpOMS\Localization\ISO3166NameEnum::getConstants();
@@ -19,6 +22,9 @@ $countries    = \phpOMS\Localization\ISO3166NameEnum::getConstants();
  * @var \Modules\SupplierManagement\Models\Supplier $supplier
  */
 $supplier = $this->getData('supplier');
+
+$newestInvoices    = $this->getData('newestInvoices') ?? [];
+$monthlyPurchaseCosts = $this->getData('monthlyPurchaseCosts') ?? [];
 
 /**
  * @var \phpOMS\Views\View $this
@@ -188,8 +194,25 @@ echo $this->getData('nav')->render();
                     <div class="row">
                         <div class="col-xs-12">
                             <section class="portlet">
-                                <div class="portlet-head"><?= $this->getHtml('Invoices'); ?></div>
-                                <div class="portlet-body"></div>
+                                <div class="portlet-head"><?= $this->getHtml('RecentInvoices'); ?></div>
+                                <table id="iSalesItemList" class="default">
+                                    <thead>
+                                    <tr>
+                                        <td><?= $this->getHtml('Number'); ?>
+                                        <td class="wf-100"><?= $this->getHtml('Name'); ?>
+                                        <td><?= $this->getHtml('Net'); ?>
+                                        <td><?= $this->getHtml('Date'); ?>
+                                    <tbody>
+                                    <?php foreach ($newestInvoices as $invoice) :
+                                        $url = UriFactory::build('{/prefix}purchase/bill?{?}&id=' . $invoice->getId());
+                                        ?>
+                                    <tr data-href="<?= $url; ?>">
+                                        <td><a href="<?= $url; ?>"><?= $invoice->getNumber(); ?></a>
+                                        <td><a href="<?= $url; ?>"><?= $invoice->billTo; ?></a>
+                                        <td><a href="<?= $url; ?>"><?= $invoice->net->getCurrency(); ?></a>
+                                        <td><a href="<?= $url; ?>"><?= $invoice->createdAt->format('Y-m-d'); ?></a>
+                                    <?php endforeach; ?>
+                                </table>
                             </section>
                         </div>
                     </div>
@@ -204,8 +227,86 @@ echo $this->getData('nav')->render();
 
                         <div class="col-xs-12 col-md-6">
                             <section class="portlet">
-                                <div class="portlet-head"><?= $this->getHtml('Sales'); ?></div>
-                                <div class="portlet-body"></div>
+                                <div class="portlet-head"><?= $this->getHtml('Purchase'); ?></div>
+                                <div class="portlet-body">
+                                <canvas id="purchase-region" data-chart='{
+                                            "type": "bar",
+                                            "data": {
+                                                "labels": [
+                                                    <?php
+                                                        $temp = [];
+                                                        foreach ($monthlyPurchaseCosts as $monthly) {
+                                                            $temp[] = $monthly['month'] . '/' . \substr((string) $monthly['year'], -2);
+                                                        }
+                                                    ?>
+                                                    <?= '"' . \implode('", "', $temp) . '"'; ?>
+                                                ],
+                                                "datasets": [
+                                                    {
+                                                        "label": "<?= $this->getHtml('Margin'); ?>",
+                                                        "type": "line",
+                                                        "data": [
+                                                            <?php
+                                                                $temp = [];
+                                                                foreach ($monthlyPurchaseCosts as $monthly) {
+                                                                    $temp[] = \round(((((int) $monthly['net_purchase']) - ((int) $monthly['net_costs'])) / ((int) $monthly['net_purchase'])) * 100, 2);
+                                                                }
+                                                            ?>
+                                                            <?= \implode(',', $temp); ?>
+                                                        ],
+                                                        "yAxisID": "axis-2",
+                                                        "fill": false,
+                                                        "borderColor": "rgb(255, 99, 132)",
+                                                        "backgroundColor": "rgb(255, 99, 132)"
+                                                    },
+                                                    {
+                                                        "label": "<?= $this->getHtml('Purchase'); ?>",
+                                                        "type": "bar",
+                                                        "data": [
+                                                            <?php
+                                                                $temp = [];
+                                                                foreach ($monthlyPurchaseCosts as $monthly) {
+                                                                    $temp[] = ((int) $monthly['net_purchase']) / 1000;
+                                                                }
+                                                            ?>
+                                                            <?= \implode(',', $temp); ?>
+                                                        ],
+                                                        "yAxisID": "axis-1",
+                                                        "backgroundColor": "rgb(54, 162, 235)"
+                                                    }
+                                                ]
+                                            },
+                                            "options": {
+                                                "scales": {
+                                                    "yAxes": [
+                                                        {
+                                                            "id": "axis-1",
+                                                            "display": true,
+                                                            "position": "left"
+                                                        },
+                                                        {
+                                                            "id": "axis-2",
+                                                            "display": true,
+                                                            "position": "right",
+                                                            "scaleLabel": {
+                                                                "display": true,
+                                                                "labelString": "<?= $this->getHtml('Margin'); ?> %"
+                                                            },
+                                                            "gridLines": {
+                                                                "display": false
+                                                            },
+                                                            "beginAtZero": true,
+                                                            "ticks": {
+                                                                "min": 0,
+                                                                "max": 100,
+                                                                "stepSize": 10
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                    }'></canvas>
+                                </div>
                             </section>
                         </div>
                     </div>

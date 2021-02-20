@@ -15,9 +15,14 @@ declare(strict_types=1);
 namespace Modules\SupplierManagement\Controller;
 
 use Modules\SupplierManagement\Models\SupplierMapper;
+use Modules\Billing\Models\PurchaseBillMapper;
+use Modules\Billing\Models\BillTypeL11n;
+use phpOMS\Asset\AssetType;
 use phpOMS\Contract\RenderableInterface;
+use phpOMS\Localization\Money;
 use phpOMS\Message\RequestAbstract;
 use phpOMS\Message\ResponseAbstract;
+use phpOMS\Stdlib\Base\SmartDateTime;
 use phpOMS\Views\View;
 
 /**
@@ -89,12 +94,38 @@ final class BackendController extends Controller
      */
     public function viewSupplierManagementSupplierProfile(RequestAbstract $request, ResponseAbstract $response, $data = null) : RenderableInterface
     {
+        $head = $response->get('Content')->getData('head');
+        $head->addAsset(AssetType::CSS, 'Resources/chartjs/Chartjs/chart.css');
+        $head->addAsset(AssetType::JSLATE, 'Resources/chartjs/Chartjs/chart.js');
+        $head->addAsset(AssetType::JSLATE, 'Modules/SupplierManagement/Controller.js', ['type' => 'module']);
+
         $view = new View($this->app->l11nManager, $request, $response);
         $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/supplier-profile');
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1003202001, $request, $response));
 
         $supplier = SupplierMapper::get((int) $request->getData('id'));
         $view->setData('supplier', $supplier);
+
+        // stats
+        if ($this->app->moduleManager->isActive('Billing')) {
+            $ytd               = PurchaseBillMapper::getPurchaseBySupplierId($supplier->getId(), new SmartDateTime('Y-01-01'), new SmartDateTime('now'));
+            $mtd               = PurchaseBillMapper::getPurchaseBySupplierId($supplier->getId(), new SmartDateTime('Y-m-01'), new SmartDateTime('now'));
+            $lastOrder         = PurchaseBillMapper::getLastOrderDateBySupplierId($supplier->getId());
+            $newestInvoices    = PurchaseBillMapper::withConditional('language', $response->getLanguage(), [BillTypeL11n::class])::getNewestSupplierInvoices($supplier->getId(), 5);
+            $monthlyPurchaseCosts = PurchaseBillMapper::getSupplierMonthlyPurchaseCosts($supplier->getId(), (new SmartDateTime('now'))->createModify(-1), new SmartDateTime('now'));
+        } else {
+            $ytd               = new Money();
+            $mtd               = new Money();
+            $lastOrder         = null;
+            $newestInvoices    = [];
+            $monthlyPurchaseCosts = [];
+        }
+
+        $view->addData('ytd', $ytd);
+        $view->addData('mtd', $mtd);
+        $view->addData('lastOrder', $lastOrder);
+        $view->addData('newestInvoices', $newestInvoices);
+        $view->addData('monthlyPurchaseCosts', $monthlyPurchaseCosts);
 
         return $view;
     }
