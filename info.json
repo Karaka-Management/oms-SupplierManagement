@@ -17,10 +17,12 @@
     "description": "Supplier management module.",
     "directory": "SupplierManagement",
     "dependencies": {
-        "Admin": "1.0.0"
+        "Admin": "1.0.0",
+        "Editor": "1.0.0"
     },
     "providing": {
-        "Navigation": "*"
+        "Navigation": "*",
+        "Media": "*"
     },
     "load": [
         {

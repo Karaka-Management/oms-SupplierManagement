@@ -1,0 +1,9 @@
+[
+    {
+        "type": "collection",
+        "create_directory": true,
+        "name": "SupplierManagement",
+        "virtualPath": "/Modules",
+        "user": 1
+    }
+]

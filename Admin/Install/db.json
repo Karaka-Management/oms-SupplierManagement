@@ -107,5 +107,31 @@
                 "foreignKey": "suppliermgmt_supplier_id"
             }
         }
+    },
+    "suppliermgmt_supplier_note": {
+        "name": "suppliermgmt_supplier_note",
+        "fields": {
+            "suppliermgmt_supplier_note_id": {
+                "name": "suppliermgmt_supplier_note_id",
+                "type": "INT",
+                "null": false,
+                "primary": true,
+                "autoincrement": true
+            },
+            "suppliermgmt_supplier_note_dst": {
+                "name": "suppliermgmt_supplier_note_dst",
+                "type": "INT",
+                "null": false,
+                "foreignTable": "editor_doc",
+                "foreignKey": "editor_doc_id"
+            },
+            "suppliermgmt_supplier_note_src": {
+                "name": "suppliermgmt_supplier_note_src",
+                "type": "INT",
+                "null": false,
+                "foreignTable": "suppliermgmt_supplier",
+                "foreignKey": "suppliermgmt_supplier_id"
+            }
+        }
     }
 }

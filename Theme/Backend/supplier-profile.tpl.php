@@ -22,6 +22,8 @@ $countries    = \phpOMS\Localization\ISO3166NameEnum::getConstants();
  * @var \Modules\SupplierManagement\Models\Supplier $supplier
  */
 $supplier = $this->getData('supplier');
+$notes = $supplier->getNotes();
+$files = $supplier->getFiles();
 
 $newestInvoices    = $this->getData('newestInvoices') ?? [];
 $monthlyPurchaseCosts = $this->getData('monthlyPurchaseCosts') ?? [];
@@ -126,7 +128,7 @@ echo $this->getData('nav')->render();
                         <div class="col-xs-12 col-lg-4">
                             <section class="portlet highlight-1">
                                 <div class="portlet-body">
-                                    <table>
+                                    <table class="wf-100">
                                         <tr><td><?= $this->getHtml('YTDSales'); ?>:
                                             <td>
                                         <tr><td><?= $this->getHtml('MTDSales'); ?>:
@@ -143,7 +145,7 @@ echo $this->getData('nav')->render();
                         <div class="col-xs-12 col-lg-4">
                             <section class="portlet highlight-2">
                                 <div class="portlet-body">
-                                    <table>
+                                    <table class="wf-100">
                                         <tr><td><?= $this->getHtml('LastContact'); ?>:
                                             <td>
                                         <tr><td><?= $this->getHtml('LastOrder'); ?>:
@@ -160,10 +162,10 @@ echo $this->getData('nav')->render();
                         <div class="col-xs-12 col-lg-4">
                             <section class="portlet highlight-3">
                                 <div class="portlet-body">
-                                    <table>
+                                    <table class="wf-100">
                                         <tr><td><?= $this->getHtml('DSO'); ?>:
                                             <td>
-                                        <tr><td><?= $this->getHtml('DUE'); ?>:
+                                        <tr><td><?= $this->getHtml('Due'); ?>:
                                             <td>
                                         <tr><td><?= $this->getHtml('Balance'); ?>:
                                             <td>
@@ -179,14 +181,42 @@ echo $this->getData('nav')->render();
                         <div class="col-xs-12 col-md-6">
                             <section class="portlet">
                                 <div class="portlet-head"><?= $this->getHtml('Notes'); ?></div>
-                                <div class="portlet-body"></div>
+                                <table id="iNotesItemList" class="default">
+                                    <thead>
+                                    <tr>
+                                        <td class="wf-100"><?= $this->getHtml('Title'); ?>
+                                        <td><?= $this->getHtml('CreatedAt'); ?>
+                                    <tbody>
+                                    <?php foreach ($notes as $note) :
+                                        $url = UriFactory::build('{/prefix}editor/single?{?}&id=' . $note->getId());
+                                        ?>
+                                    <tr data-href="<?= $url; ?>">
+                                        <td><a href="<?= $url; ?>"><?= $note->title; ?></a>
+                                        <td><a href="<?= $url; ?>"><?= $note->createdAt->format('Y-m-d'); ?></a>
+                                    <?php endforeach; ?>
+                                </table>
                             </section>
                         </div>
 
                         <div class="col-xs-12 col-md-6">
                             <section class="portlet">
                                 <div class="portlet-head"><?= $this->getHtml('Documents'); ?></div>
-                                <div class="portlet-body"></div>
+                                <table id="iFilesSupplierList" class="default">
+                                    <thead>
+                                    <tr>
+                                        <td class="wf-100"><?= $this->getHtml('Title'); ?>
+                                        <td>
+                                        <td><?= $this->getHtml('CreatedAt'); ?>
+                                    <tbody>
+                                    <?php foreach ($files as $file) :
+                                        $url = UriFactory::build('{/prefix}media/single?{?}&id=' . $file->getId());
+                                        ?>
+                                    <tr data-href="<?= $url; ?>">
+                                        <td><a href="<?= $url; ?>"><?= $file->name; ?></a>
+                                        <td><a href="<?= $url; ?>"><?= $file->extension; ?></a>
+                                        <td><a href="<?= $url; ?>"><?= $file->createdAt->format('Y-m-d'); ?></a>
+                                    <?php endforeach; ?>
+                                </table>
                             </section>
                         </div>
                     </div>

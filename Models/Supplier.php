@@ -16,6 +16,7 @@ namespace Modules\SupplierManagement\Models;
 
 use Modules\Admin\Models\Address;
 use Modules\Admin\Models\NullAddress;
+use Modules\Editor\Models\EditorDoc;
 use Modules\Media\Models\Media;
 use Modules\Profile\Models\ContactElement;
 use Modules\Profile\Models\NullContactElement;
@@ -52,6 +53,14 @@ class Supplier
     private \DateTimeImmutable $createdAt;
 
     public Profile $profile;
+
+    /**
+     * Files.
+     *
+     * @var EditorDoc[]
+     * @since 1.0.0
+     */
+    private array $notes = [];
 
     private array $files = [];
 
@@ -191,6 +200,32 @@ class Supplier
     public function setInfo(string $info) : void
     {
         $this->info = $info;
+    }
+
+    /**
+     * Add doc to item
+     *
+     * @param EditorDoc $note Note
+     *
+     * @return void
+     *
+     * @since 1.0.0
+     */
+    public function addNote(EditorDoc $note) : void
+    {
+        $this->notes[] = $note;
+    }
+
+    /**
+     * Get notes
+     *
+     * @return EditorDoc[]
+     *
+     * @since 1.0.0
+     */
+    public function getNotes() : array
+    {
+        return $this->notes;
     }
 
     /**
