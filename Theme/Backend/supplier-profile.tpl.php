@@ -12,7 +12,6 @@
  */
 declare(strict_types=1);
 
-use Modules\Profile\Models\ContactType;
 use phpOMS\Uri\UriFactory;
 
 $countryCodes = \phpOMS\Localization\ISO3166TwoEnum::getConstants();
@@ -22,10 +21,10 @@ $countries    = \phpOMS\Localization\ISO3166NameEnum::getConstants();
  * @var \Modules\SupplierManagement\Models\Supplier $supplier
  */
 $supplier = $this->getData('supplier');
-$notes = $supplier->getNotes();
-$files = $supplier->getFiles();
+$notes    = $supplier->getNotes();
+$files    = $supplier->getFiles();
 
-$newestInvoices    = $this->getData('newestInvoices') ?? [];
+$newestInvoices       = $this->getData('newestInvoices') ?? [];
 $monthlyPurchaseCosts = $this->getData('monthlyPurchaseCosts') ?? [];
 
 /**
