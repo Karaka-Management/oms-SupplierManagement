@@ -28,23 +28,77 @@ echo $this->getData('nav')->render(); ?>
                 <tr>
                     <td>
                     <td><?= $this->getHtml('ID', '0', '0'); ?>
-                        <input id="clientList-r1-asc" name="supplierList-sort" type="radio"><label for="supplierList-r1-asc"><i class="sort-asc fa fa-chevron-up"></i></label>
-                        <input id="supplierList-r1-desc" name="supplierList-sort" type="radio"><label for="supplierList-r1-desc"><i class="sort-desc fa fa-chevron-down"></i></label>
+                        <label for="iPurchaseSupplierList-sort-1">
+                            <input type="radio" name="iPurchaseSupplierList-sort" id="iPurchaseSupplierList-sort-1">
+                            <i class="sort-asc fa fa-chevron-up"></i>
+                        </label>
+                        <label for="iPurchaseSupplierList-sort-2">
+                            <input type="radio" name="iPurchaseSupplierList-sort" id="iPurchaseSupplierList-sort-2">
+                             <i class="sort-desc fa fa-chevron-down"></i>
+                        </label>
+                        <label>
+                            <i class="filter fa fa-filter"></i>
+                        </label>
                     <td class="wf-100"><?= $this->getHtml('Name'); ?>
-                        <input id="supplierList-r2-asc" name="supplierList-sort" type="radio"><label for="supplierList-r2-asc"><i class="sort-asc fa fa-chevron-up"></i></label>
-                        <input id="supplierList-r2-desc" name="supplierList-sort" type="radio"><label for="supplierList-r2-desc"><i class="sort-desc fa fa-chevron-down"></i></label>
+                        <label for="iPurchaseSupplierList-sort-3">
+                            <input type="radio" name="iPurchaseSupplierList-sort" id="iPurchaseSupplierList-sort-3">
+                            <i class="sort-asc fa fa-chevron-up"></i>
+                        </label>
+                        <label for="iPurchaseSupplierList-sort-4">
+                            <input type="radio" name="iPurchaseSupplierList-sort" id="iPurchaseSupplierList-sort-4">
+                             <i class="sort-desc fa fa-chevron-down"></i>
+                        </label>
+                        <label>
+                            <i class="filter fa fa-filter"></i>
+                        </label>
                     <td><?= $this->getHtml('City'); ?>
-                        <input id="supplierList-r5-asc" name="supplierList-sort" type="radio"><label for="supplierList-r5-asc"><i class="sort-asc fa fa-chevron-up"></i></label>
-                        <input id="supplierList-r5-desc" name="supplierList-sort" type="radio"><label for="supplierList-r5-desc"><i class="sort-desc fa fa-chevron-down"></i></label>
+                        <label for="iPurchaseSupplierList-sort-5">
+                            <input type="radio" name="iPurchaseSupplierList-sort" id="iPurchaseSupplierList-sort-5">
+                            <i class="sort-asc fa fa-chevron-up"></i>
+                        </label>
+                        <label for="iPurchaseSupplierList-sort-6">
+                            <input type="radio" name="iPurchaseSupplierList-sort" id="iPurchaseSupplierList-sort-6">
+                             <i class="sort-desc fa fa-chevron-down"></i>
+                        </label>
+                        <label>
+                            <i class="filter fa fa-filter"></i>
+                        </label>
                     <td><?= $this->getHtml('Zip'); ?>
-                        <input id="supplierList-r6-asc" name="supplierList-sort" type="radio"><label for="supplierList-r6-asc"><i class="sort-asc fa fa-chevron-up"></i></label>
-                        <input id="supplierList-r6-desc" name="supplierList-sort" type="radio"><label for="supplierList-r6-desc"><i class="sort-desc fa fa-chevron-down"></i></label>
+                        <label for="iPurchaseSupplierList-sort-7">
+                            <input type="radio" name="iPurchaseSupplierList-sort" id="iPurchaseSupplierList-sort-7">
+                            <i class="sort-asc fa fa-chevron-up"></i>
+                        </label>
+                        <label for="iPurchaseSupplierList-sort-8">
+                            <input type="radio" name="iPurchaseSupplierList-sort" id="iPurchaseSupplierList-sort-8">
+                             <i class="sort-desc fa fa-chevron-down"></i>
+                        </label>
+                        <label>
+                            <i class="filter fa fa-filter"></i>
+                        </label>
                     <td><?= $this->getHtml('Address'); ?>
-                        <input id="supplierList-r7-asc" name="supplierList-sort" type="radio"><label for="supplierList-r7-asc"><i class="sort-asc fa fa-chevron-up"></i></label>
-                        <input id="supplierList-r7-desc" name="supplierList-sort" type="radio"><label for="supplierList-r7-desc"><i class="sort-desc fa fa-chevron-down"></i></label>
+                        <label for="iPurchaseSupplierList-sort-9">
+                            <input type="radio" name="iPurchaseSupplierList-sort" id="iPurchaseSupplierList-sort-9">
+                            <i class="sort-asc fa fa-chevron-up"></i>
+                        </label>
+                        <label for="iPurchaseSupplierList-sort-10">
+                            <input type="radio" name="iPurchaseSupplierList-sort" id="iPurchaseSupplierList-sort-10">
+                             <i class="sort-desc fa fa-chevron-down"></i>
+                        </label>
+                        <label>
+                            <i class="filter fa fa-filter"></i>
+                        </label>
                     <td><?= $this->getHtml('Country'); ?>
-                        <input id="supplierList-r8-asc" name="supplierList-sort" type="radio"><label for="supplierList-r8-asc"><i class="sort-asc fa fa-chevron-up"></i></label>
-                        <input id="supplierList-r8-desc" name="supplierList-sort" type="radio"><label for="supplierList-r8-desc"><i class="sort-desc fa fa-chevron-down"></i></label>
+                        <label for="iPurchaseSupplierList-sort-11">
+                            <input type="radio" name="iPurchaseSupplierList-sort" id="iPurchaseSupplierList-sort-11">
+                            <i class="sort-asc fa fa-chevron-up"></i>
+                        </label>
+                        <label for="iPurchaseSupplierList-sort-12">
+                            <input type="radio" name="iPurchaseSupplierList-sort" id="iPurchaseSupplierList-sort-12">
+                             <i class="sort-desc fa fa-chevron-down"></i>
+                        </label>
+                        <label>
+                            <i class="filter fa fa-filter"></i>
+                        </label>
                 <tbody>
                 <?php $count = 0; foreach ($suppliers as $key => $value) : ++$count;
                  $url        = UriFactory::build('{/prefix}purchase/supplier/profile?{?}&id=' . $value->getId());
