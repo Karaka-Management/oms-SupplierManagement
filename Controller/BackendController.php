@@ -111,7 +111,7 @@ final class BackendController extends Controller
             $ytd                  = PurchaseBillMapper::getPurchaseBySupplierId($supplier->getId(), new SmartDateTime('Y-01-01'), new SmartDateTime('now'));
             $mtd                  = PurchaseBillMapper::getPurchaseBySupplierId($supplier->getId(), new SmartDateTime('Y-m-01'), new SmartDateTime('now'));
             $lastOrder            = PurchaseBillMapper::getLastOrderDateBySupplierId($supplier->getId());
-            $newestInvoices       = PurchaseBillMapper::withConditional('language', $response->getLanguage(), [BillTypeL11n::class])::getNewestSupplierInvoices($supplier->getId(), 5);
+            $newestInvoices       = PurchaseBillMapper::with('language', $response->getLanguage(), [BillTypeL11n::class])::getNewestSupplierInvoices($supplier->getId(), 5);
             $monthlyPurchaseCosts = PurchaseBillMapper::getSupplierMonthlyPurchaseCosts($supplier->getId(), (new SmartDateTime('now'))->createModify(-1), new SmartDateTime('now'));
         } else {
             $ytd                  = new Money();
