@@ -33,11 +33,11 @@ final class SupplierAttributeTypeMapper extends DataMapperAbstract
      * @since 1.0.0
      */
     protected static array $columns = [
-        'suppliermgmt_attr_type_id'     => ['name' => 'suppliermgmt_attr_type_id',     'type' => 'int',    'internal' => 'id'],
-        'suppliermgmt_attr_type_name'   => ['name' => 'suppliermgmt_attr_type_name',   'type' => 'string', 'internal' => 'name', 'autocomplete' => true],
-        'suppliermgmt_attr_type_fields' => ['name' => 'suppliermgmt_attr_type_fields', 'type' => 'int',    'internal' => 'fields'],
-        'suppliermgmt_attr_type_custom' => ['name' => 'suppliermgmt_attr_type_custom', 'type' => 'bool', 'internal' => 'custom'],
-        'suppliermgmt_attr_type_pattern' => ['name' => 'suppliermgmt_attr_type_pattern', 'type' => 'bool', 'internal' => 'validationPattern'],
+        'suppliermgmt_attr_type_id'       => ['name' => 'suppliermgmt_attr_type_id',     'type' => 'int',    'internal' => 'id'],
+        'suppliermgmt_attr_type_name'     => ['name' => 'suppliermgmt_attr_type_name',   'type' => 'string', 'internal' => 'name', 'autocomplete' => true],
+        'suppliermgmt_attr_type_fields'   => ['name' => 'suppliermgmt_attr_type_fields', 'type' => 'int',    'internal' => 'fields'],
+        'suppliermgmt_attr_type_custom'   => ['name' => 'suppliermgmt_attr_type_custom', 'type' => 'bool', 'internal' => 'custom'],
+        'suppliermgmt_attr_type_pattern'  => ['name' => 'suppliermgmt_attr_type_pattern', 'type' => 'bool', 'internal' => 'validationPattern'],
         'suppliermgmt_attr_type_required' => ['name' => 'suppliermgmt_attr_type_required', 'type' => 'bool', 'internal' => 'isRequired'],
     ];
 

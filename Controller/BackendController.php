@@ -16,6 +16,7 @@ namespace Modules\SupplierManagement\Controller;
 
 use Modules\Billing\Models\BillTypeL11n;
 use Modules\Billing\Models\PurchaseBillMapper;
+use Modules\Media\Models\Media;
 use Modules\SupplierManagement\Models\SupplierMapper;
 use phpOMS\Asset\AssetType;
 use phpOMS\Contract\RenderableInterface;
@@ -24,7 +25,6 @@ use phpOMS\Message\RequestAbstract;
 use phpOMS\Message\ResponseAbstract;
 use phpOMS\Stdlib\Base\SmartDateTime;
 use phpOMS\Views\View;
-use Modules\Media\Models\Media;
 
 /**
  * SupplierManagement controller class.

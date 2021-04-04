@@ -68,7 +68,9 @@ class SupplierAttributeType implements \JsonSerializable, ArrayableInterface
      *
      * @var string | SupplierAttributeTypeL11n
      */
-    protected string | SupplierAttributeTypeL11n $l11n;
+    protected string |
+
+ SupplierAttributeTypeL11n $l11n;
 
     /**
      * Possible default attribute values
@@ -105,7 +107,7 @@ class SupplierAttributeType implements \JsonSerializable, ArrayableInterface
      * Set l11n
      *
      * @param string|SupplierAttributeTypeL11n $l11n Tag article l11n
-     * @param string                       $lang Language
+     * @param string                           $lang Language
      *
      * @return void
      *
