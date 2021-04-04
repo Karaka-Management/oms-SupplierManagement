@@ -33,10 +33,10 @@ final class SupplierAttributeMapper extends DataMapperAbstract
      * @since 1.0.0
      */
     protected static array $columns = [
-        'suppliermgmt_supplier_attr_id'    => ['name' => 'suppliermgmt_supplier_attr_id',    'type' => 'int', 'internal' => 'id'],
+        'suppliermgmt_supplier_attr_id'        => ['name' => 'suppliermgmt_supplier_attr_id',    'type' => 'int', 'internal' => 'id'],
         'suppliermgmt_supplier_attr_supplier'  => ['name' => 'suppliermgmt_supplier_attr_supplier',  'type' => 'int', 'internal' => 'supplier'],
-        'suppliermgmt_supplier_attr_type'  => ['name' => 'suppliermgmt_supplier_attr_type',  'type' => 'int', 'internal' => 'type'],
-        'suppliermgmt_supplier_attr_value' => ['name' => 'suppliermgmt_supplier_attr_value', 'type' => 'int', 'internal' => 'value'],
+        'suppliermgmt_supplier_attr_type'      => ['name' => 'suppliermgmt_supplier_attr_type',  'type' => 'int', 'internal' => 'type'],
+        'suppliermgmt_supplier_attr_value'     => ['name' => 'suppliermgmt_supplier_attr_value', 'type' => 'int', 'internal' => 'value'],
     ];
 
     /**

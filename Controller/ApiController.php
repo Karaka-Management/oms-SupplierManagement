@@ -19,25 +19,25 @@ use Modules\Admin\Models\Address;
 use Modules\Media\Models\PathSettings;
 use Modules\Profile\Models\ContactElementMapper;
 use Modules\Profile\Models\Profile;
+use Modules\SupplierManagement\Models\AttributeValueType;
+use Modules\SupplierManagement\Models\NullSupplierAttributeType;
+use Modules\SupplierManagement\Models\NullSupplierAttributeValue;
 use Modules\SupplierManagement\Models\Supplier;
+use Modules\SupplierManagement\Models\SupplierAttribute;
+use Modules\SupplierManagement\Models\SupplierAttributeMapper;
+use Modules\SupplierManagement\Models\SupplierAttributeType;
+use Modules\SupplierManagement\Models\SupplierAttributeTypeL11n;
+use Modules\SupplierManagement\Models\SupplierAttributeTypeL11nMapper;
+use Modules\SupplierManagement\Models\SupplierAttributeTypeMapper;
+use Modules\SupplierManagement\Models\SupplierAttributeValue;
+use Modules\SupplierManagement\Models\SupplierAttributeValueMapper;
 use Modules\SupplierManagement\Models\SupplierMapper;
+use phpOMS\Message\Http\HttpRequest;
 use phpOMS\Message\Http\RequestStatusCode;
 use phpOMS\Message\NotificationLevel;
 use phpOMS\Message\RequestAbstract;
 use phpOMS\Message\ResponseAbstract;
 use phpOMS\Model\Message\FormValidation;
-use Modules\SupplierManagement\Models\SupplierAttribute;
-use Modules\SupplierManagement\Models\NullSupplierAttributeValue;
-use Modules\SupplierManagement\Models\SupplierAttributeTypeL11n;
-use phpOMS\Message\Http\HttpRequest;
-use Modules\SupplierManagement\Models\SupplierAttributeType;
-use Modules\SupplierManagement\Models\SupplierAttributeValue;
-use Modules\SupplierManagement\Models\AttributeValueType;
-use Modules\SupplierManagement\Models\NullSupplierAttributeType;
-use Modules\SupplierManagement\Models\SupplierAttributeTypeMapper;
-use Modules\SupplierManagement\Models\SupplierAttributeTypeL11nMapper;
-use Modules\SupplierManagement\Models\SupplierAttributeValueMapper;
-use Modules\SupplierManagement\Models\SupplierAttributeMapper;
 
 /**
  * SupplierManagement class.
@@ -202,10 +202,10 @@ final class ApiController extends Controller
      */
     private function createSupplierAttributeFromRequest(RequestAbstract $request) : SupplierAttribute
     {
-        $attribute        = new SupplierAttribute();
+        $attribute            = new SupplierAttribute();
         $attribute->supplier  = (int) $request->getData('supplier');
-        $attribute->type  = new NullSupplierAttributeType((int) $request->getData('type'));
-        $attribute->value = new NullSupplierAttributeValue((int) $request->getData('value'));
+        $attribute->type      = new NullSupplierAttributeType((int) $request->getData('type'));
+        $attribute->value     = new NullSupplierAttributeValue((int) $request->getData('value'));
 
         return $attribute;
     }
