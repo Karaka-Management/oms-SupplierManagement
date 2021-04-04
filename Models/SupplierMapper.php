@@ -115,5 +115,12 @@ final class SupplierMapper extends DataMapperAbstract
             'external' => 'suppliermgmt_supplier_contactelement_dst',
             'self'     => 'suppliermgmt_supplier_contactelement_src',
         ],
+        'attributes' => [
+            'mapper'      => SupplierAttributeMapper::class,
+            'table'       => 'suppliermgmt_supplier_attr',
+            'self'        => 'suppliermgmt_supplier_attr_supplier',
+            'conditional' => true,
+            'external'    => null,
+        ],
     ];
 }

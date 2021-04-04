@@ -21,6 +21,7 @@ use Modules\Media\Models\Media;
 use Modules\Profile\Models\ContactElement;
 use Modules\Profile\Models\NullContactElement;
 use Modules\Profile\Models\Profile;
+use Modules\Media\Models\NullMedia;
 
 /**
  * Supplier class.
@@ -53,6 +54,14 @@ class Supplier
     private \DateTimeImmutable $createdAt;
 
     public Profile $profile;
+
+    /**
+     * Attributes.
+     *
+     * @var int[]|SupplierAttribute[]
+     * @since 1.0.0
+     */
+    private array $attributes = [];
 
     /**
      * Files.

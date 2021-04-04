@@ -82,6 +82,198 @@
             }
         }
     },
+    "suppliermgmt_attr_type": {
+        "name": "suppliermgmt_attr_type",
+        "fields": {
+            "suppliermgmt_attr_type_id": {
+                "name": "suppliermgmt_attr_type_id",
+                "type": "INT",
+                "null": false,
+                "primary": true,
+                "autoincrement": true
+            },
+            "suppliermgmt_attr_type_name": {
+                "name": "suppliermgmt_attr_type_name",
+                "type": "VARCHAR(255)",
+                "null": false
+            },
+            "suppliermgmt_attr_type_fields": {
+                "name": "suppliermgmt_attr_type_fields",
+                "type": "INT(11)",
+                "null": false
+            },
+            "suppliermgmt_attr_type_custom": {
+                "name": "suppliermgmt_attr_type_custom",
+                "type": "TINYINT(1)",
+                "null": false
+            },
+            "suppliermgmt_attr_type_required": {
+                "description": "Every item must have this attribute type if set to true.",
+                "name": "suppliermgmt_attr_type_required",
+                "type": "TINYINT(1)",
+                "null": false
+            },
+            "suppliermgmt_attr_type_pattern": {
+                "description": "This is a regex validation pattern.",
+                "name": "suppliermgmt_attr_type_pattern",
+                "type": "VARCHAR(255)",
+                "null": false
+            }
+        }
+    },
+    "suppliermgmt_attr_type_l11n": {
+        "name": "suppliermgmt_attr_type_l11n",
+        "fields": {
+            "suppliermgmt_attr_type_l11n_id": {
+                "name": "suppliermgmt_attr_type_l11n_id",
+                "type": "INT",
+                "null": false,
+                "primary": true,
+                "autoincrement": true
+            },
+            "suppliermgmt_attr_type_l11n_title": {
+                "name": "suppliermgmt_attr_type_l11n_title",
+                "type": "VARCHAR(255)",
+                "null": false
+            },
+            "suppliermgmt_attr_type_l11n_type": {
+                "name": "suppliermgmt_attr_type_l11n_type",
+                "type": "INT(11)",
+                "null": false,
+                "foreignTable": "suppliermgmt_attr_type",
+                "foreignKey": "suppliermgmt_attr_type_id"
+            },
+            "suppliermgmt_attr_type_l11n_lang": {
+                "name": "suppliermgmt_attr_type_l11n_lang",
+                "type": "VARCHAR(2)",
+                "null": false,
+                "foreignTable": "language",
+                "foreignKey": "language_639_1"
+            }
+        }
+    },
+    "suppliermgmt_attr_value": {
+        "name": "suppliermgmt_attr_value",
+        "fields": {
+            "suppliermgmt_attr_value_id": {
+                "name": "suppliermgmt_attr_value_id",
+                "type": "INT",
+                "null": false,
+                "primary": true,
+                "autoincrement": true
+            },
+            "suppliermgmt_attr_value_default": {
+                "name": "suppliermgmt_attr_value_default",
+                "type": "TINYINT(1)",
+                "null": false
+            },
+            "suppliermgmt_attr_value_type": {
+                "name": "suppliermgmt_attr_value_type",
+                "type": "INT(11)",
+                "null": false
+            },
+            "suppliermgmt_attr_value_valueStr": {
+                "name": "suppliermgmt_attr_value_valueStr",
+                "type": "VARCHAR(255)",
+                "null": true,
+                "default": null
+            },
+            "suppliermgmt_attr_value_valueInt": {
+                "name": "suppliermgmt_attr_value_valueInt",
+                "type": "INT(11)",
+                "null": true,
+                "default": null
+            },
+            "suppliermgmt_attr_value_valueDec": {
+                "name": "suppliermgmt_attr_value_valueDec",
+                "type": "DECIMAL(19,5)",
+                "null": true,
+                "default": null
+            },
+            "suppliermgmt_attr_value_valueDat": {
+                "name": "suppliermgmt_attr_value_valueDat",
+                "type": "DATETIME",
+                "null": true,
+                "default": null
+            },
+            "suppliermgmt_attr_value_lang": {
+                "name": "suppliermgmt_attr_value_lang",
+                "type": "VARCHAR(2)",
+                "null": true,
+                "default": null,
+                "foreignTable": "language",
+                "foreignKey": "language_639_1"
+            },
+            "suppliermgmt_attr_value_country": {
+                "name": "suppliermgmt_attr_value_country",
+                "type": "VARCHAR(2)",
+                "null": true,
+                "default": null,
+                "foreignTable": "country",
+                "foreignKey": "country_code2"
+            }
+        }
+    },
+    "suppliermgmt_supplier_attr_default": {
+        "name": "suppliermgmt_supplier_attr_default",
+        "fields": {
+            "suppliermgmt_supplier_attr_default_id": {
+                "name": "suppliermgmt_supplier_attr_default_id",
+                "type": "INT",
+                "null": false,
+                "primary": true,
+                "autoincrement": true
+            },
+            "suppliermgmt_supplier_attr_default_type": {
+                "name": "suppliermgmt_supplier_attr_default_type",
+                "type": "INT(11)",
+                "null": false,
+                "foreignTable": "suppliermgmt_attr_type",
+                "foreignKey": "suppliermgmt_attr_type_id"
+            },
+            "suppliermgmt_supplier_attr_default_value": {
+                "name": "suppliermgmt_supplier_attr_default_value",
+                "type": "INT(11)",
+                "null": false,
+                "foreignTable": "suppliermgmt_attr_value",
+                "foreignKey": "suppliermgmt_attr_value_id"
+            }
+        }
+    },
+    "suppliermgmt_supplier_attr": {
+        "name": "suppliermgmt_supplier_attr",
+        "fields": {
+            "suppliermgmt_supplier_attr_id": {
+                "name": "suppliermgmt_supplier_attr_id",
+                "type": "INT",
+                "null": false,
+                "primary": true,
+                "autoincrement": true
+            },
+            "suppliermgmt_supplier_attr_supplier": {
+                "name": "suppliermgmt_supplier_attr_supplier",
+                "type": "INT(11)",
+                "null": false,
+                "foreignTable": "suppliermgmt_supplier",
+                "foreignKey": "suppliermgmt_supplier_id"
+            },
+            "suppliermgmt_supplier_attr_type": {
+                "name": "suppliermgmt_supplier_attr_type",
+                "type": "INT(11)",
+                "null": false,
+                "foreignTable": "suppliermgmt_attr_type",
+                "foreignKey": "suppliermgmt_attr_type_id"
+            },
+            "suppliermgmt_supplier_attr_value": {
+                "name": "suppliermgmt_supplier_attr_value",
+                "type": "INT(11)",
+                "null": true,
+                "default": null,
+                "foreignTable": "suppliermgmt_attr_value",
+                "foreignKey": "suppliermgmt_attr_value_id"
+            }
+        }
+    },
     "suppliermgmt_supplier_media": {
         "name": "suppliermgmt_supplier_media",
         "fields": {

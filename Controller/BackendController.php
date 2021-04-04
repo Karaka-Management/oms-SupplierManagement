@@ -24,6 +24,7 @@ use phpOMS\Message\RequestAbstract;
 use phpOMS\Message\ResponseAbstract;
 use phpOMS\Stdlib\Base\SmartDateTime;
 use phpOMS\Views\View;
+use Modules\Media\Models\Media;
 
 /**
  * SupplierManagement controller class.
@@ -53,7 +54,12 @@ final class BackendController extends Controller
         $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/supplier-list');
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1003202001, $request, $response));
 
-        $supplier = SupplierMapper::getAfterPivot(0, null, 25);
+        $supplier = SupplierMapper
+            ::with('notes', models: null)
+            ::with('contactElements', models: null)
+            ::with('type', 'backend_image', models: [Media::class]) // @todo: it would be nicer if I coult say files:type or files/type and remove the models parameter?
+            ::getAfterPivot(0, null, 25);
+
         $view->addData('supplier', $supplier);
 
         return $view;
@@ -103,7 +109,11 @@ final class BackendController extends Controller
         $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/supplier-profile');
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1003202001, $request, $response));
 
-        $supplier = SupplierMapper::get((int) $request->getData('id'));
+        $supplier = SupplierMapper
+            ::with('files', limit: 5, orderBy: 'createdAt', sortOrder: 'ASC')
+            ::with('notes', limit: 5, orderBy: 'id', sortOrder: 'ASC')
+            ::get((int) $request->getData('id'));
+
         $view->setData('supplier', $supplier);
 
         // stats
