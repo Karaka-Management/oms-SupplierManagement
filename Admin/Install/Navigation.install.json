@@ -44,5 +44,20 @@
                 "children": []
             }
         ]
-    }
+    },
+    {
+        "id": 1003203001,
+        "pid": "/purchase/analysis",
+        "type": 3,
+        "subtype": 1,
+        "name": "Supplier",
+        "uri": "{/prefix}purchase/analysis/supplier?{?}",
+        "target": "self",
+        "icon": null,
+        "order": 2,
+        "from": "SupplierManagement",
+        "permission": { "permission": 2, "type": null, "element": null },
+        "parent": 1002106001,
+        "children": []
+    },
 ]

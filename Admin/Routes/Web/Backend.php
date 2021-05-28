@@ -39,7 +39,7 @@ return [
             ],
         ],
     ],
-    '^.*/purchase/supplier/analysis.*$' => [
+    '^.*/purchase/analysis/supplier.*$' => [
         [
             'dest'       => '\Modules\SupplierManagement\Controller\BackendController:viewSupplierManagementSupplierAnalysis',
             'verb'       => RouteVerb::GET,
