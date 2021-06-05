@@ -54,10 +54,9 @@ final class BackendController extends Controller
         $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/supplier-list');
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1003202001, $request, $response));
 
-        $supplier = SupplierMapper
-            ::with('notes', models: null)
+        $supplier = SupplierMapper::with('notes', models: null)
             ::with('contactElements', models: null)
-            ::with('type', 'backend_image', models: [Media::class]) // @todo: it would be nicer if I coult say files:type or files/type and remove the models parameter?
+            //::with('type', 'backend_image', models: [Media::class]) // @todo: it would be nicer if I coult say files:type or files/type and remove the models parameter?
             ::getAfterPivot(0, null, 25);
 
         $view->addData('supplier', $supplier);
