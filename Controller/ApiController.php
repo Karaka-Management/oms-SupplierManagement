@@ -201,10 +201,10 @@ final class ApiController extends Controller
      */
     private function createSupplierAttributeFromRequest(RequestAbstract $request) : SupplierAttribute
     {
-        $attribute            = new SupplierAttribute();
-        $attribute->supplier  = (int) $request->getData('supplier');
-        $attribute->type      = new NullSupplierAttributeType((int) $request->getData('type'));
-        $attribute->value     = new NullSupplierAttributeValue((int) $request->getData('value'));
+        $attribute           = new SupplierAttribute();
+        $attribute->supplier = (int) $request->getData('supplier');
+        $attribute->type     = new NullSupplierAttributeType((int) $request->getData('type'));
+        $attribute->value    = new NullSupplierAttributeValue((int) $request->getData('value'));
 
         return $attribute;
     }

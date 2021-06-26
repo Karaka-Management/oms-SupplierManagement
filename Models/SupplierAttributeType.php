@@ -68,9 +68,7 @@ class SupplierAttributeType implements \JsonSerializable, ArrayableInterface
      *
      * @var string | SupplierAttributeTypeL11n
      */
-    protected string |
-
- SupplierAttributeTypeL11n $l11n;
+    protected string|SupplierAttributeTypeL11n $l11n;
 
     /**
      * Possible default attribute values
@@ -113,16 +111,16 @@ class SupplierAttributeType implements \JsonSerializable, ArrayableInterface
      *
      * @since 1.0.0
      */
-    public function setL11n($l11n, string $lang = ISO639x1Enum::_EN) : void
+    public function setL11n(string|SupplierAttributeTypeL11n $l11n, string $lang = ISO639x1Enum::_EN) : void
     {
         if ($l11n instanceof SupplierAttributeTypeL11n) {
             $this->l11n = $l11n;
-        } elseif (\is_string($l11n)) {
+        } elseif ($this->l11n instanceof SupplierAttributeTypeL11n) {
+            $this->l11n->title = $l11n;
+        } else {
             $this->l11n        = new SupplierAttributeTypeL11n();
             $this->l11n->title = $l11n;
             $this->l11n->setLanguage($lang);
-        } elseif ($this->l11n instanceof SupplierAttributeTypeL11n && \is_string($l11n)) {
-            $this->l11n->title = $l11n;
         }
     }
 
