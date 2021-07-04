@@ -117,7 +117,7 @@ SupplierAttributeTypeL11n $l11n;
     {
         if ($l11n instanceof SupplierAttributeTypeL11n) {
             $this->l11n = $l11n;
-        } elseif ($this->l11n instanceof SupplierAttributeTypeL11n) {
+        } elseif (isset($this->l11n) && $this->l11n instanceof SupplierAttributeTypeL11n) {
             $this->l11n->title = $l11n;
         } else {
             $this->l11n        = new SupplierAttributeTypeL11n();
