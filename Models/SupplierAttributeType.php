@@ -68,9 +68,7 @@ class SupplierAttributeType implements \JsonSerializable, ArrayableInterface
      *
      * @var string | SupplierAttributeTypeL11n
      */
-    protected string |
-
-SupplierAttributeTypeL11n $l11n;
+    protected string|SupplierAttributeTypeL11n $l11n;
 
     /**
      * Possible default attribute values
