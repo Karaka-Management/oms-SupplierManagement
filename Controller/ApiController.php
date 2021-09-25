@@ -495,7 +495,7 @@ final class ApiController extends Controller
             $request->header->account,
             __DIR__ . '/../../../Modules/Media/Files/Modules/SupplierManagement/' . ($request->getData('supplier') ?? '0'),
             '/Modules/SupplierManagement/' . ($request->getData('supplier') ?? '0'),
-            $request->getData('type') ?? '',
+            $request->getData('type', 'int'),
             '',
             '',
             PathSettings::FILE_PATH
