@@ -41,9 +41,7 @@ class SupplierAttributeTypeL11n implements \JsonSerializable, ArrayableInterface
      * @var int|SupplierAttributeType
      * @since 1.0.0
      */
-    protected int |
-
-SupplierAttributeType $type = 0;
+    protected int|SupplierAttributeType $type = 0;
 
     /**
      * Language.
