@@ -157,7 +157,7 @@ final class ApiController extends Controller
         $this->createModel($request->header->account, $contactElement, ContactElementMapper::class, 'supplier-contactElement', $request->getOrigin());
         $this->createModelRelation(
             $request->header->account,
-            (int) $request->getData('supplier'),
+            (int) $request->getData('account'),
             $contactElement->getId(),
         SupplierMapper::class, 'contactElements', '', $request->getOrigin());
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Contact Element', 'Contact element successfully created', $contactElement);
