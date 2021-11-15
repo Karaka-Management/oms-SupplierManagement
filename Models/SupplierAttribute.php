@@ -59,6 +59,17 @@ class SupplierAttribute implements \JsonSerializable, ArrayableInterface
     public SupplierAttributeValue $value;
 
     /**
+     * Constructor.
+     *
+     * @since 1.0.0
+     */
+    public function __construct()
+    {
+        $this->type  = new SupplierAttributeType();
+        $this->value = new SupplierAttributeValue();
+    }
+
+    /**
      * Get id
      *
      * @return int
@@ -75,7 +86,12 @@ class SupplierAttribute implements \JsonSerializable, ArrayableInterface
      */
     public function toArray() : array
     {
-        return [];
+        return [
+            'id'          => $this->id,
+            'supplier'    => $this->supplier,
+            'type'        => $this->type,
+            'value'       => $this->value,
+        ];
     }
 
     /**

@@ -18,7 +18,6 @@ use Modules\Admin\Models\Address;
 use Modules\Admin\Models\NullAddress;
 use Modules\Editor\Models\EditorDoc;
 use Modules\Media\Models\Media;
-use Modules\Media\Models\NullMedia;
 use Modules\Profile\Models\ContactElement;
 use Modules\Profile\Models\NullContactElement;
 use Modules\Profile\Models\Profile;
@@ -43,15 +42,15 @@ class Supplier
 
     public string $number = '';
 
-    private string $numberReverse = '';
+    public string $numberReverse = '';
 
-    private int $status = 0;
+    private int $status = SupplierStatus::ACTIVE;
 
     private int $type = 0;
 
     public string $info = '';
 
-    private \DateTimeImmutable $createdAt;
+    public \DateTimeImmutable $createdAt;
 
     public Profile $profile;
 
@@ -79,6 +78,8 @@ class Supplier
 
     public Address $mainAddress;
 
+    private array $partners = [];
+
     /**
      * Constructor.
      *
@@ -101,36 +102,6 @@ class Supplier
     public function getId() : int
     {
         return $this->id;
-    }
-
-    /**
-     * Get reverse number.
-     *
-     * @return string
-     *
-     * @since 1.0.0
-     */
-    public function getReverseNumber() : string
-    {
-        return $this->numberReverse;
-    }
-
-    /**
-     * Set revers number.
-     *
-     * @param string $numberReverse Reverse number
-     *
-     * @return void
-     *
-     * @since 1.0.0
-     */
-    public function setReverseNumber(string $numberReverse) : void
-    {
-        if (!\is_scalar($numberReverse)) {
-            throw new \Exception();
-        }
-
-        $this->numberReverse = $numberReverse;
     }
 
     /**
@@ -183,32 +154,6 @@ class Supplier
     public function setType(int $type) : void
     {
         $this->type = $type;
-    }
-
-    /**
-     * Get info.
-     *
-     * @return string
-     *
-     * @since 1.0.0
-     */
-    public function getInfo() : string
-    {
-        return $this->info;
-    }
-
-    /**
-     * Set info.
-     *
-     * @param string $info Info
-     *
-     * @return void
-     *
-     * @since 1.0.0
-     */
-    public function setInfo(string $info) : void
-    {
-        $this->info = $info;
     }
 
     /**
@@ -299,7 +244,7 @@ class Supplier
      */
     private function orderContactElements(ContactElement $a, ContactElement $b) : int
     {
-        return $a->getOrder() <=> $b->getOrder();
+        return $a->order <=> $b->order;
     }
 
     /**
@@ -339,35 +284,15 @@ class Supplier
     }
 
     /**
-     * Get media file by type
-     *
-     * @param string $type Media type
-     *
-     * @return Media
-     *
-     * @since 1.0.0
-     */
-    public function getFileByType(string $type) : Media
-    {
-        foreach ($this->files as $file) {
-            if ($file->type === $type) {
-                return $file;
-            }
-        }
-
-        return new NullMedia();
-    }
-
-    /**
      * Get all media files by type
      *
-     * @param string $type Media type
+     * @param null|int $type Media type
      *
      * @return Media[]
      *
      * @since 1.0.0
      */
-    public function getFilesByType(string $type) : array
+    public function getFilesByType(int $type = null) : array
     {
         $files = [];
         foreach ($this->files as $file) {
@@ -377,5 +302,28 @@ class Supplier
         }
 
         return $files;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toArray() : array
+    {
+        return [
+            'id'            => $this->id,
+            'number'        => $this->number,
+            'numberReverse' => $this->numberReverse,
+            'status'        => $this->status,
+            'type'          => $this->type,
+            'info'          => $this->info,
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function jsonSerialize()
+    {
+        return $this->toArray();
     }
 }

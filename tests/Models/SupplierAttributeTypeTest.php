@@ -1,0 +1,82 @@
+<?php
+/**
+ * Orange Management
+ *
+ * PHP Version 8.0
+ *
+ * @package   tests
+ * @copyright Dennis Eichhorn
+ * @license   OMS License 1.0
+ * @version   1.0.0
+ * @link      https://orange-management.org
+ */
+declare(strict_types=1);
+
+namespace Modules\SupplierManagement\tests\Models;
+
+use Modules\SupplierManagement\Models\SupplierAttributeType;
+use Modules\SupplierManagement\Models\SupplierAttributeTypeL11n;
+
+/**
+ * @internal
+ */
+final class SupplierAttributeTypeTest extends \PHPUnit\Framework\TestCase
+{
+    private SupplierAttributeType $type;
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function setUp() : void
+    {
+        $this->type = new SupplierAttributeType();
+    }
+
+    /**
+     * @covers Modules\SupplierManagement\Models\SupplierAttributeType
+     * @group module
+     */
+    public function testDefault() : void
+    {
+        self::assertEquals(0, $this->type->getId());
+        self::assertEquals('', $this->type->getL11n());
+    }
+
+    /**
+     * @covers Modules\SupplierManagement\Models\SupplierAttributeType
+     * @group module
+     */
+    public function testL11nInputOutput() : void
+    {
+        $this->type->setL11n('Test');
+        self::assertEquals('Test', $this->type->getL11n());
+
+        $this->type->setL11n(new SupplierAttributeTypeL11n(0, 'NewTest'));
+        self::assertEquals('NewTest', $this->type->getL11n());
+    }
+
+    /**
+     * @covers Modules\SupplierManagement\Models\SupplierAttributeType
+     * @group module
+     */
+    public function testSerialize() : void
+    {
+        $this->type->name                = 'Title';
+        $this->type->fields              = 2;
+        $this->type->custom              = true;
+        $this->type->validationPattern   = '\d*';
+        $this->type->isRequired          = true;
+
+        self::assertEquals(
+            [
+                'id'                => 0,
+                'name'              => 'Title',
+                'fields'            => 2,
+                'custom'            => true,
+                'validationPattern' => '\d*',
+                'isRequired'        => true,
+            ],
+            $this->type->jsonSerialize()
+        );
+    }
+}

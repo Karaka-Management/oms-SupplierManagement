@@ -100,7 +100,7 @@ echo $this->getData('nav')->render();
 
                     <section class="portlet highlight-4">
                         <div class="portlet-body">
-                            <textarea class="undecorated"><?= $this->printHtml($supplier->getInfo()); ?></textarea>
+                            <textarea class="undecorated"><?= $this->printHtml($supplier->info); ?></textarea>
                         </div>
                     </section>
 

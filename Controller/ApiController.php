@@ -32,6 +32,7 @@ use Modules\SupplierManagement\Models\SupplierAttributeTypeMapper;
 use Modules\SupplierManagement\Models\SupplierAttributeValue;
 use Modules\SupplierManagement\Models\SupplierAttributeValueMapper;
 use Modules\SupplierManagement\Models\SupplierMapper;
+use phpOMS\Localization\ISO639x1Enum;
 use phpOMS\Message\Http\RequestStatusCode;
 use phpOMS\Message\NotificationLevel;
 use phpOMS\Message\RequestAbstract;
@@ -269,8 +270,8 @@ final class ApiController extends Controller
      */
     private function createSupplierAttributeTypeL11nFromRequest(RequestAbstract $request) : SupplierAttributeTypeL11n
     {
-        $attrL11n = new SupplierAttributeTypeL11n();
-        $attrL11n->setType((int) ($request->getData('type') ?? 0));
+        $attrL11n       = new SupplierAttributeTypeL11n();
+        $attrL11n->type = (int) ($request->getData('type') ?? 0);
         $attrL11n->setLanguage((string) (
             $request->getData('language') ?? $request->getLanguage()
         ));
@@ -323,7 +324,6 @@ final class ApiController extends Controller
         }
 
         $attrType = $this->createSupplierAttributeTypeFromRequest($request);
-        $attrType->setL11n($request->getData('title'), $request->getData('language'));
         $this->createModel($request->header->account, $attrType, SupplierAttributeTypeMapper::class, 'attr_type', $request->getOrigin());
 
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Attribute type', 'Attribute type successfully created', $attrType);
@@ -341,9 +341,9 @@ final class ApiController extends Controller
     private function createSupplierAttributeTypeFromRequest(RequestAbstract $request) : SupplierAttributeType
     {
         $attrType = new SupplierAttributeType();
-        $attrType->setL11n((string) ($request->getData('name') ?? ''));
-        $attrType->setFields((int) ($request->getData('fields') ?? 0));
-        $attrType->setCustom((bool) ($request->getData('custom') ?? false));
+        $attrType->setL11n((string) ($request->getData('title') ?? ''), $request->getData('language') ?? ISO639x1Enum::_EN);
+        $attrType->fields = (int) ($request->getData('fields') ?? 0);
+        $attrType->custom = (bool) ($request->getData('custom') ?? false);
 
         return $attrType;
     }
@@ -360,8 +360,7 @@ final class ApiController extends Controller
     private function validateSupplierAttributeTypeCreate(RequestAbstract $request) : array
     {
         $val = [];
-        if (($val['name'] = empty($request->getData('name')))
-            || ($val['title'] = empty($request->getData('title')))
+        if (($val['title'] = empty($request->getData('title')))
         ) {
             return $val;
         }
@@ -490,7 +489,8 @@ final class ApiController extends Controller
         }
 
         $uploaded = $this->app->moduleManager->get('Media')->uploadFiles(
-            [$request->getData('name') ?? ''],
+            $request->getDataList('names') ?? [],
+            $request->getDataList('filenames') ?? [],
             $uploadedFiles,
             $request->header->account,
             __DIR__ . '/../../../Modules/Media/Files/Modules/SupplierManagement/' . ($request->getData('supplier') ?? '0'),
