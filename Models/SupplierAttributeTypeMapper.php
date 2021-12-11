@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Modules\SupplierManagement\Models;
 
-use phpOMS\DataStorage\Database\DataMapperAbstract;
+use phpOMS\DataStorage\Database\Mapper\DataMapperFactory;
 
 /**
  * Supplier mapper class.
@@ -24,7 +24,7 @@ use phpOMS\DataStorage\Database\DataMapperAbstract;
  * @link    https://orange-management.org
  * @since   1.0.0
  */
-final class SupplierAttributeTypeMapper extends DataMapperAbstract
+final class SupplierAttributeTypeMapper extends DataMapperFactory
 {
     /**
      * Columns.
@@ -32,7 +32,7 @@ final class SupplierAttributeTypeMapper extends DataMapperAbstract
      * @var array<string, array{name:string, type:string, internal:string, autocomplete?:bool, readonly?:bool, writeonly?:bool, annotations?:array}>
      * @since 1.0.0
      */
-    protected static array $columns = [
+    public const COLUMNS = [
         'suppliermgmt_attr_type_id'       => ['name' => 'suppliermgmt_attr_type_id',     'type' => 'int',    'internal' => 'id'],
         'suppliermgmt_attr_type_name'     => ['name' => 'suppliermgmt_attr_type_name',   'type' => 'string', 'internal' => 'name', 'autocomplete' => true],
         'suppliermgmt_attr_type_fields'   => ['name' => 'suppliermgmt_attr_type_fields', 'type' => 'int',    'internal' => 'fields'],
@@ -47,21 +47,19 @@ final class SupplierAttributeTypeMapper extends DataMapperAbstract
      * @var array<string, array{mapper:string, table:string, self?:?string, external?:?string, column?:string}>
      * @since 1.0.0
      */
-    protected static array $hasMany = [
+    public const HAS_MANY = [
         'l11n' => [
             'mapper'            => SupplierAttributeTypeL11nMapper::class,
             'table'             => 'suppliermgmt_attr_type_l11n',
             'self'              => 'suppliermgmt_attr_type_l11n_type',
             'column'            => 'title',
-            'conditional'       => true,
             'external'          => null,
         ],
         'defaults' => [
             'mapper'            => SupplierAttributeValueMapper::class,
             'table'             => 'suppliermgmt_supplier_attr_default',
             'self'              => 'suppliermgmt_supplier_attr_default_type',
-            'external'          => 'suppliermgmt_supplier_attr_default_value',
-            'conditional'       => false,
+            'external'          => 'suppliermgmt_supplier_attr_default_value'
         ],
     ];
 
@@ -71,7 +69,7 @@ final class SupplierAttributeTypeMapper extends DataMapperAbstract
      * @var string
      * @since 1.0.0
      */
-    protected static string $table = 'suppliermgmt_attr_type';
+    public const TABLE = 'suppliermgmt_attr_type';
 
     /**
      * Primary field name.
@@ -79,5 +77,5 @@ final class SupplierAttributeTypeMapper extends DataMapperAbstract
      * @var string
      * @since 1.0.0
      */
-    protected static string $primaryField = 'suppliermgmt_attr_type_id';
+    public const PRIMARYFIELD ='suppliermgmt_attr_type_id';
 }

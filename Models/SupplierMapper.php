@@ -19,7 +19,7 @@ use Modules\Editor\Models\EditorDocMapper;
 use Modules\Media\Models\MediaMapper;
 use Modules\Profile\Models\ContactElementMapper;
 use Modules\Profile\Models\ProfileMapper;
-use phpOMS\DataStorage\Database\DataMapperAbstract;
+use phpOMS\DataStorage\Database\Mapper\DataMapperFactory;
 
 /**
  * Supplier mapper class.
@@ -29,7 +29,7 @@ use phpOMS\DataStorage\Database\DataMapperAbstract;
  * @link    https://orange-management.org
  * @since   1.0.0
  */
-final class SupplierMapper extends DataMapperAbstract
+final class SupplierMapper extends DataMapperFactory
 {
     /**
      * Columns.
@@ -37,7 +37,7 @@ final class SupplierMapper extends DataMapperAbstract
      * @var array<string, array{name:string, type:string, internal:string, autocomplete?:bool, readonly?:bool, writeonly?:bool, annotations?:array}>
      * @since 1.0.0
      */
-    protected static array $columns = [
+    public const COLUMNS = [
         'suppliermgmt_supplier_id'         => ['name' => 'suppliermgmt_supplier_id',         'type' => 'int',      'internal' => 'id'],
         'suppliermgmt_supplier_no'         => ['name' => 'suppliermgmt_supplier_no',         'type' => 'string',   'internal' => 'number'],
         'suppliermgmt_supplier_no_reverse' => ['name' => 'suppliermgmt_supplier_no_reverse', 'type' => 'string',   'internal' => 'numberReverse'],
@@ -55,7 +55,7 @@ final class SupplierMapper extends DataMapperAbstract
      * @var string
      * @since 1.0.0
      */
-    protected static string $table = 'suppliermgmt_supplier';
+    public const TABLE = 'suppliermgmt_supplier';
 
     /**
      * Primary field name.
@@ -63,7 +63,7 @@ final class SupplierMapper extends DataMapperAbstract
      * @var string
      * @since 1.0.0
      */
-    protected static string $primaryField = 'suppliermgmt_supplier_id';
+    public const PRIMARYFIELD ='suppliermgmt_supplier_id';
 
     /**
      * Created at column
@@ -71,7 +71,7 @@ final class SupplierMapper extends DataMapperAbstract
      * @var string
      * @since 1.0.0
      */
-    protected static string $createdAt = 'suppliermgmt_supplier_created_at';
+    public const CREATED_AT = 'suppliermgmt_supplier_created_at';
 
     /**
      * Has one relation.
@@ -79,7 +79,7 @@ final class SupplierMapper extends DataMapperAbstract
      * @var array<string, array{mapper:string, external:string, by?:string, column?:string, conditional?:bool}>
      * @since 1.0.0
      */
-    protected static array $ownsOne = [
+    public const OWNS_ONE = [
         'profile' => [
             'mapper'     => ProfileMapper::class,
             'external'   => 'suppliermgmt_supplier_profile',
@@ -96,7 +96,7 @@ final class SupplierMapper extends DataMapperAbstract
      * @var array<string, array{mapper:string, table:string, self?:?string, external?:?string, column?:string}>
      * @since 1.0.0
      */
-    protected static array $hasMany = [
+    public const HAS_MANY = [
         'files'           => [
             'mapper'   => MediaMapper::class, /* mapper of the related object */
             'table'    => 'suppliermgmt_supplier_media', /* table of the related object, null if no relation table is used (many->1) */

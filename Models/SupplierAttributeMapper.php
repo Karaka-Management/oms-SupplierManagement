@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Modules\SupplierManagement\Models;
 
-use phpOMS\DataStorage\Database\DataMapperAbstract;
+use phpOMS\DataStorage\Database\Mapper\DataMapperFactory;
 
 /**
  * Supplier mapper class.
@@ -24,7 +24,7 @@ use phpOMS\DataStorage\Database\DataMapperAbstract;
  * @link    https://orange-management.org
  * @since   1.0.0
  */
-final class SupplierAttributeMapper extends DataMapperAbstract
+final class SupplierAttributeMapper extends DataMapperFactory
 {
     /**
      * Columns.
@@ -32,7 +32,7 @@ final class SupplierAttributeMapper extends DataMapperAbstract
      * @var array<string, array{name:string, type:string, internal:string, autocomplete?:bool, readonly?:bool, writeonly?:bool, annotations?:array}>
      * @since 1.0.0
      */
-    protected static array $columns = [
+    public const COLUMNS = [
         'suppliermgmt_supplier_attr_id'        => ['name' => 'suppliermgmt_supplier_attr_id',    'type' => 'int', 'internal' => 'id'],
         'suppliermgmt_supplier_attr_supplier'  => ['name' => 'suppliermgmt_supplier_attr_supplier',  'type' => 'int', 'internal' => 'supplier'],
         'suppliermgmt_supplier_attr_type'      => ['name' => 'suppliermgmt_supplier_attr_type',  'type' => 'int', 'internal' => 'type'],
@@ -45,7 +45,7 @@ final class SupplierAttributeMapper extends DataMapperAbstract
      * @var array<string, array{mapper:string, external:string, by?:string, column?:string, conditional?:bool}>
      * @since 1.0.0
      */
-    protected static array $ownsOne = [
+    public const OWNS_ONE = [
         'type' => [
             'mapper'            => SupplierAttributeTypeMapper::class,
             'external'          => 'suppliermgmt_supplier_attr_type',
@@ -62,7 +62,7 @@ final class SupplierAttributeMapper extends DataMapperAbstract
      * @var string
      * @since 1.0.0
      */
-    protected static string $table = 'suppliermgmt_supplier_attr';
+    public const TABLE = 'suppliermgmt_supplier_attr';
 
     /**
      * Primary field name.
@@ -70,5 +70,5 @@ final class SupplierAttributeMapper extends DataMapperAbstract
      * @var string
      * @since 1.0.0
      */
-    protected static string $primaryField = 'suppliermgmt_supplier_attr_id';
+    public const PRIMARYFIELD ='suppliermgmt_supplier_attr_id';
 }
