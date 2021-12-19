@@ -104,7 +104,7 @@ echo $this->getData('nav')->render(); ?>
                 <tbody>
                 <?php $count = 0; foreach ($suppliers as $key => $value) : ++$count;
                  $url        = UriFactory::build('{/prefix}purchase/supplier/profile?{?}&id=' . $value->getId());
-                 $image      = $value->getFileByType('backend_image'); ?>
+                 $image      = $value->getFileByType(0); ?>
                 <tr data-href="<?= $url; ?>">
                     <td><a href="<?= $url; ?>"><img width="30" loading="lazy" class="item-image"
                             src="<?= $image instanceof NullMedia ?

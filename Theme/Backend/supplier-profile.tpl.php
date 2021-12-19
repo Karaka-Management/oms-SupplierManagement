@@ -12,6 +12,7 @@
  */
 declare(strict_types=1);
 
+use Modules\Profile\Models\ContactType;
 use phpOMS\Uri\UriFactory;
 
 $countryCodes = \phpOMS\Localization\ISO3166TwoEnum::getConstants();
@@ -61,7 +62,7 @@ echo $this->getData('nav')->render();
         <div class="tab">
             <div class="row">
                 <div class="col-xs-12 col-lg-3 last-lg">
-                    <section class="portlet">
+                <section class="portlet">
                         <form>
                             <div class="portlet-body">
                                 <table class="layout wf-100">
@@ -73,29 +74,79 @@ echo $this->getData('nav')->render();
                                     <tr><td><input type="text" id="iName2" name="name2" value="<?= $this->printHtml($supplier->profile->account->name2); ?>">
                                     <tr><td><label for="iName3"><?= $this->getHtml('Name3'); ?></label>
                                     <tr><td><input type="text" id="iName3" name="name3" value="<?= $this->printHtml($supplier->profile->account->name3); ?>">
-                                    <tr><td><h3><?= $this->getHtml('Address'); ?></h3>
-                                    <?php if (!empty($supplier->mainAddress->addition)) : ?>
-                                        <tr><td><label for="iName1"><?= $this->getHtml('Addition'); ?></label>
-                                    <tr><td><input type="text" id="iName1" name="name1" value="<?= $this->printHtml($supplier->mainAddress->addition); ?>">
-                                    <?php endif; ?>
-                                    <tr><td><label for="iName1"><?= $this->getHtml('Address'); ?></label>
-                                    <tr><td><input type="text" id="iName1" name="name1" value="<?= $this->printHtml($supplier->mainAddress->address); ?>" required>
-                                    <tr><td><label for="iName1"><?= $this->getHtml('Postal'); ?></label>
-                                    <tr><td><input type="text" id="iName1" name="name1" value="<?= $this->printHtml($supplier->mainAddress->postal); ?>" required>
-                                    <tr><td><label for="iName1"><?= $this->getHtml('City'); ?></label>
-                                    <tr><td><input type="text" id="iName1" name="name1" value="<?= $this->printHtml($supplier->mainAddress->city); ?>" required>
-                                    <tr><td><label for="iName1"><?= $this->getHtml('Country'); ?></label>
-                                    <tr><td><select>
-                                        <?php foreach ($countryCodes as $code3 => $code2) : ?>
-                                            <option value="<?= $this->printHtml($code2); ?>"<?= $this->printHtml($code2 === $supplier->mainAddress->getCountry() ? ' selected' : ''); ?>><?= $this->printHtml($countries[$code3]); ?>
-                                        <?php endforeach; ?>
-                                    </select>
                                 </table>
                             </div>
                             <div class="portlet-foot">
                                 <input type="submit" value="<?= $this->getHtml('Save', '0', '0'); ?>"> <input type="submit" value="<?= $this->getHtml('Delete', '0', '0'); ?>">
                             </div>
                         </form>
+                    </section>
+
+                    <section class="portlet">
+                        <div class="portlet-head">
+                            <?= $this->getHtml('Contact'); ?>
+                            <a class="floatRight" href=""><i class="fa fa-envelope-o btn"></i></a>
+                        </div>
+                        <div class="portlet-body">
+                            <table class="layout wf-100">
+                                <tr><td><label for="iName1"><?= $this->getHtml('Phone'); ?></label>
+                                <tr><td><input type="text" id="iName1" name="name1" value="<?= $this->printHtml($supplier->getMainContactElement(ContactType::PHONE)->content); ?>">
+                                <tr><td><label for="iName1"><?= $this->getHtml('Email'); ?></label>
+                                <tr><td><input type="text" id="iName1" name="name1" value="<?= $this->printHtml($supplier->getMainContactElement(ContactType::EMAIL)->content); ?>">
+                                <tr><td><label for="iName1"><?= $this->getHtml('Website'); ?></label>
+                                <tr><td><input type="text" id="iName1" name="name1" value="<?= $this->printHtml($supplier->getMainContactElement(ContactType::WEBSITE)->content); ?>">
+                            </table>
+                        </div>
+                    </section>
+
+                    <section class="portlet">
+                        <div class="portlet-head">
+                            <?= $this->getHtml('Address'); ?>
+                            <span class="clickPopup floatRight">
+                                <label for="addressDropdown"><i class="fa fa-print btn"></i></label>
+                                <input id="addressDropdown" name="addressDropdown" type="checkbox">
+                                <div class="popup">
+                                    <ul>
+                                        <li>
+                                            <input id="id1" type="checkbox">
+                                            <ul>
+                                                <li>
+                                                    <label for="id1">
+                                                        <a href="" class="button">Word</a>
+                                                        <span></span>
+                                                        <i class="fa fa-chevron-right expand"></i>
+                                                    </label>
+                                                <li>Letter
+                                            </ul>
+                                        <li><label class="button cancel" for="addressDropdown">Cancel</label>
+                                    </ul>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="portlet-body">
+                            <table class="layout wf-100">
+                                <?php if (!empty($supplier->mainAddress->addition)) : ?>
+                                    <tr><td><label for="iName1"><?= $this->getHtml('Addition'); ?></label>
+                                <tr><td><input type="text" id="iName1" name="name1" value="<?= $this->printHtml($supplier->mainAddress->addition); ?>">
+                                <?php endif; ?>
+                                <tr><td><label for="iName1"><?= $this->getHtml('Address'); ?></label>
+                                <tr><td><input type="text" id="iName1" name="name1" value="<?= $this->printHtml($supplier->mainAddress->address); ?>" required>
+                                <tr><td><label for="iName1"><?= $this->getHtml('Postal'); ?></label>
+                                <tr><td><input type="text" id="iName1" name="name1" value="<?= $this->printHtml($supplier->mainAddress->postal); ?>" required>
+                                <tr><td><label for="iName1"><?= $this->getHtml('City'); ?></label>
+                                <tr><td><input type="text" id="iName1" name="name1" value="<?= $this->printHtml($supplier->mainAddress->city); ?>" required>
+                                <tr><td><label for="iName1"><?= $this->getHtml('Country'); ?></label>
+                                <tr><td><select>
+                                    <?php foreach ($countryCodes as $code3 => $code2) : ?>
+                                        <option value="<?= $this->printHtml($code2); ?>"<?= $this->printHtml($code2 === $supplier->mainAddress->getCountry() ? ' selected' : ''); ?>><?= $this->printHtml($countries[$code3]); ?>
+                                    <?php endforeach; ?>
+                                </select>
+                                <tr><td>
+                                    <?php if (\is_file(__DIR__ . '/../../../../phpOMS/Localization/Maps/svg/' . \strtolower($supplier->mainAddress->getCountry()) . '.svg')) : ?>
+                                    <img id="iMap" style="width: 100%;" src="<?= UriFactory::build('phpOMS/Localization/Maps/svg/' . \strtolower($supplier->mainAddress->getCountry()) . '.svg'); ?>">
+                                    <?php endif; ?>
+                            </table>
+                        </div>
                     </section>
 
                     <section class="portlet highlight-4">
@@ -233,14 +284,16 @@ echo $this->getData('nav')->render();
                                         <td><?= $this->getHtml('Net'); ?>
                                         <td><?= $this->getHtml('Date'); ?>
                                     <tbody>
-                                    <?php foreach ($newestInvoices as $invoice) :
+                                    <?php
+                                        /** @var \Modules\Billing\Models\Bill $invoice */
+                                    foreach ($newestInvoices as $invoice) :
                                         $url = UriFactory::build('{/prefix}purchase/bill?{?}&id=' . $invoice->getId());
                                         ?>
                                     <tr data-href="<?= $url; ?>">
                                         <td><a href="<?= $url; ?>"><?= $invoice->getNumber(); ?></a>
                                         <td><a href="<?= $url; ?>"><?= $invoice->type->getL11n(); ?></a>
                                         <td><a href="<?= $url; ?>"><?= $invoice->billTo; ?></a>
-                                        <td><a href="<?= $url; ?>"><?= $invoice->net->getCurrency(); ?></a>
+                                        <td><a href="<?= $url; ?>"><?= $invoice->netSales->getCurrency(); ?></a>
                                         <td><a href="<?= $url; ?>"><?= $invoice->createdAt->format('Y-m-d'); ?></a>
                                     <?php endforeach; ?>
                                 </table>

@@ -8,7 +8,7 @@
  * @copyright Dennis Eichhorn
  * @license   OMS License 1.0
  * @version   1.0.0
- * @link      https:   //orange-management.org
+ * @link      https://orange-management.org
  */
 declare(strict_types=1);
 
@@ -21,7 +21,7 @@ use phpOMS\DataStorage\Database\Mapper\DataMapperFactory;
  *
  * @package Modules\SupplierManagement\Models
  * @license OMS License 1.0
- * @link    https:   //orange-management.org
+ * @link    https://orange-management.org
  * @since   1.0.0
  */
 final class SupplierAttributeValueMapper extends DataMapperFactory
@@ -33,15 +33,15 @@ final class SupplierAttributeValueMapper extends DataMapperFactory
      * @since 1.0.0
      */
     public const COLUMNS = [
-        'suppliermgmt_attr_value_id'       => ['name' => 'suppliermgmt_attr_value_id',       'type' => 'int',    'internal' => 'id'],
-        'suppliermgmt_attr_value_default'  => ['name' => 'suppliermgmt_attr_value_default',  'type' => 'bool', 'internal' => 'isDefault'],
-        'suppliermgmt_attr_value_type'     => ['name' => 'suppliermgmt_attr_value_type',     'type' => 'int',    'internal' => 'type'],
-        'suppliermgmt_attr_value_valueStr' => ['name' => 'suppliermgmt_attr_value_valueStr', 'type' => 'string', 'internal' => 'valueStr'],
-        'suppliermgmt_attr_value_valueInt' => ['name' => 'suppliermgmt_attr_value_valueInt', 'type' => 'int', 'internal' => 'valueInt'],
-        'suppliermgmt_attr_value_valueDec' => ['name' => 'suppliermgmt_attr_value_valueDec', 'type' => 'float', 'internal' => 'valueDec'],
+        'suppliermgmt_attr_value_id'       => ['name' => 'suppliermgmt_attr_value_id',       'type' => 'int',      'internal' => 'id'],
+        'suppliermgmt_attr_value_default'  => ['name' => 'suppliermgmt_attr_value_default',  'type' => 'bool',     'internal' => 'isDefault'],
+        'suppliermgmt_attr_value_type'     => ['name' => 'suppliermgmt_attr_value_type',     'type' => 'int',      'internal' => 'type'],
+        'suppliermgmt_attr_value_valueStr' => ['name' => 'suppliermgmt_attr_value_valueStr', 'type' => 'string',   'internal' => 'valueStr'],
+        'suppliermgmt_attr_value_valueInt' => ['name' => 'suppliermgmt_attr_value_valueInt', 'type' => 'int',      'internal' => 'valueInt'],
+        'suppliermgmt_attr_value_valueDec' => ['name' => 'suppliermgmt_attr_value_valueDec', 'type' => 'float',    'internal' => 'valueDec'],
         'suppliermgmt_attr_value_valueDat' => ['name' => 'suppliermgmt_attr_value_valueDat', 'type' => 'DateTime', 'internal' => 'valueDat'],
-        'suppliermgmt_attr_value_lang'     => ['name' => 'suppliermgmt_attr_value_lang',     'type' => 'string', 'internal' => 'language'],
-        'suppliermgmt_attr_value_country'  => ['name' => 'suppliermgmt_attr_value_country',  'type' => 'string', 'internal' => 'country'],
+        'suppliermgmt_attr_value_lang'     => ['name' => 'suppliermgmt_attr_value_lang',     'type' => 'string',   'internal' => 'language'],
+        'suppliermgmt_attr_value_country'  => ['name' => 'suppliermgmt_attr_value_country',  'type' => 'string',   'internal' => 'country'],
     ];
 
     /**

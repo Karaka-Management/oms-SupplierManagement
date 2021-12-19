@@ -144,6 +144,7 @@ final class ApiController extends Controller
      */
     public function apiContactElementCreate(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
     {
+        /** @var \Modules\Profile\Controller\ApiController $profileModule */
         $profileModule = $this->app->moduleManager->get('Profile');
 
         if (!empty($val = $profileModule->validateContactElementCreate($request))) {

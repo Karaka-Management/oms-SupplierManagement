@@ -14,11 +14,11 @@ declare(strict_types=1);
 
 namespace Modules\SupplierManagement\Controller;
 
-use Modules\Billing\Models\BillTypeL11n;
 use Modules\Billing\Models\PurchaseBillMapper;
 use Modules\SupplierManagement\Models\SupplierMapper;
 use phpOMS\Asset\AssetType;
 use phpOMS\Contract\RenderableInterface;
+use phpOMS\DataStorage\Database\Query\OrderType;
 use phpOMS\Localization\Money;
 use phpOMS\Message\RequestAbstract;
 use phpOMS\Message\ResponseAbstract;
@@ -54,10 +54,13 @@ final class BackendController extends Controller
         $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/supplier-list');
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1003202001, $request, $response));
 
-        $supplier = SupplierMapper::with('notes', models: null)
-            ::with('contactElements', models: null)
-            //::with('type', 'backend_image', models: [Media::class]) // @todo: it would be nicer if I coult say files:type or files/type and remove the models parameter?
-            ::getAfterPivot(0, null, 25);
+        $supplier = SupplierMapper::getAll()
+            ->with('profile')
+            ->with('profile/account')
+            ->with('profile/image')
+            ->with('mainAddress')
+            ->limit(25)
+            ->execute();
 
         $view->addData('supplier', $supplier);
 
@@ -108,10 +111,15 @@ final class BackendController extends Controller
         $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/supplier-profile');
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1003202001, $request, $response));
 
-        $supplier = SupplierMapper
-            ::with('files', limit: 5)::orderBy('createdAt', 'ASC')
-            ::with('notes', limit: 5)::orderBy('id', 'ASC')
-            ::get((int) $request->getData('id'));
+        $supplier = SupplierMapper::get()
+            ->with('profile')
+            ->with('profile/account')
+            ->with('contactElements')
+            ->with('mainAddress')
+            ->with('files')->limit(5, 'files')->sort('files/id', OrderType::DESC)
+            ->with('notes')->limit(5, 'files')->sort('notes/id', OrderType::DESC)
+            ->where('id', (int) $request->getData('id'))
+            ->execute();
 
         $view->setData('supplier', $supplier);
 
@@ -120,7 +128,7 @@ final class BackendController extends Controller
             $ytd                  = PurchaseBillMapper::getPurchaseBySupplierId($supplier->getId(), new SmartDateTime('Y-01-01'), new SmartDateTime('now'));
             $mtd                  = PurchaseBillMapper::getPurchaseBySupplierId($supplier->getId(), new SmartDateTime('Y-m-01'), new SmartDateTime('now'));
             $lastOrder            = PurchaseBillMapper::getLastOrderDateBySupplierId($supplier->getId());
-            $newestInvoices       = PurchaseBillMapper::with('language', $response->getLanguage(), [BillTypeL11n::class])::getNewestSupplierInvoices($supplier->getId(), 5);
+            $newestInvoices       = PurchaseBillMapper::getAll()->with('supplier')->where('supplier', $supplier->getId())->sort('id', OrderType::DESC)->limit(5)->execute();
             $monthlyPurchaseCosts = PurchaseBillMapper::getSupplierMonthlyPurchaseCosts($supplier->getId(), (new SmartDateTime('now'))->createModify(-1), new SmartDateTime('now'));
         } else {
             $ytd                  = new Money();
