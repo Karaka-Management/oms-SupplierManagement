@@ -96,6 +96,7 @@ return ['SupplierManagement' => [
     'Tags'           => 'Tags',
     'Title'          => '',
     'Type'           => 'Type',
+    'Website'        => '',
     'Wire'           => 'Wire',
     'YTDSales'       => 'YTD Sales',
     'Zip'            => 'Zip',

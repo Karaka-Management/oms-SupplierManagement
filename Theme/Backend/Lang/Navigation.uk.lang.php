@@ -13,7 +13,7 @@
 declare(strict_types=1);
 
 return ['Navigation' => [
-    'Create'    => 'Erstellen',
-    'List'      => 'Aufführen',
-    'Suppliers' => 'Lieferanten',
+    'Create'    => 'Створювати',
+    'List'      => 'Список',
+    'Suppliers' => 'Постачальники',
 ]];
