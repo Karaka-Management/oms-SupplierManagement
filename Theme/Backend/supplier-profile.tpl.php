@@ -333,7 +333,7 @@ echo $this->getData('nav')->render();
                                                             <?php
                                                                 $temp = [];
                                                                 foreach ($monthlyPurchaseCosts as $monthly) {
-                                                                    $temp[] = \round(((((int) $monthly['net_purchase']) - ((int) $monthly['net_costs'])) / ((int) $monthly['net_purchase'])) * 100, 2);
+                                                                    $temp[] = \round(((((int) $monthly['net_purchase']) - ((int) ($monthly['net_costs'] ?? 0))) / (((int) $monthly['net_purchase']) + 0.0001)) * 100, 2);
                                                                 }
                                                             ?>
                                                             <?= \implode(',', $temp); ?>
