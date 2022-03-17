@@ -13,7 +13,7 @@
 declare(strict_types=1);
 
 use Modules\SupplierManagement\Controller\BackendController;
-use Modules\SupplierManagement\Models\PermissionState;
+use Modules\SupplierManagement\Models\PermissionCategory;
 use phpOMS\Account\PermissionType;
 use phpOMS\Router\RouteVerb;
 
@@ -25,7 +25,7 @@ return [
             'permission' => [
                 'module' => BackendController::NAME,
                 'type'   => PermissionType::READ,
-                'state'  => PermissionState::SUPPLIER,
+                'state'  => PermissionCategory::SUPPLIER,
             ],
         ],
     ],
@@ -36,7 +36,7 @@ return [
             'permission' => [
                 'module' => BackendController::NAME,
                 'type'   => PermissionType::CREATE,
-                'state'  => PermissionState::SUPPLIER,
+                'state'  => PermissionCategory::SUPPLIER,
             ],
         ],
     ],
@@ -47,7 +47,7 @@ return [
             'permission' => [
                 'module' => BackendController::NAME,
                 'type'   => PermissionType::READ,
-                'state'  => PermissionState::SUPPLIER,
+                'state'  => PermissionCategory::SUPPLIER,
             ],
         ],
     ],
@@ -58,7 +58,7 @@ return [
             'permission' => [
                 'module' => BackendController::NAME,
                 'type'   => PermissionType::READ,
-                'state'  => PermissionState::ANALYSIS,
+                'state'  => PermissionCategory::ANALYSIS,
             ],
         ],
     ],
