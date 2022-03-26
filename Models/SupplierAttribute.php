@@ -14,7 +14,6 @@ declare(strict_types=1);
 
 namespace Modules\SupplierManagement\Models;
 
-use phpOMS\Contract\ArrayableInterface;
 
 /**
  * Supplier class.
@@ -24,7 +23,7 @@ use phpOMS\Contract\ArrayableInterface;
  * @link    https://karaka.app
  * @since   1.0.0
  */
-class SupplierAttribute implements \JsonSerializable, ArrayableInterface
+class SupplierAttribute implements \JsonSerializable
 {
     /**
      * Id.
