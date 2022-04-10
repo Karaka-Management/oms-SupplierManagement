@@ -290,7 +290,7 @@ echo $this->getData('nav')->render();
                                         <td><?= $this->getHtml('Date'); ?>
                                     <tbody>
                                     <?php
-                                        /** @var \Modules\Billing\Models\Bill $invoice */
+                                    /** @var \Modules\Billing\Models\Bill $invoice */
                                     foreach ($newestInvoices as $invoice) :
                                         $url = UriFactory::build('{/prefix}purchase/bill?{?}&id=' . $invoice->getId());
                                         ?>

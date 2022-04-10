@@ -59,7 +59,7 @@ final class SupplierAttributeTypeMapper extends DataMapperFactory
             'mapper'   => SupplierAttributeValueMapper::class,
             'table'    => 'suppliermgmt_supplier_attr_default',
             'self'     => 'suppliermgmt_supplier_attr_default_type',
-            'external' => 'suppliermgmt_supplier_attr_default_value'
+            'external' => 'suppliermgmt_supplier_attr_default_value',
         ],
     ];
 
