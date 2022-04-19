@@ -2,7 +2,7 @@
 /**
  * Karaka
  *
- * PHP Version 8.0
+ * PHP Version 8.1
  *
  * @package   Modules\SupplierManagement
  * @copyright Dennis Eichhorn
@@ -102,6 +102,7 @@ final class BackendController extends Controller
      */
     public function viewSupplierManagementSupplierProfile(RequestAbstract $request, ResponseAbstract $response, $data = null) : RenderableInterface
     {
+        /** @var \phpOMS\Model\Html\Head $head */
         $head = $response->get('Content')->getData('head');
         $head->addAsset(AssetType::CSS, 'Resources/chartjs/Chartjs/chart.css');
         $head->addAsset(AssetType::JSLATE, 'Resources/chartjs/Chartjs/chart.js');
@@ -111,6 +112,7 @@ final class BackendController extends Controller
         $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/supplier-profile');
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1003202001, $request, $response));
 
+        /** @var Supplier $supplier */
         $supplier = SupplierMapper::get()
             ->with('profile')
             ->with('profile/account')
