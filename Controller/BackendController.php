@@ -48,7 +48,7 @@ final class BackendController extends Controller
      * @since 1.0.0
      * @codeCoverageIgnore
      */
-    public function viewSupplierManagementSupplierList(RequestAbstract $request, ResponseAbstract $response, $data = null) : RenderableInterface
+    public function viewSupplierManagementSupplierList(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : RenderableInterface
     {
         $view = new View($this->app->l11nManager, $request, $response);
         $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/supplier-list');
@@ -79,7 +79,7 @@ final class BackendController extends Controller
      * @since 1.0.0
      * @codeCoverageIgnore
      */
-    public function viewSupplierManagementSupplierCreate(RequestAbstract $request, ResponseAbstract $response, $data = null) : RenderableInterface
+    public function viewSupplierManagementSupplierCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : RenderableInterface
     {
         $view = new View($this->app->l11nManager, $request, $response);
         $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/supplier-create');
@@ -100,7 +100,7 @@ final class BackendController extends Controller
      * @since 1.0.0
      * @codeCoverageIgnore
      */
-    public function viewSupplierManagementSupplierProfile(RequestAbstract $request, ResponseAbstract $response, $data = null) : RenderableInterface
+    public function viewSupplierManagementSupplierProfile(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : RenderableInterface
     {
         /** @var \phpOMS\Model\Html\Head $head */
         $head = $response->get('Content')->getData('head');
@@ -112,7 +112,7 @@ final class BackendController extends Controller
         $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/supplier-profile');
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1003202001, $request, $response));
 
-        /** @var Supplier $supplier */
+        /** @var \Modules\SupplierManagement\Models\Supplier $supplier */
         $supplier = SupplierMapper::get()
             ->with('profile')
             ->with('profile/account')
@@ -161,7 +161,7 @@ final class BackendController extends Controller
      * @since 1.0.0
      * @codeCoverageIgnore
      */
-    public function viewSupplierManagementSupplierAnalysis(RequestAbstract $request, ResponseAbstract $response, $data = null) : RenderableInterface
+    public function viewSupplierManagementSupplierAnalysis(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : RenderableInterface
     {
         $view = new View($this->app->l11nManager, $request, $response);
 

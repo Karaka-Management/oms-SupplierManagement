@@ -62,7 +62,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiSupplierCreate(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
+    public function apiSupplierCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateSupplierCreate($request))) {
             $response->set('supplier_create', new FormValidation($val));
@@ -142,7 +142,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiContactElementCreate(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
+    public function apiContactElementCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         /** @var \Modules\Profile\Controller\ApiController $profileModule */
         $profileModule = $this->app->moduleManager->get('Profile');
@@ -178,7 +178,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiSupplierAttributeCreate(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
+    public function apiSupplierAttributeCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateSupplierAttributeCreate($request))) {
             $response->set('attribute_create', new FormValidation($val));
@@ -246,7 +246,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiSupplierAttributeTypeL11nCreate(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
+    public function apiSupplierAttributeTypeL11nCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateSupplierAttributeTypeL11nCreate($request))) {
             $response->set('attr_type_l11n_create', new FormValidation($val));
@@ -315,7 +315,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiSupplierAttributeTypeCreate(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
+    public function apiSupplierAttributeTypeCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateSupplierAttributeTypeCreate($request))) {
             $response->set('attr_type_create', new FormValidation($val));
@@ -382,7 +382,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiSupplierAttributeValueCreate(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
+    public function apiSupplierAttributeValueCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateSupplierAttributeValueCreate($request))) {
             $response->set('attr_value_create', new FormValidation($val));
@@ -478,7 +478,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiFileCreate(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
+    public function apiFileCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         $uploadedFiles = $request->getFiles();
 
@@ -523,7 +523,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiNoteCreate(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
+    public function apiNoteCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         $request->setData('virtualpath', '/Modules/SupplierManagement/' . $request->getData('id'), true);
         $this->app->moduleManager->get('Editor')->apiEditorCreate($request, $response, $data);
