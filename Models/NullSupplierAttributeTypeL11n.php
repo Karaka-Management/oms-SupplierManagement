@@ -35,4 +35,12 @@ final class NullSupplierAttributeTypeL11n extends SupplierAttributeTypeL11n
     {
         $this->id = $id;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function jsonSerialize() : mixed
+    {
+        return ['id' => $this->id];
+    }
 }
