@@ -103,13 +103,13 @@ echo $this->getData('nav')->render(); ?>
                         </label>
                 <tbody>
                 <?php $count = 0; foreach ($suppliers as $key => $value) : ++$count;
-                 $url        = UriFactory::build('purchase/supplier/profile?{?}&id=' . $value->getId());
+                 $url        = UriFactory::build('{/lang}/{/app}/purchase/supplier/profile?{?}&id=' . $value->getId());
                  $image      = $value->getFileByType(0); ?>
                 <tr data-href="<?= $url; ?>">
                     <td><a href="<?= $url; ?>"><img alt="<?= $this->getHtml('IMG_alt_supplier'); ?>" width="30" loading="lazy" class="item-image"
                             src="<?= $image instanceof NullMedia ?
                                         UriFactory::build('Web/Backend/img/user_default_' . \mt_rand(1, 6) .'.png') :
-                                        UriFactory::build('' . $image->getPath()); ?>"></a>
+                                        UriFactory::build('{/lang}/{/app}/' . $image->getPath()); ?>"></a>
                     <td data-label="<?= $this->getHtml('ID', '0', '0'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->number); ?></a>
                     <td data-label="<?= $this->getHtml('Name'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->profile->account->name1); ?> <?= $this->printHtml($value->profile->account->name2); ?></a>
                     <td data-label="<?= $this->getHtml('City'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->mainAddress->city); ?></a>

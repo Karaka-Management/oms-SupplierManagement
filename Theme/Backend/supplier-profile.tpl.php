@@ -239,7 +239,7 @@ echo $this->getData('nav')->render();
                                         <td><?= $this->getHtml('CreatedAt'); ?>
                                     <tbody>
                                     <?php foreach ($notes as $note) :
-                                        $url = UriFactory::build('editor/single?{?}&id=' . $note->getId());
+                                        $url = UriFactory::build('{/lang}/{/app}/editor/single?{?}&id=' . $note->getId());
                                         ?>
                                     <tr data-href="<?= $url; ?>">
                                         <td><a href="<?= $url; ?>"><?= $note->title; ?></a>
@@ -262,7 +262,7 @@ echo $this->getData('nav')->render();
                                         <td><?= $this->getHtml('CreatedAt'); ?>
                                     <tbody>
                                     <?php foreach ($files as $file) :
-                                        $url = UriFactory::build('media/single?{?}&id=' . $file->getId());
+                                        $url = UriFactory::build('{/lang}/{/app}/media/single?{?}&id=' . $file->getId());
                                         ?>
                                     <tr data-href="<?= $url; ?>">
                                         <td><a href="<?= $url; ?>"><?= $file->name; ?></a>
@@ -292,7 +292,7 @@ echo $this->getData('nav')->render();
                                     <?php
                                     /** @var \Modules\Billing\Models\Bill $invoice */
                                     foreach ($newestInvoices as $invoice) :
-                                        $url = UriFactory::build('purchase/bill?{?}&id=' . $invoice->getId());
+                                        $url = UriFactory::build('{/lang}/{/app}/purchase/bill?{?}&id=' . $invoice->getId());
                                         ?>
                                     <tr data-href="<?= $url; ?>">
                                         <td><a href="<?= $url; ?>"><?= $invoice->getNumber(); ?></a>
