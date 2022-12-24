@@ -22,6 +22,7 @@ use Modules\Media\Models\NullMedia;
 use Modules\Profile\Models\ContactElement;
 use Modules\Profile\Models\NullContactElement;
 use Modules\Profile\Models\Profile;
+use Modules\Admin\Models\Account;
 
 /**
  * Supplier class.
@@ -58,7 +59,7 @@ class Supplier
     /**
      * Attributes.
      *
-     * @var int[]|SupplierAttribute[]
+     * @var SupplierAttribute[]
      * @since 1.0.0
      */
     private array $attributes = [];
@@ -219,6 +220,58 @@ class Supplier
     public function getAddresses() : array
     {
         return $this->address;
+    }
+
+    /**
+     * Add partner
+     *
+     * @param Account $partner Partner
+     *
+     * @return void
+     *
+     * @since 1.0.0
+     */
+    public function addPartner(Account $partner) : void
+    {
+        $this->partners[] = $partner;
+    }
+
+    /**
+     * Get partners
+     *
+     * @return Account[]
+     *
+     * @since 1.0.0
+     */
+    public function getPartners() : array
+    {
+        return $this->partners;
+    }
+
+    /**
+     * Add attribute to supplier
+     *
+     * @param SupplierAttribute $attribute Attribute
+     *
+     * @return void
+     *
+     * @since 1.0.0
+     */
+    public function addAttribute(SupplierAttribute $attribute) : void
+    {
+        $this->attributes[] = $attribute;
+    }
+
+    /**
+     * Get attributes
+     *
+     * @return SupplierAttribute[]
+     *
+     * @since 1.0.0
+     */
+    public function getAttributes() : array
+    {
+        return $this->attributes;
     }
 
     /**
