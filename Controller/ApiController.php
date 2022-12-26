@@ -88,21 +88,21 @@ final class ApiController extends Controller
     private function createSupplierFromRequest(RequestAbstract $request) : Supplier
     {
         $account        = new Account();
-        $account->name1 = $request->getData('name1') ?? '';
-        $account->name2 = $request->getData('name2') ?? '';
+        $account->name1 = (string) ($request->getData('name1') ?? '');
+        $account->name2 = (string) ($request->getData('name2') ?? '');
 
         $profile = new Profile($account);
 
         $supplier          = new Supplier();
-        $supplier->number  = $request->getData('number') ?? '';
+        $supplier->number  = (string) ($request->getData('number') ?? '');
         $supplier->profile = $profile;
 
         $addr          = new Address();
-        $addr->address = $request->getData('address') ?? '';
-        $addr->postal  = $request->getData('postal') ?? '';
-        $addr->city    = $request->getData('city') ?? '';
-        $addr->state   = $request->getData('state') ?? '';
-        $addr->setCountry($request->getData('country') ?? '');
+        $addr->address = (string) ($request->getData('address') ?? '');
+        $addr->postal  = (string) ($request->getData('postal') ?? '');
+        $addr->city    = (string) ($request->getData('city') ?? '');
+        $addr->state   = (string) ($request->getData('state') ?? '');
+        $addr->setCountry((string) ($request->getData('country') ?? ''));
         $supplier->mainAddress = $addr;
 
         return $supplier;
@@ -419,15 +419,15 @@ final class ApiController extends Controller
     {
         $attrValue = new SupplierAttributeValue();
 
-        $type = $request->getData('type') ?? 0;
+        $type = (int) ($request->getData('type') ?? 0);
         if ($type === AttributeValueType::_INT) {
-            $attrValue->valueInt = (int) $request->getData('value');
+            $attrValue->valueInt = $request->hasData('value') ? (int) $request->getData('value') : null;
         } elseif ($type === AttributeValueType::_STRING) {
-            $attrValue->valueStr = (string) $request->getData('value');
+            $attrValue->valueStr = $request->hasData('value') ? (string) $request->getData('value') : null;
         } elseif ($type === AttributeValueType::_FLOAT) {
-            $attrValue->valueDec = (float) $request->getData('value');
+            $attrValue->valueDec = $request->hasData('value') ? (float) $request->getData('value') : null;
         } elseif ($type === AttributeValueType::_DATETIME) {
-            $attrValue->valueDat = new \DateTime($request->getData('value') ?? '');
+            $attrValue->valueDat = $request->hasData('value') ? new \DateTime((string) ($request->getData('value') ?? '')) : null;
         }
 
         $attrValue->type      = $type;
@@ -528,7 +528,12 @@ final class ApiController extends Controller
         $request->setData('virtualpath', '/Modules/SupplierManagement/' . $request->getData('id'), true);
         $this->app->moduleManager->get('Editor')->apiEditorCreate($request, $response, $data);
 
-        $model = $response->get($request->uri->__toString())['response'];
+        $data = $response->get($request->uri->__toString());
+        if (!\is_array($data)) {
+            return;
+        }
+
+        $model = $data['response'];
         $this->createModelRelation($request->header->account, $request->getData('id'), $model->getId(), SupplierMapper::class, 'notes', '', $request->getOrigin());
     }
 }
