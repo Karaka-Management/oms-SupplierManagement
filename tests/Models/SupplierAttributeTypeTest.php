@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Modules\SupplierManagement\tests\Models;
 
 use Modules\SupplierManagement\Models\SupplierAttributeType;
-use Modules\SupplierManagement\Models\SupplierAttributeTypeL11n;
+use phpOMS\Localization\BaseStringL11n;
 
 /**
  * @internal
@@ -51,7 +51,7 @@ final class SupplierAttributeTypeTest extends \PHPUnit\Framework\TestCase
         $this->type->setL11n('Test');
         self::assertEquals('Test', $this->type->getL11n());
 
-        $this->type->setL11n(new SupplierAttributeTypeL11n(0, 'NewTest'));
+        $this->type->setL11n(new BaseStringL11n('NewTest'));
         self::assertEquals('NewTest', $this->type->getL11n());
     }
 

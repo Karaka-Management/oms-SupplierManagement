@@ -19,14 +19,13 @@ use Modules\Admin\Models\Address;
 use Modules\Media\Models\PathSettings;
 use Modules\Profile\Models\ContactElementMapper;
 use Modules\Profile\Models\Profile;
-use Modules\SupplierManagement\Models\AttributeValueType;
 use Modules\SupplierManagement\Models\NullSupplierAttributeType;
 use Modules\SupplierManagement\Models\NullSupplierAttributeValue;
 use Modules\SupplierManagement\Models\Supplier;
 use Modules\SupplierManagement\Models\SupplierAttribute;
 use Modules\SupplierManagement\Models\SupplierAttributeMapper;
 use Modules\SupplierManagement\Models\SupplierAttributeType;
-use Modules\SupplierManagement\Models\SupplierAttributeTypeL11n;
+use phpOMS\Localization\BaseStringL11n;
 use Modules\SupplierManagement\Models\SupplierAttributeTypeL11nMapper;
 use Modules\SupplierManagement\Models\SupplierAttributeTypeMapper;
 use Modules\SupplierManagement\Models\SupplierAttributeValue;
@@ -104,6 +103,8 @@ final class ApiController extends Controller
         $addr->state   = (string) ($request->getData('state') ?? '');
         $addr->setCountry((string) ($request->getData('country') ?? ''));
         $supplier->mainAddress = $addr;
+
+        $supplier->unit = $request->getData('unit', 'int');
 
         return $supplier;
     }
@@ -265,18 +266,18 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract $request Request
      *
-     * @return SupplierAttributeTypeL11n
+     * @return BaseStringL11n
      *
      * @since 1.0.0
      */
-    private function createSupplierAttributeTypeL11nFromRequest(RequestAbstract $request) : SupplierAttributeTypeL11n
+    private function createSupplierAttributeTypeL11nFromRequest(RequestAbstract $request) : BaseStringL11n
     {
-        $attrL11n       = new SupplierAttributeTypeL11n();
-        $attrL11n->type = (int) ($request->getData('type') ?? 0);
+        $attrL11n       = new BaseStringL11n();
+        $attrL11n->ref = (int) ($request->getData('type') ?? 0);
         $attrL11n->setLanguage((string) (
             $request->getData('language') ?? $request->getLanguage()
         ));
-        $attrL11n->title = (string) ($request->getData('title') ?? '');
+        $attrL11n->content = (string) ($request->getData('title') ?? '');
 
         return $attrL11n;
     }
@@ -341,10 +342,13 @@ final class ApiController extends Controller
      */
     private function createSupplierAttributeTypeFromRequest(RequestAbstract $request) : SupplierAttributeType
     {
-        $attrType = new SupplierAttributeType();
+        $attrType = new SupplierAttributeType($request->getData('name') ?? '');
         $attrType->setL11n((string) ($request->getData('title') ?? ''), $request->getData('language') ?? ISO639x1Enum::_EN);
-        $attrType->fields = (int) ($request->getData('fields') ?? 0);
-        $attrType->custom = (bool) ($request->getData('custom') ?? false);
+        $attrType->datatype            = (int) ($request->getData('datatype') ?? 0);
+        $attrType->setFields((int) ($request->getData('fields') ?? 0));
+        $attrType->custom            = (bool) ($request->getData('custom') ?? false);
+        $attrType->isRequired        = (bool) ($request->getData('is_required') ?? false);
+        $attrType->validationPattern = (string) ($request->getData('validation_pattern') ?? '');
 
         return $attrType;
     }
@@ -362,6 +366,7 @@ final class ApiController extends Controller
     {
         $val = [];
         if (($val['title'] = empty($request->getData('title')))
+            || ($val['name'] = empty($request->getData('name')))
         ) {
             return $val;
         }
@@ -397,7 +402,7 @@ final class ApiController extends Controller
         if ($attrValue->isDefault) {
             $this->createModelRelation(
                 $request->header->account,
-                (int) $request->getData('attributetype'),
+                (int) $request->getData('type'),
                 $attrValue->getId(),
                 SupplierAttributeTypeMapper::class, 'defaults', '', $request->getOrigin()
             );
@@ -417,28 +422,16 @@ final class ApiController extends Controller
      */
     private function createSupplierAttributeValueFromRequest(RequestAbstract $request) : SupplierAttributeValue
     {
+        $type = SupplierAttributeTypeMapper::get()
+            ->where('id', (int) ($request->getData('type') ?? 0))
+            ->execute();
+
         $attrValue = new SupplierAttributeValue();
-
-        $type = (int) ($request->getData('type') ?? 0);
-        if ($type === AttributeValueType::_INT) {
-            $attrValue->valueInt = $request->hasData('value') ? (int) $request->getData('value') : null;
-        } elseif ($type === AttributeValueType::_STRING) {
-            $attrValue->valueStr = $request->hasData('value') ? (string) $request->getData('value') : null;
-        } elseif ($type === AttributeValueType::_FLOAT) {
-            $attrValue->valueDec = $request->hasData('value') ? (float) $request->getData('value') : null;
-        } elseif ($type === AttributeValueType::_DATETIME) {
-            $attrValue->valueDat = $request->hasData('value') ? new \DateTime((string) ($request->getData('value') ?? '')) : null;
-        }
-
-        $attrValue->type      = $type;
         $attrValue->isDefault = (bool) ($request->getData('default') ?? false);
+        $attrValue->setValue($request->getData('value'), $type->datatype);
 
-        if ($request->hasData('language')) {
-            $attrValue->setLanguage((string) ($request->getData('language') ?? $request->getLanguage()));
-        }
-
-        if ($request->hasData('country')) {
-            $attrValue->setCountry((string) ($request->getData('country') ?? $request->header->l11n->getCountry()));
+        if ($request->getData('title') !== null) {
+            $attrValue->setL11n($request->getData('title'), $request->getData('language') ?? ISO639x1Enum::_EN);
         }
 
         return $attrValue;
@@ -457,6 +450,75 @@ final class ApiController extends Controller
     {
         $val = [];
         if (($val['type'] = empty($request->getData('type')))
+            || ($val['value'] = empty($request->getData('value')))
+        ) {
+            return $val;
+        }
+
+        return [];
+    }
+
+    /**
+     * Api method to create item attribute l11n
+     *
+     * @param RequestAbstract  $request  Request
+     * @param ResponseAbstract $response Response
+     * @param mixed            $data     Generic data
+     *
+     * @return void
+     *
+     * @api
+     *
+     * @since 1.0.0
+     */
+    public function apiSupplierAttributeValueL11nCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
+    {
+        if (!empty($val = $this->validateSupplierAttributeValueL11nCreate($request))) {
+            $response->set('attr_value_l11n_create', new FormValidation($val));
+            $response->header->status = RequestStatusCode::R_400;
+
+            return;
+        }
+
+        $attrL11n = $this->createSupplierAttributeValueL11nFromRequest($request);
+        $this->createModel($request->header->account, $attrL11n, SupplierAttributeValueL11nMapper::class, 'attr_value_l11n', $request->getOrigin());
+        $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Attribute type localization', 'Attribute type localization successfully created', $attrL11n);
+    }
+
+    /**
+     * Method to create Supplier attribute l11n from request.
+     *
+     * @param RequestAbstract $request Request
+     *
+     * @return BaseStringL11n
+     *
+     * @since 1.0.0
+     */
+    private function createSupplierAttributeValueL11nFromRequest(RequestAbstract $request) : BaseStringL11n
+    {
+        $attrL11n        = new BaseStringL11n();
+        $attrL11n->ref = (int) ($request->getData('value') ?? 0);
+        $attrL11n->setLanguage((string) (
+            $request->getData('language') ?? $request->getLanguage()
+        ));
+        $attrL11n->content = (string) ($request->getData('title') ?? '');
+
+        return $attrL11n;
+    }
+
+    /**
+     * Validate Supplier attribute l11n create request
+     *
+     * @param RequestAbstract $request Request
+     *
+     * @return array<string, bool>
+     *
+     * @since 1.0.0
+     */
+    private function validateSupplierAttributeValueL11nCreate(RequestAbstract $request) : array
+    {
+        $val = [];
+        if (($val['title'] = empty($request->getData('title')))
             || ($val['value'] = empty($request->getData('value')))
         ) {
             return $val;

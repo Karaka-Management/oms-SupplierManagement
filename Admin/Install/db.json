@@ -53,6 +53,14 @@
                 "default": null,
                 "foreignTable": "address",
                 "foreignKey": "address_id"
+            },
+            "suppliermgmt_supplier_unit": {
+                "name": "suppliermgmt_supplier_unit",
+                "type": "INT",
+                "default": null,
+                "null": true,
+                "foreignTable": "organization_unit",
+                "foreignKey": "organization_unit_id"
             }
         }
     },
@@ -95,6 +103,12 @@
             "suppliermgmt_attr_type_name": {
                 "name": "suppliermgmt_attr_type_name",
                 "type": "VARCHAR(255)",
+                "null": false,
+                "unique": true
+            },
+            "suppliermgmt_attr_type_datatype": {
+                "name": "suppliermgmt_attr_type_datatype",
+                "type": "INT(11)",
                 "null": false
             },
             "suppliermgmt_attr_type_fields": {
@@ -167,11 +181,6 @@
                 "type": "TINYINT(1)",
                 "null": false
             },
-            "suppliermgmt_attr_value_type": {
-                "name": "suppliermgmt_attr_value_type",
-                "type": "INT(11)",
-                "null": false
-            },
             "suppliermgmt_attr_value_valueStr": {
                 "name": "suppliermgmt_attr_value_valueStr",
                 "type": "VARCHAR(255)",
@@ -195,22 +204,37 @@
                 "type": "DATETIME",
                 "null": true,
                 "default": null
+            }
+        }
+    },
+    "suppliermgmt_attr_value_l11n": {
+        "name": "suppliermgmt_attr_value_l11n",
+        "fields": {
+            "suppliermgmt_attr_value_l11n_id": {
+                "name": "suppliermgmt_attr_value_l11n_id",
+                "type": "INT",
+                "null": false,
+                "primary": true,
+                "autoincrement": true
             },
-            "suppliermgmt_attr_value_lang": {
-                "name": "suppliermgmt_attr_value_lang",
+            "suppliermgmt_attr_value_l11n_title": {
+                "name": "suppliermgmt_attr_value_l11n_title",
+                "type": "VARCHAR(255)",
+                "null": false
+            },
+            "suppliermgmt_attr_value_l11n_value": {
+                "name": "suppliermgmt_attr_value_l11n_value",
+                "type": "INT(11)",
+                "null": false,
+                "foreignTable": "suppliermgmt_attr_value",
+                "foreignKey": "suppliermgmt_attr_value_id"
+            },
+            "suppliermgmt_attr_value_l11n_lang": {
+                "name": "suppliermgmt_attr_value_l11n_lang",
                 "type": "VARCHAR(2)",
-                "null": true,
-                "default": null,
+                "null": false,
                 "foreignTable": "language",
                 "foreignKey": "language_639_1"
-            },
-            "suppliermgmt_attr_value_country": {
-                "name": "suppliermgmt_attr_value_country",
-                "type": "VARCHAR(2)",
-                "null": true,
-                "default": null,
-                "foreignTable": "country",
-                "foreignKey": "country_code2"
             }
         }
     },

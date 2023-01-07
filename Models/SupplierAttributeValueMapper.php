@@ -35,13 +35,25 @@ final class SupplierAttributeValueMapper extends DataMapperFactory
     public const COLUMNS = [
         'suppliermgmt_attr_value_id'       => ['name' => 'suppliermgmt_attr_value_id',       'type' => 'int',      'internal' => 'id'],
         'suppliermgmt_attr_value_default'  => ['name' => 'suppliermgmt_attr_value_default',  'type' => 'bool',     'internal' => 'isDefault'],
-        'suppliermgmt_attr_value_type'     => ['name' => 'suppliermgmt_attr_value_type',     'type' => 'int',      'internal' => 'type'],
         'suppliermgmt_attr_value_valueStr' => ['name' => 'suppliermgmt_attr_value_valueStr', 'type' => 'string',   'internal' => 'valueStr'],
         'suppliermgmt_attr_value_valueInt' => ['name' => 'suppliermgmt_attr_value_valueInt', 'type' => 'int',      'internal' => 'valueInt'],
         'suppliermgmt_attr_value_valueDec' => ['name' => 'suppliermgmt_attr_value_valueDec', 'type' => 'float',    'internal' => 'valueDec'],
         'suppliermgmt_attr_value_valueDat' => ['name' => 'suppliermgmt_attr_value_valueDat', 'type' => 'DateTime', 'internal' => 'valueDat'],
-        'suppliermgmt_attr_value_lang'     => ['name' => 'suppliermgmt_attr_value_lang',     'type' => 'string',   'internal' => 'language'],
-        'suppliermgmt_attr_value_country'  => ['name' => 'suppliermgmt_attr_value_country',  'type' => 'string',   'internal' => 'country'],
+    ];
+
+    /**
+     * Has many relation.
+     *
+     * @var array<string, array{mapper:string, table:string, self?:?string, external?:?string, column?:string}>
+     * @since 1.0.0
+     */
+    public const HAS_MANY = [
+        'l11n' => [
+            'mapper'   => SupplierAttributeValueL11nMapper::class,
+            'table'    => 'suppliermgmt_attr_value_l11n',
+            'self'     => 'suppliermgmt_attr_value_l11n_value',
+            'external' => null,
+        ],
     ];
 
     /**

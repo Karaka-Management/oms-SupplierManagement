@@ -83,6 +83,14 @@ class Supplier
     private array $partners = [];
 
     /**
+     * Unit
+     *
+     * @var null|int
+     * @since 1.0.0
+     */
+    public ?int $unit = null;
+
+    /**
      * Constructor.
      *
      * @since 1.0.0
@@ -371,6 +379,26 @@ class Supplier
     {
         foreach ($this->files as $file) {
             if ($file->type === $type) {
+                return $file;
+            }
+        }
+
+        return new NullMedia();
+    }
+
+    /**
+     * Get all media files by type name
+     *
+     * @param string $type Media type
+     *
+     * @return Media
+     *
+     * @since 1.0.0
+     */
+    public function getFileByTypeName(string $type) : Media
+    {
+        foreach ($this->files as $file) {
+            if ($file->type->name === $type) {
                 return $file;
             }
         }

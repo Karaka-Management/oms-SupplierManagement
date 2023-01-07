@@ -35,6 +35,7 @@ final class SupplierAttributeTypeMapper extends DataMapperFactory
     public const COLUMNS = [
         'suppliermgmt_attr_type_id'       => ['name' => 'suppliermgmt_attr_type_id',       'type' => 'int',    'internal' => 'id'],
         'suppliermgmt_attr_type_name'     => ['name' => 'suppliermgmt_attr_type_name',     'type' => 'string', 'internal' => 'name', 'autocomplete' => true],
+        'suppliermgmt_attr_type_datatype'   => ['name' => 'suppliermgmt_attr_type_datatype',   'type' => 'int',    'internal' => 'datatype'],
         'suppliermgmt_attr_type_fields'   => ['name' => 'suppliermgmt_attr_type_fields',   'type' => 'int',    'internal' => 'fields'],
         'suppliermgmt_attr_type_custom'   => ['name' => 'suppliermgmt_attr_type_custom',   'type' => 'bool',   'internal' => 'custom'],
         'suppliermgmt_attr_type_pattern'  => ['name' => 'suppliermgmt_attr_type_pattern',  'type' => 'string', 'internal' => 'validationPattern'],

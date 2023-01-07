@@ -47,6 +47,7 @@ final class SupplierMapper extends DataMapperFactory
         'suppliermgmt_supplier_created_at' => ['name' => 'suppliermgmt_supplier_created_at', 'type' => 'DateTimeImmutable', 'internal' => 'createdAt', 'readonly' => true],
         'suppliermgmt_supplier_profile'    => ['name' => 'suppliermgmt_supplier_profile',    'type' => 'int',               'internal' => 'profile'],
         'suppliermgmt_supplier_address'    => ['name' => 'suppliermgmt_supplier_address',    'type' => 'int',               'internal' => 'mainAddress'],
+        'suppliermgmt_supplier_unit'    => ['name' => 'suppliermgmt_supplier_unit',    'type' => 'int',               'internal' => 'unit'],
     ];
 
     /**
