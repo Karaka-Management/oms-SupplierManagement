@@ -14,8 +14,8 @@ declare(strict_types=1);
 
 namespace Modules\SupplierManagement\Models;
 
-use phpOMS\Localization\ISO639x1Enum;
 use phpOMS\Localization\BaseStringL11n;
+use phpOMS\Localization\ISO639x1Enum;
 
 /**
  * Supplier Attribute Type class.
@@ -113,7 +113,7 @@ class SupplierAttributeType implements \JsonSerializable
      * Set l11n
      *
      * @param string|BaseStringL11n $l11n Tag article l11n
-     * @param string                           $lang Language
+     * @param string                $lang Language
      *
      * @return void
      *
@@ -126,7 +126,7 @@ class SupplierAttributeType implements \JsonSerializable
         } elseif (isset($this->l11n) && $this->l11n instanceof BaseStringL11n) {
             $this->l11n->content = $l11n;
         } else {
-            $this->l11n        = new BaseStringL11n();
+            $this->l11n          = new BaseStringL11n();
             $this->l11n->content = $l11n;
             $this->l11n->setLanguage($lang);
         }

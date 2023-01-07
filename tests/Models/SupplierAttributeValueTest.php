@@ -14,8 +14,8 @@ declare(strict_types=1);
 
 namespace Modules\SupplierManagement\tests\Models;
 
-use Modules\SupplierManagement\Models\SupplierAttributeValue;
 use Modules\SupplierManagement\Models\AttributeValueType;
+use Modules\SupplierManagement\Models\SupplierAttributeValue;
 
 /**
  * @internal
