@@ -39,6 +39,9 @@ final class SupplierAttributeValueMapper extends DataMapperFactory
         'suppliermgmt_attr_value_valueInt' => ['name' => 'suppliermgmt_attr_value_valueInt', 'type' => 'int',      'internal' => 'valueInt'],
         'suppliermgmt_attr_value_valueDec' => ['name' => 'suppliermgmt_attr_value_valueDec', 'type' => 'float',    'internal' => 'valueDec'],
         'suppliermgmt_attr_value_valueDat' => ['name' => 'suppliermgmt_attr_value_valueDat', 'type' => 'DateTime', 'internal' => 'valueDat'],
+        'suppliermgmt_attr_value_unit'          => ['name' => 'suppliermgmt_attr_value_unit', 'type' => 'string', 'internal' => 'unit'],
+        'suppliermgmt_attr_value_deptype'          => ['name' => 'suppliermgmt_attr_value_deptype', 'type' => 'int', 'internal' => 'dependingAttributeType'],
+        'suppliermgmt_attr_value_depvalue'          => ['name' => 'suppliermgmt_attr_value_depvalue', 'type' => 'int', 'internal' => 'dependingAttributeValue'],
     ];
 
     /**

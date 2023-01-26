@@ -15,6 +15,8 @@ declare(strict_types=1);
 namespace Modules\SupplierManagement\Controller;
 
 use Modules\Billing\Models\PurchaseBillMapper;
+use Modules\SupplierManagement\Models\SupplierAttributeTypeMapper;
+use Modules\SupplierManagement\Models\SupplierAttributeValueMapper;
 use Modules\SupplierManagement\Models\SupplierMapper;
 use phpOMS\Asset\AssetType;
 use phpOMS\Contract\RenderableInterface;
@@ -36,6 +38,94 @@ use phpOMS\Views\View;
  */
 final class BackendController extends Controller
 {
+    /**
+     * Routing end-point for application behaviour.
+     *
+     * @param RequestAbstract  $request  Request
+     * @param ResponseAbstract $response Response
+     * @param mixed            $data     Generic data
+     *
+     * @return RenderableInterface
+     *
+     * @since 1.0.0
+     * @codeCoverageIgnore
+     */
+    public function SupplierManagementAttributeTypeList(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : RenderableInterface
+    {
+        $view = new View($this->app->l11nManager, $request, $response);
+        $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/attribute-type-list');
+        $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1004801001, $request, $response));
+
+        /** @var \Modules\SupplierManagement\Models\SupplierAttributeType[] $attributes */
+        $attributes = SupplierAttributeTypeMapper::getAll()
+            ->with('l11n')
+            ->where('l11n/language', $response->getLanguage())
+            ->execute();
+
+        $view->addData('attributes', $attributes);
+
+        return $view;
+    }
+
+    /**
+     * Routing end-point for application behaviour.
+     *
+     * @param RequestAbstract  $request  Request
+     * @param ResponseAbstract $response Response
+     * @param mixed            $data     Generic data
+     *
+     * @return RenderableInterface
+     *
+     * @since 1.0.0
+     * @codeCoverageIgnore
+     */
+    public function SupplierManagementAttributeValues(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : RenderableInterface
+    {
+        $view = new View($this->app->l11nManager, $request, $response);
+        $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/attribute-value-list');
+        $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1004801001, $request, $response));
+
+        /** @var \Modules\SupplierManagement\Models\SupplierAttributeValue[] $attributes */
+        $attributes = SupplierAttributeValueMapper::getAll()
+            ->with('l11n')
+            ->where('l11n/language', $response->getLanguage())
+            ->execute();
+
+        $view->addData('attributes', $attributes);
+
+        return $view;
+    }
+
+    /**
+     * Routing end-point for application behaviour.
+     *
+     * @param RequestAbstract  $request  Request
+     * @param ResponseAbstract $response Response
+     * @param mixed            $data     Generic data
+     *
+     * @return RenderableInterface
+     *
+     * @since 1.0.0
+     * @codeCoverageIgnore
+     */
+    public function SupplierManagementAttributeType(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : RenderableInterface
+    {
+        $view = new View($this->app->l11nManager, $request, $response);
+        $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/attribute-type');
+        $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1004801001, $request, $response));
+
+        /** @var \Modules\SupplierManagement\Models\SupplierAttributeType $attribute */
+        $attribute = SupplierAttributeTypeMapper::get()
+            ->with('l11n')
+            ->where('id', (int) $request->getData('id'))
+            ->where('l11n/language', $response->getLanguage())
+            ->execute();
+
+        $view->addData('attribute', $attribute);
+
+        return $view;
+    }
+
     /**
      * Routing end-point for application behaviour.
      *

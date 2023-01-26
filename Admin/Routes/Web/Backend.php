@@ -18,6 +18,28 @@ use phpOMS\Account\PermissionType;
 use phpOMS\Router\RouteVerb;
 
 return [
+    '^.*/purchase/supplier/attribute/type/list.*$' => [
+        [
+            'dest'       => '\Modules\SupplierManagement\Controller\BackendController:viewSupplierManagementAttributeTypeList',
+            'verb'       => RouteVerb::GET,
+            'permission' => [
+                'module' => BackendController::NAME,
+                'type'   => PermissionType::READ,
+                'state'  => PermissionCategory::SUPPLIER,
+            ],
+        ],
+    ],
+    '^.*/purchase/supplier/attribute/type\?.*$' => [
+        [
+            'dest'       => '\Modules\SupplierManagement\Controller\BackendController:viewSupplierManagementAttributeType',
+            'verb'       => RouteVerb::GET,
+            'permission' => [
+                'module' => BackendController::NAME,
+                'type'   => PermissionType::READ,
+                'state'  => PermissionCategory::SUPPLIER,
+            ],
+        ],
+    ],
     '^.*/purchase/supplier/list.*$' => [
         [
             'dest'       => '\Modules\SupplierManagement\Controller\BackendController:viewSupplierManagementSupplierList',

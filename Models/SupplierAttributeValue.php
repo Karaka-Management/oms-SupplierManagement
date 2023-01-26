@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Modules\SupplierManagement\Models;
 
+use phpOMS\Localization\BaseStringL11n;
 use phpOMS\Localization\ISO3166TwoEnum;
 use phpOMS\Localization\ISO639x1Enum;
 
@@ -36,6 +37,22 @@ class SupplierAttributeValue implements \JsonSerializable
      * @since 1.0.0
      */
     protected int $id = 0;
+
+    /**
+     * Depending attribute type
+     *
+     * @var null|int
+     * @since 1.0.0
+     */
+    public ?int $dependingAttributeType = null;
+
+    /**
+     * Depending attribute value
+     *
+     * @var null|int
+     * @since 1.0.0
+     */
+    public ?int $dependingAttributeValue = null;
 
     /**
      * Int value
@@ -76,6 +93,14 @@ class SupplierAttributeValue implements \JsonSerializable
      * @since 1.0.0
      */
     public bool $isDefault = false;
+
+    /**
+     * Unit of the value
+     *
+     * @var string
+     * @since 1.0.0
+     */
+    public string $unit = '';
 
     /**
      * Localization
@@ -146,7 +171,10 @@ class SupplierAttributeValue implements \JsonSerializable
     {
         if ($datatype === AttributeValueType::_STRING) {
             $this->valueStr = (string) $value;
-        } elseif ($datatype === AttributeValueType::_INT) {
+        } elseif ($datatype === AttributeValueType::_INT
+            || $datatype === AttributeValueType::_FLOAT_INT
+            || $datatype === AttributeValueType::_BOOL
+        ) {
             $this->valueInt = (int) $value;
         } elseif ($datatype === AttributeValueType::_FLOAT) {
             $this->valueDec = (float) $value;
@@ -175,58 +203,6 @@ class SupplierAttributeValue implements \JsonSerializable
         }
 
         return null;
-    }
-
-    /**
-     * Set language
-     *
-     * @param string $language Language
-     *
-     * @return void
-     *
-     * @since 1.0.0
-     */
-    public function setLanguage(string $language) : void
-    {
-        $this->language = $language;
-    }
-
-    /**
-     * Get language
-     *
-     * @return string
-     *
-     * @since 1.0.0
-     */
-    public function getLanguage() : string
-    {
-        return $this->language;
-    }
-
-    /**
-     * Set country
-     *
-     * @param string $country Country
-     *
-     * @return void
-     *
-     * @since 1.0.0
-     */
-    public function setCountry(string $country) : void
-    {
-        $this->country = $country;
-    }
-
-    /**
-     * Get country
-     *
-     * @return string
-     *
-     * @since 1.0.0
-     */
-    public function getCountry() : string
-    {
-        return $this->country;
     }
 
     /**
