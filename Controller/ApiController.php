@@ -25,12 +25,12 @@ use Modules\SupplierManagement\Models\Supplier;
 use Modules\SupplierManagement\Models\SupplierAttribute;
 use Modules\SupplierManagement\Models\SupplierAttributeMapper;
 use Modules\SupplierManagement\Models\SupplierAttributeType;
-use phpOMS\Localization\BaseStringL11n;
 use Modules\SupplierManagement\Models\SupplierAttributeTypeL11nMapper;
 use Modules\SupplierManagement\Models\SupplierAttributeTypeMapper;
 use Modules\SupplierManagement\Models\SupplierAttributeValue;
 use Modules\SupplierManagement\Models\SupplierAttributeValueMapper;
 use Modules\SupplierManagement\Models\SupplierMapper;
+use phpOMS\Localization\BaseStringL11n;
 use phpOMS\Localization\ISO639x1Enum;
 use phpOMS\Message\Http\RequestStatusCode;
 use phpOMS\Message\NotificationLevel;
@@ -273,7 +273,7 @@ final class ApiController extends Controller
     private function createSupplierAttributeTypeL11nFromRequest(RequestAbstract $request) : BaseStringL11n
     {
         $attrL11n       = new BaseStringL11n();
-        $attrL11n->ref = (int) ($request->getData('type') ?? 0);
+        $attrL11n->ref  = (int) ($request->getData('type') ?? 0);
         $attrL11n->setLanguage((string) (
             $request->getData('language') ?? $request->getLanguage()
         ));
@@ -426,7 +426,7 @@ final class ApiController extends Controller
             ->where('id', (int) ($request->getData('type') ?? 0))
             ->execute();
 
-        $attrValue = new SupplierAttributeValue();
+        $attrValue            = new SupplierAttributeValue();
         $attrValue->isDefault = (bool) ($request->getData('default') ?? false);
         $attrValue->setValue($request->getData('value'), $type->datatype);
 
@@ -497,7 +497,7 @@ final class ApiController extends Controller
     private function createSupplierAttributeValueL11nFromRequest(RequestAbstract $request) : BaseStringL11n
     {
         $attrL11n        = new BaseStringL11n();
-        $attrL11n->ref = (int) ($request->getData('value') ?? 0);
+        $attrL11n->ref   = (int) ($request->getData('value') ?? 0);
         $attrL11n->setLanguage((string) (
             $request->getData('language') ?? $request->getLanguage()
         ));
