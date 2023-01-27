@@ -64,6 +64,66 @@
             }
         }
     },
+    "suppliermgmt_supplier_l11n_type": {
+        "name": "suppliermgmt_supplier_l11n_type",
+        "fields": {
+            "suppliermgmt_supplier_l11n_type_id": {
+                "name": "suppliermgmt_supplier_l11n_type_id",
+                "type": "INT",
+                "null": false,
+                "primary": true,
+                "autoincrement": true
+            },
+            "suppliermgmt_supplier_l11n_type_title": {
+                "name": "suppliermgmt_supplier_l11n_type_title",
+                "type": "VARCHAR(50)",
+                "null": false
+            },
+            "suppliermgmt_supplier_l11n_type_required": {
+                "name": "suppliermgmt_supplier_l11n_type_required",
+                "type": "TINYINT(1)",
+                "null": false
+            }
+        }
+    },
+    "suppliermgmt_supplier_l11n": {
+        "name": "suppliermgmt_supplier_l11n",
+        "fields": {
+            "suppliermgmt_supplier_l11n_id": {
+                "name": "suppliermgmt_supplier_l11n_id",
+                "type": "INT",
+                "null": false,
+                "primary": true,
+                "autoincrement": true
+            },
+            "suppliermgmt_supplier_l11n_description": {
+                "name": "suppliermgmt_supplier_l11n_description",
+                "type": "TEXT",
+                "null": false
+            },
+            "suppliermgmt_supplier_l11n_supplier": {
+                "name": "suppliermgmt_supplier_l11n_supplier",
+                "type": "INT(11)",
+                "null": false,
+                "foreignTable": "suppliermgmt_supplier",
+                "foreignKey": "suppliermgmt_supplier_id"
+            },
+            "suppliermgmt_supplier_l11n_typeref": {
+                "name": "suppliermgmt_supplier_l11n_typeref",
+                "type": "INT(11)",
+                "null": false,
+                "foreignTable": "suppliermgmt_supplier_l11n_type",
+                "foreignKey": "suppliermgmt_supplier_l11n_type_id"
+            },
+            "suppliermgmt_supplier_l11n_lang": {
+                "name": "suppliermgmt_supplier_l11n_lang",
+                "type": "VARCHAR(2)",
+                "null": false,
+                "foreignTable": "language",
+                "foreignKey": "language_639_1"
+            }
+        }
+    },
     "suppliermgmt_supplier_contactelement": {
         "name": "suppliermgmt_supplier_contactelement",
         "fields": {

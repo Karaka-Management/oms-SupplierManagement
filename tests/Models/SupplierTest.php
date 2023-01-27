@@ -51,7 +51,6 @@ final class SupplierTest extends \PHPUnit\Framework\TestCase
         self::assertEquals([], $this->supplier->getFiles());
         self::assertEquals([], $this->supplier->getAddresses());
         self::assertEquals([], $this->supplier->getContactElements());
-        self::assertEquals([], $this->supplier->getFilesByType(0));
         self::assertEquals((new \DateTime('now'))->format('Y-m-d'), $this->supplier->createdAt->format('Y-m-d'));
         self::assertInstanceOf('\Modules\Profile\Models\Profile', $this->supplier->profile);
         self::assertInstanceOf('\Modules\Admin\Models\Address', $this->supplier->mainAddress);
@@ -86,7 +85,6 @@ final class SupplierTest extends \PHPUnit\Framework\TestCase
     {
         $this->supplier->addFile($temp = new Media());
         self::assertCount(1, $this->supplier->getFiles());
-        self::assertEquals([$temp], $this->supplier->getFilesByType());
     }
 
     /**

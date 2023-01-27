@@ -136,7 +136,8 @@ class SupplierAttributeValue implements \JsonSerializable
         if ($l11n instanceof BaseStringL11n) {
             $this->l11n = $l11n;
         } elseif (isset($this->l11n) && $this->l11n instanceof BaseStringL11n) {
-            $this->l11n->content = $l11n;
+            $this->l11n->content  = $l11n;
+            $this->l11n->setLanguage($lang);
         } else {
             $this->l11n          = new BaseStringL11n();
             $this->l11n->content = $l11n;
@@ -160,8 +161,8 @@ class SupplierAttributeValue implements \JsonSerializable
     /**
      * Set value
      *
-     * @param int|string|float|\DateTimeInterface $value Value
-     * @param int                                 $type  Datatype
+     * @param int|string|float $value    Value
+     * @param int              $datatype Datatype
      *
      * @return void
      *
@@ -179,7 +180,7 @@ class SupplierAttributeValue implements \JsonSerializable
         } elseif ($datatype === AttributeValueType::_FLOAT) {
             $this->valueDec = (float) $value;
         } elseif ($datatype === AttributeValueType::_DATETIME) {
-            $this->valueDat = new \DateTime($value);
+            $this->valueDat = new \DateTime((string) $value);
         }
     }
 

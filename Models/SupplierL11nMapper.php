@@ -24,7 +24,7 @@ use phpOMS\DataStorage\Database\Mapper\DataMapperFactory;
  * @link    https://jingga.app
  * @since   1.0.0
  */
-final class SupplierAttributeMapper extends DataMapperFactory
+final class SupplierL11nMapper extends DataMapperFactory
 {
     /**
      * Columns.
@@ -33,10 +33,11 @@ final class SupplierAttributeMapper extends DataMapperFactory
      * @since 1.0.0
      */
     public const COLUMNS = [
-        'suppliermgmt_supplier_attr_id'       => ['name' => 'suppliermgmt_supplier_attr_id',       'type' => 'int', 'internal' => 'id'],
-        'suppliermgmt_supplier_attr_supplier' => ['name' => 'suppliermgmt_supplier_attr_supplier', 'type' => 'int', 'internal' => 'supplier'],
-        'suppliermgmt_supplier_attr_type'     => ['name' => 'suppliermgmt_supplier_attr_type',     'type' => 'int', 'internal' => 'type'],
-        'suppliermgmt_supplier_attr_value'    => ['name' => 'suppliermgmt_supplier_attr_value',    'type' => 'int', 'internal' => 'value'],
+        'suppliermgmt_supplier_l11n_id'          => ['name' => 'suppliermgmt_supplier_l11n_id',          'type' => 'int',    'internal' => 'id'],
+        'suppliermgmt_supplier_l11n_description' => ['name' => 'suppliermgmt_supplier_l11n_description', 'type' => 'string', 'internal' => 'description', 'autocomplete' => true],
+        'suppliermgmt_supplier_l11n_supplier'        => ['name' => 'suppliermgmt_supplier_l11n_supplier',        'type' => 'int',    'internal' => 'supplier'],
+        'suppliermgmt_supplier_l11n_lang'        => ['name' => 'suppliermgmt_supplier_l11n_lang',        'type' => 'string', 'internal' => 'language'],
+        'suppliermgmt_supplier_l11n_typeref'     => ['name' => 'suppliermgmt_supplier_l11n_typeref',     'type' => 'int',    'internal' => 'type'],
     ];
 
     /**
@@ -47,12 +48,8 @@ final class SupplierAttributeMapper extends DataMapperFactory
      */
     public const OWNS_ONE = [
         'type' => [
-            'mapper'   => SupplierAttributeTypeMapper::class,
-            'external' => 'suppliermgmt_supplier_attr_type',
-        ],
-        'value' => [
-            'mapper'   => SupplierAttributeValueMapper::class,
-            'external' => 'suppliermgmt_supplier_attr_value',
+            'mapper'   => SupplierL11nTypeMapper::class,
+            'external' => 'suppliermgmt_supplier_l11n_typeref',
         ],
     ];
 
@@ -62,7 +59,7 @@ final class SupplierAttributeMapper extends DataMapperFactory
      * @var string
      * @since 1.0.0
      */
-    public const TABLE = 'suppliermgmt_supplier_attr';
+    public const TABLE = 'suppliermgmt_supplier_l11n';
 
     /**
      * Primary field name.
@@ -70,5 +67,5 @@ final class SupplierAttributeMapper extends DataMapperFactory
      * @var string
      * @since 1.0.0
      */
-    public const PRIMARYFIELD ='suppliermgmt_supplier_attr_id';
+    public const PRIMARYFIELD ='suppliermgmt_supplier_l11n_id';
 }

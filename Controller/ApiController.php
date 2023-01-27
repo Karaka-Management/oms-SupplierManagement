@@ -16,11 +16,13 @@ namespace Modules\SupplierManagement\Controller;
 
 use Modules\Admin\Models\Account;
 use Modules\Admin\Models\Address;
+use Modules\Media\Models\MediaMapper;
 use Modules\Media\Models\PathSettings;
 use Modules\Profile\Models\ContactElementMapper;
 use Modules\Profile\Models\Profile;
 use Modules\SupplierManagement\Models\NullSupplierAttributeType;
 use Modules\SupplierManagement\Models\NullSupplierAttributeValue;
+use Modules\SupplierManagement\Models\NullSupplierL11nType;
 use Modules\SupplierManagement\Models\Supplier;
 use Modules\SupplierManagement\Models\SupplierAttribute;
 use Modules\SupplierManagement\Models\SupplierAttributeMapper;
@@ -28,7 +30,12 @@ use Modules\SupplierManagement\Models\SupplierAttributeType;
 use Modules\SupplierManagement\Models\SupplierAttributeTypeL11nMapper;
 use Modules\SupplierManagement\Models\SupplierAttributeTypeMapper;
 use Modules\SupplierManagement\Models\SupplierAttributeValue;
+use Modules\SupplierManagement\Models\SupplierAttributeValueL11nMapper;
 use Modules\SupplierManagement\Models\SupplierAttributeValueMapper;
+use Modules\SupplierManagement\Models\SupplierL11n;
+use Modules\SupplierManagement\Models\SupplierL11nMapper;
+use Modules\SupplierManagement\Models\SupplierL11nType;
+use Modules\SupplierManagement\Models\SupplierL11nTypeMapper;
 use Modules\SupplierManagement\Models\SupplierMapper;
 use phpOMS\Localization\BaseStringL11n;
 use phpOMS\Localization\ISO639x1Enum;
@@ -131,7 +138,7 @@ final class ApiController extends Controller
     }
 
     /**
-     * Routing end-point for application behaviour.
+     * Api method to create supplier l11n
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
@@ -143,27 +150,126 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiContactElementCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
+    public function apiSupplierL11nCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
-        /** @var \Modules\Profile\Controller\ApiController $profileModule */
-        $profileModule = $this->app->moduleManager->get('Profile');
-
-        if (!empty($val = $profileModule->validateContactElementCreate($request))) {
-            $response->set('contact_element_create', new FormValidation($val));
+        if (!empty($val = $this->validateSupplierL11nCreate($request))) {
+            $response->set('supplier_l11n_create', new FormValidation($val));
             $response->header->status = RequestStatusCode::R_400;
 
             return;
         }
 
-        $contactElement = $profileModule->createContactElementFromRequest($request);
+        $supplierL11n = $this->createSupplierL11nFromRequest($request);
+        $this->createModel($request->header->account, $supplierL11n, SupplierL11nMapper::class, 'supplier_l11n', $request->getOrigin());
+        $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Supplier localization', 'Supplier localization successfully created', $supplierL11n);
+    }
 
-        $this->createModel($request->header->account, $contactElement, ContactElementMapper::class, 'supplier-contactElement', $request->getOrigin());
-        $this->createModelRelation(
-            $request->header->account,
-            (int) $request->getData('account'),
-            $contactElement->getId(),
-        SupplierMapper::class, 'contactElements', '', $request->getOrigin());
-        $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Contact Element', 'Contact element successfully created', $contactElement);
+    /**
+     * Method to create supplier l11n from request.
+     *
+     * @param RequestAbstract $request Request
+     *
+     * @return SupplierL11n
+     *
+     * @since 1.0.0
+     */
+    private function createSupplierL11nFromRequest(RequestAbstract $request) : SupplierL11n
+    {
+        $supplierL11n           = new SupplierL11n();
+        $supplierL11n->supplier = (int) ($request->getData('supplier') ?? 0);
+        $supplierL11n->type     = new NullSupplierL11nType((int) ($request->getData('type') ?? 0));
+        $supplierL11n->setLanguage((string) (
+            $request->getData('language') ?? $request->getLanguage()
+        ));
+        $supplierL11n->description = (string) ($request->getData('description') ?? '');
+
+        return $supplierL11n;
+    }
+
+    /**
+     * Validate supplier l11n create request
+     *
+     * @param RequestAbstract $request Request
+     *
+     * @return array<string, bool>
+     *
+     * @since 1.0.0
+     */
+    private function validateSupplierL11nCreate(RequestAbstract $request) : array
+    {
+        $val = [];
+        if (($val['supplier'] = empty($request->getData('supplier')))
+            || ($val['type'] = empty($request->getData('type')))
+            || ($val['description'] = empty($request->getData('description')))
+        ) {
+            return $val;
+        }
+
+        return [];
+    }
+
+    /**
+     * Api method to create supplier l11n type
+     *
+     * @param RequestAbstract  $request  Request
+     * @param ResponseAbstract $response Response
+     * @param mixed            $data     Generic data
+     *
+     * @return void
+     *
+     * @api
+     *
+     * @since 1.0.0
+     */
+    public function apiSupplierL11nTypeCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
+    {
+        if (!empty($val = $this->validateSupplierL11nTypeCreate($request))) {
+            $response->set('supplier_l11n_type_create', new FormValidation($val));
+            $response->header->status = RequestStatusCode::R_400;
+
+            return;
+        }
+
+        $supplierL11nType = $this->createSupplierL11nTypeFromRequest($request);
+        $this->createModel($request->header->account, $supplierL11nType, SupplierL11nTypeMapper::class, 'supplier_l11n_type', $request->getOrigin());
+        $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Supplier localization type', 'Supplier localization type successfully created', $supplierL11nType);
+    }
+
+    /**
+     * Method to create supplier l11n type from request.
+     *
+     * @param RequestAbstract $request Request
+     *
+     * @return SupplierL11nType
+     *
+     * @since 1.0.0
+     */
+    private function createSupplierL11nTypeFromRequest(RequestAbstract $request) : SupplierL11nType
+    {
+        $supplierL11nType             = new SupplierL11nType();
+        $supplierL11nType->title      = (string) ($request->getData('title') ?? '');
+        $supplierL11nType->isRequired = (bool) ($request->getData('is_required') ?? false);
+
+        return $supplierL11nType;
+    }
+
+    /**
+     * Validate supplier l11n type create request
+     *
+     * @param RequestAbstract $request Request
+     *
+     * @return array<string, bool>
+     *
+     * @since 1.0.0
+     */
+    private function validateSupplierL11nTypeCreate(RequestAbstract $request) : array
+    {
+        $val = [];
+        if (($val['title'] = empty($request->getData('title')))) {
+            return $val;
+        }
+
+        return [];
     }
 
     /**
@@ -272,8 +378,8 @@ final class ApiController extends Controller
      */
     private function createSupplierAttributeTypeL11nFromRequest(RequestAbstract $request) : BaseStringL11n
     {
-        $attrL11n       = new BaseStringL11n();
-        $attrL11n->ref  = (int) ($request->getData('type') ?? 0);
+        $attrL11n      = new BaseStringL11n();
+        $attrL11n->ref = (int) ($request->getData('type') ?? 0);
         $attrL11n->setLanguage((string) (
             $request->getData('language') ?? $request->getLanguage()
         ));
@@ -342,13 +448,13 @@ final class ApiController extends Controller
      */
     private function createSupplierAttributeTypeFromRequest(RequestAbstract $request) : SupplierAttributeType
     {
-        $attrType = new SupplierAttributeType($request->getData('name') ?? '');
-        $attrType->setL11n((string) ($request->getData('title') ?? ''), $request->getData('language') ?? ISO639x1Enum::_EN);
-        $attrType->datatype            = (int) ($request->getData('datatype') ?? 0);
-        $attrType->setFields((int) ($request->getData('fields') ?? 0));
+        $attrType                    = new SupplierAttributeType($request->getData('name') ?? '');
+        $attrType->datatype          = (int) ($request->getData('datatype') ?? 0);
         $attrType->custom            = (bool) ($request->getData('custom') ?? false);
         $attrType->isRequired        = (bool) ($request->getData('is_required') ?? false);
         $attrType->validationPattern = (string) ($request->getData('validation_pattern') ?? '');
+        $attrType->setL11n((string) ($request->getData('title') ?? ''), $request->getData('language') ?? ISO639x1Enum::_EN);
+        $attrType->setFields((int) ($request->getData('fields') ?? 0));
 
         return $attrType;
     }
@@ -422,6 +528,7 @@ final class ApiController extends Controller
      */
     private function createSupplierAttributeValueFromRequest(RequestAbstract $request) : SupplierAttributeValue
     {
+        /** @var SupplierAttributeType $type */
         $type = SupplierAttributeTypeMapper::get()
             ->where('id', (int) ($request->getData('type') ?? 0))
             ->execute();
@@ -496,8 +603,8 @@ final class ApiController extends Controller
      */
     private function createSupplierAttributeValueL11nFromRequest(RequestAbstract $request) : BaseStringL11n
     {
-        $attrL11n        = new BaseStringL11n();
-        $attrL11n->ref   = (int) ($request->getData('value') ?? 0);
+        $attrL11n      = new BaseStringL11n();
+        $attrL11n->ref = (int) ($request->getData('value') ?? 0);
         $attrL11n->setLanguage((string) (
             $request->getData('language') ?? $request->getLanguage()
         ));
@@ -552,15 +659,28 @@ final class ApiController extends Controller
         }
 
         $uploaded = $this->app->moduleManager->get('Media')->uploadFiles(
-            $request->getDataList('names'),
-            $request->getDataList('filenames'),
-            $uploadedFiles,
-            $request->header->account,
-            __DIR__ . '/../../../Modules/Media/Files/Modules/SupplierManagement/' . ($request->getData('supplier') ?? '0'),
-            '/Modules/SupplierManagement/' . ($request->getData('supplier') ?? '0'),
-            $request->getData('type', 'int'),
+            names: $request->getDataList('names'),
+            fileNames: $request->getDataList('filenames'),
+            files: $uploadedFiles,
+            account: $request->header->account,
+            basePath: __DIR__ . '/../../../Modules/Media/Files/Modules/SupplierManagement/' . ($request->getData('supplier') ?? '0'),
+            virtualPath: '/Modules/SupplierManagement/' . ($request->getData('supplier') ?? '0'),
             pathSettings: PathSettings::FILE_PATH
         );
+
+        if ($request->hasData('type')) {
+            foreach ($uploaded as $file) {
+                $this->createModelRelation(
+                    $request->header->account,
+                    $file->getId(),
+                    $request->getData('type', 'int'),
+                    MediaMapper::class,
+                    'types',
+                    '',
+                    $request->getOrigin()
+                );
+            }
+        }
 
         $this->createModelRelation(
             $request->header->account,
