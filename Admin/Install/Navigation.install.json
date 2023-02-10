@@ -100,7 +100,7 @@
         "uri": "{/lang}/{/app}/purchase/analysis/supplier?{?}",
         "target": "self",
         "icon": null,
-        "order": 10,
+        "order": 15,
         "from": "SupplierManagement",
         "permission": { "permission": 2, "category": null, "element": null },
         "parent": 1002106001,

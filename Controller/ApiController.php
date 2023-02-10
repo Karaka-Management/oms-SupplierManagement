@@ -716,6 +716,14 @@ final class ApiController extends Controller
         }
 
         $model = $data['response'];
-        $this->createModelRelation($request->header->account, $request->getData('id'), $model->getId(), SupplierMapper::class, 'notes', '', $request->getOrigin());
+        $this->createModelRelation(
+            $request->header->account,
+            $request->getData('id'),
+            $model->getId(),
+            SupplierMapper::class,
+            'notes',
+            '',
+            $request->getOrigin()
+        );
     }
 }
