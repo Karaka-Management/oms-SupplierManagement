@@ -54,7 +54,7 @@ class Supplier
 
     public \DateTimeImmutable $createdAt;
 
-    public Profile $profile;
+    public Account $account;
 
     /**
      * Attributes.
@@ -104,7 +104,7 @@ class Supplier
     public function __construct()
     {
         $this->createdAt   = new \DateTimeImmutable('now');
-        $this->profile     = new Profile();
+        $this->account     = new Account();
         $this->mainAddress = new NullAddress();
     }
 
@@ -274,6 +274,17 @@ class Supplier
     public function getAttributes() : array
     {
         return $this->attributes;
+    }
+
+    public function getAttributeByTypeName(string $name) : SupplierAttribute
+    {
+        foreach ($this->attributes as $attribute) {
+            if ($attribute->type->name === $name) {
+                return $attribute;
+            }
+        }
+
+        return new NullSupplierAttribute();
     }
 
     /**

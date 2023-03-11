@@ -67,5 +67,5 @@ final class SupplierL11nMapper extends DataMapperFactory
      * @var string
      * @since 1.0.0
      */
-    public const PRIMARYFIELD ='suppliermgmt_supplier_l11n_id';
+    public const PRIMARYFIELD = 'suppliermgmt_supplier_l11n_id';
 }

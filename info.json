@@ -11,13 +11,15 @@
         "phpOMS-db": "1.0.0"
     },
     "creator": {
-        "name": "Karaka",
+        "name": "Jingga",
         "website": "jingga.app"
     },
     "description": "Supplier management module.",
     "directory": "SupplierManagement",
     "dependencies": {
         "Admin": "1.0.0",
+        "Media": "1.0.0",
+        "Payment": "1.0.0",
         "Editor": "1.0.0"
     },
     "providing": {

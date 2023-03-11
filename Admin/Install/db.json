@@ -39,12 +39,12 @@
                 "type": "DATETIME",
                 "null": false
             },
-            "suppliermgmt_supplier_profile": {
-                "name": "suppliermgmt_supplier_profile",
+            "suppliermgmt_supplier_account": {
+                "name": "suppliermgmt_supplier_account",
                 "type": "INT",
                 "null": false,
-                "foreignTable": "profile_account",
-                "foreignKey": "profile_account_id"
+                "foreignTable": "account",
+                "foreignKey": "account_id"
             },
             "suppliermgmt_supplier_address": {
                 "name": "suppliermgmt_supplier_address",

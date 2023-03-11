@@ -97,11 +97,9 @@ final class ApiController extends Controller
         $account->name1 = (string) ($request->getData('name1') ?? '');
         $account->name2 = (string) ($request->getData('name2') ?? '');
 
-        $profile = new Profile($account);
-
         $supplier          = new Supplier();
         $supplier->number  = (string) ($request->getData('number') ?? '');
-        $supplier->profile = $profile;
+        $supplier->account = $account;
 
         $addr          = new Address();
         $addr->address = (string) ($request->getData('address') ?? '');
@@ -161,7 +159,7 @@ final class ApiController extends Controller
 
         $supplierL11n = $this->createSupplierL11nFromRequest($request);
         $this->createModel($request->header->account, $supplierL11n, SupplierL11nMapper::class, 'supplier_l11n', $request->getOrigin());
-        $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Supplier localization', 'Supplier localization successfully created', $supplierL11n);
+        $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Localization', 'Localization successfully created', $supplierL11n);
     }
 
     /**
@@ -232,7 +230,7 @@ final class ApiController extends Controller
 
         $supplierL11nType = $this->createSupplierL11nTypeFromRequest($request);
         $this->createModel($request->header->account, $supplierL11nType, SupplierL11nTypeMapper::class, 'supplier_l11n_type', $request->getOrigin());
-        $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Supplier localization type', 'Supplier localization type successfully created', $supplierL11nType);
+        $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Localization type', 'Localization type successfully created', $supplierL11nType);
     }
 
     /**
@@ -364,7 +362,7 @@ final class ApiController extends Controller
 
         $attrL11n = $this->createSupplierAttributeTypeL11nFromRequest($request);
         $this->createModel($request->header->account, $attrL11n, SupplierAttributeTypeL11nMapper::class, 'attr_type_l11n', $request->getOrigin());
-        $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Attribute type localization', 'Attribute type localization successfully created', $attrL11n);
+        $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Localization', 'Localization successfully created', $attrL11n);
     }
 
     /**
@@ -589,7 +587,7 @@ final class ApiController extends Controller
 
         $attrL11n = $this->createSupplierAttributeValueL11nFromRequest($request);
         $this->createModel($request->header->account, $attrL11n, SupplierAttributeValueL11nMapper::class, 'attr_value_l11n', $request->getOrigin());
-        $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Attribute type localization', 'Attribute type localization successfully created', $attrL11n);
+        $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Localization', 'Localization successfully created', $attrL11n);
     }
 
     /**

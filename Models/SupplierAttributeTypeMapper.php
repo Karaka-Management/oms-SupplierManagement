@@ -78,5 +78,5 @@ final class SupplierAttributeTypeMapper extends DataMapperFactory
      * @var string
      * @since 1.0.0
      */
-    public const PRIMARYFIELD ='suppliermgmt_attr_type_id';
+    public const PRIMARYFIELD = 'suppliermgmt_attr_type_id';
 }

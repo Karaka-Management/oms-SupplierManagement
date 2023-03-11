@@ -145,9 +145,7 @@ final class BackendController extends Controller
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1003202001, $request, $response));
 
         $supplier = SupplierMapper::getAll()
-            ->with('profile')
-            ->with('profile/account')
-            ->with('profile/image')
+            ->with('account')
             ->with('mainAddress')
             ->limit(25)
             ->execute();
@@ -204,8 +202,7 @@ final class BackendController extends Controller
 
         /** @var \Modules\SupplierManagement\Models\Supplier $supplier */
         $supplier = SupplierMapper::get()
-            ->with('profile')
-            ->with('profile/account')
+            ->with('account')
             ->with('contactElements')
             ->with('mainAddress')
             ->with('files')->limit(5, 'files')->sort('files/id', OrderType::DESC)

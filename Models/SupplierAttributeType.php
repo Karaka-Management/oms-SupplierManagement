@@ -109,6 +109,17 @@ class SupplierAttributeType implements \JsonSerializable
         return $this->id;
     }
 
+    public function getDefaultByValue(mixed $value) : SupplierAttributeValue
+    {
+        foreach ($this->defaults as $default) {
+            if ($default->getValue() === $value) {
+                return $default;
+            }
+        }
+
+        return new NullSupplierAttributeValue();
+    }
+
     /**
      * Set l11n
      *

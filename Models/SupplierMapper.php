@@ -14,11 +14,11 @@ declare(strict_types=1);
 
 namespace Modules\SupplierManagement\Models;
 
+use Modules\Admin\Models\AccountMapper;
 use Modules\Admin\Models\AddressMapper;
 use Modules\Editor\Models\EditorDocMapper;
 use Modules\Media\Models\MediaMapper;
 use Modules\Profile\Models\ContactElementMapper;
-use Modules\Profile\Models\ProfileMapper;
 use phpOMS\DataStorage\Database\Mapper\DataMapperFactory;
 
 /**
@@ -45,7 +45,7 @@ final class SupplierMapper extends DataMapperFactory
         'suppliermgmt_supplier_type'       => ['name' => 'suppliermgmt_supplier_type',       'type' => 'int',               'internal' => 'type'],
         'suppliermgmt_supplier_info'       => ['name' => 'suppliermgmt_supplier_info',       'type' => 'string',            'internal' => 'info'],
         'suppliermgmt_supplier_created_at' => ['name' => 'suppliermgmt_supplier_created_at', 'type' => 'DateTimeImmutable', 'internal' => 'createdAt', 'readonly' => true],
-        'suppliermgmt_supplier_profile'    => ['name' => 'suppliermgmt_supplier_profile',    'type' => 'int',               'internal' => 'profile'],
+        'suppliermgmt_supplier_account'    => ['name' => 'suppliermgmt_supplier_account',    'type' => 'int',               'internal' => 'account'],
         'suppliermgmt_supplier_address'    => ['name' => 'suppliermgmt_supplier_address',    'type' => 'int',               'internal' => 'mainAddress'],
         'suppliermgmt_supplier_unit'       => ['name' => 'suppliermgmt_supplier_unit',    'type' => 'int',               'internal' => 'unit'],
     ];
@@ -64,7 +64,7 @@ final class SupplierMapper extends DataMapperFactory
      * @var string
      * @since 1.0.0
      */
-    public const PRIMARYFIELD ='suppliermgmt_supplier_id';
+    public const PRIMARYFIELD = 'suppliermgmt_supplier_id';
 
     /**
      * Created at column
@@ -81,9 +81,9 @@ final class SupplierMapper extends DataMapperFactory
      * @since 1.0.0
      */
     public const OWNS_ONE = [
-        'profile' => [
-            'mapper'   => ProfileMapper::class,
-            'external' => 'suppliermgmt_supplier_profile',
+        'account' => [
+            'mapper'   => AccountMapper::class,
+            'external' => 'suppliermgmt_supplier_account',
         ],
         'mainAddress' => [
             'mapper'   => AddressMapper::class,
