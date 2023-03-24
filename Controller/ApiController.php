@@ -6,7 +6,7 @@
  *
  * @package   Modules\SupplierManagement
  * @copyright Dennis Eichhorn
- * @license   OMS License 1.0
+ * @license   OMS License 2.0
  * @version   1.0.0
  * @link      https://jingga.app
  */
@@ -49,7 +49,7 @@ use phpOMS\Model\Message\FormValidation;
  * SupplierManagement class.
  *
  * @package Modules\SupplierManagement
- * @license OMS License 1.0
+ * @license OMS License 2.0
  * @link    https://jingga.app
  * @since   1.0.0
  */
@@ -94,22 +94,22 @@ final class ApiController extends Controller
     private function createSupplierFromRequest(RequestAbstract $request) : Supplier
     {
         $account        = new Account();
-        $account->name1 = (string) ($request->getData('name1') ?? '');
-        $account->name2 = (string) ($request->getData('name2') ?? '');
+        $account->name1 = $request->getDataString('name1') ?? '';
+        $account->name2 = $request->getDataString('name2') ?? '';
 
         $supplier          = new Supplier();
-        $supplier->number  = (string) ($request->getData('number') ?? '');
+        $supplier->number  = $request->getDataString('number') ?? '';
         $supplier->account = $account;
 
         $addr          = new Address();
-        $addr->address = (string) ($request->getData('address') ?? '');
-        $addr->postal  = (string) ($request->getData('postal') ?? '');
-        $addr->city    = (string) ($request->getData('city') ?? '');
-        $addr->state   = (string) ($request->getData('state') ?? '');
-        $addr->setCountry((string) ($request->getData('country') ?? ''));
+        $addr->address = $request->getDataString('address') ?? '';
+        $addr->postal  = $request->getDataString('postal') ?? '';
+        $addr->city    = $request->getDataString('city') ?? '';
+        $addr->state   = $request->getDataString('state') ?? '';
+        $addr->setCountry($request->getDataString('country') ?? '');
         $supplier->mainAddress = $addr;
 
-        $supplier->unit = $request->getData('unit', 'int');
+        $supplier->unit = $request->getDataInt('unit');
 
         return $supplier;
     }
@@ -174,12 +174,12 @@ final class ApiController extends Controller
     private function createSupplierL11nFromRequest(RequestAbstract $request) : SupplierL11n
     {
         $supplierL11n           = new SupplierL11n();
-        $supplierL11n->supplier = (int) ($request->getData('supplier') ?? 0);
-        $supplierL11n->type     = new NullSupplierL11nType((int) ($request->getData('type') ?? 0));
-        $supplierL11n->setLanguage((string) (
-            $request->getData('language') ?? $request->getLanguage()
-        ));
-        $supplierL11n->description = (string) ($request->getData('description') ?? '');
+        $supplierL11n->supplier = $request->getDataInt('supplier') ?? 0;
+        $supplierL11n->type     = new NullSupplierL11nType($request->getDataInt('type') ?? 0);
+        $supplierL11n->setLanguage(
+            $request->getDataString('language') ?? $request->getLanguage()
+        );
+        $supplierL11n->description = $request->getDataString('description') ?? '';
 
         return $supplierL11n;
     }
@@ -245,7 +245,7 @@ final class ApiController extends Controller
     private function createSupplierL11nTypeFromRequest(RequestAbstract $request) : SupplierL11nType
     {
         $supplierL11nType             = new SupplierL11nType();
-        $supplierL11nType->title      = (string) ($request->getData('title') ?? '');
+        $supplierL11nType->title      = $request->getDataString('title') ?? '';
         $supplierL11nType->isRequired = (bool) ($request->getData('is_required') ?? false);
 
         return $supplierL11nType;
@@ -377,11 +377,11 @@ final class ApiController extends Controller
     private function createSupplierAttributeTypeL11nFromRequest(RequestAbstract $request) : BaseStringL11n
     {
         $attrL11n      = new BaseStringL11n();
-        $attrL11n->ref = (int) ($request->getData('type') ?? 0);
-        $attrL11n->setLanguage((string) (
-            $request->getData('language') ?? $request->getLanguage()
-        ));
-        $attrL11n->content = (string) ($request->getData('title') ?? '');
+        $attrL11n->ref = $request->getDataInt('type') ?? 0;
+        $attrL11n->setLanguage(
+            $request->getDataString('language') ?? $request->getLanguage()
+        );
+        $attrL11n->content = $request->getDataString('title') ?? '';
 
         return $attrL11n;
     }
@@ -446,13 +446,13 @@ final class ApiController extends Controller
      */
     private function createSupplierAttributeTypeFromRequest(RequestAbstract $request) : SupplierAttributeType
     {
-        $attrType                    = new SupplierAttributeType($request->getData('name') ?? '');
-        $attrType->datatype          = (int) ($request->getData('datatype') ?? 0);
-        $attrType->custom            = (bool) ($request->getData('custom') ?? false);
+        $attrType                    = new SupplierAttributeType($request->getDataString('name') ?? '');
+        $attrType->datatype          = $request->getDataInt('datatype') ?? 0;
+        $attrType->custom            = $request->getDataBool('custom') ?? false;
         $attrType->isRequired        = (bool) ($request->getData('is_required') ?? false);
-        $attrType->validationPattern = (string) ($request->getData('validation_pattern') ?? '');
-        $attrType->setL11n((string) ($request->getData('title') ?? ''), $request->getData('language') ?? ISO639x1Enum::_EN);
-        $attrType->setFields((int) ($request->getData('fields') ?? 0));
+        $attrType->validationPattern = $request->getDataString('validation_pattern') ?? '';
+        $attrType->setL11n($request->getDataString('title') ?? '', $request->getDataString('language') ?? ISO639x1Enum::_EN);
+        $attrType->setFields($request->getDataInt('fields') ?? 0);
 
         return $attrType;
     }
@@ -528,15 +528,15 @@ final class ApiController extends Controller
     {
         /** @var SupplierAttributeType $type */
         $type = SupplierAttributeTypeMapper::get()
-            ->where('id', (int) ($request->getData('type') ?? 0))
+            ->where('id', $request->getDataInt('type') ?? 0)
             ->execute();
 
         $attrValue            = new SupplierAttributeValue();
-        $attrValue->isDefault = (bool) ($request->getData('default') ?? false);
+        $attrValue->isDefault = $request->getDataBool('default') ?? false;
         $attrValue->setValue($request->getData('value'), $type->datatype);
 
-        if ($request->getData('title') !== null) {
-            $attrValue->setL11n($request->getData('title'), $request->getData('language') ?? ISO639x1Enum::_EN);
+        if ($request->hasData('title')) {
+            $attrValue->setL11n($request->getDataString('title') ?? '', $request->getDataString('language') ?? ISO639x1Enum::_EN);
         }
 
         return $attrValue;
@@ -602,11 +602,11 @@ final class ApiController extends Controller
     private function createSupplierAttributeValueL11nFromRequest(RequestAbstract $request) : BaseStringL11n
     {
         $attrL11n      = new BaseStringL11n();
-        $attrL11n->ref = (int) ($request->getData('value') ?? 0);
-        $attrL11n->setLanguage((string) (
-            $request->getData('language') ?? $request->getLanguage()
-        ));
-        $attrL11n->content = (string) ($request->getData('title') ?? '');
+        $attrL11n->ref = $request->getDataInt('value') ?? 0;
+        $attrL11n->setLanguage(
+            $request->getDataString('language') ?? $request->getLanguage()
+        );
+        $attrL11n->content = $request->getDataString('title') ?? '';
 
         return $attrL11n;
     }
@@ -671,7 +671,7 @@ final class ApiController extends Controller
                 $this->createModelRelation(
                     $request->header->account,
                     $file->getId(),
-                    $request->getData('type', 'int'),
+                    $request->getDataInt('type'),
                     MediaMapper::class,
                     'types',
                     '',

@@ -6,7 +6,7 @@
  *
  * @package   Modules\SupplierManagement\Models
  * @copyright Dennis Eichhorn
- * @license   OMS License 1.0
+ * @license   OMS License 2.0
  * @version   1.0.0
  * @link      https://jingga.app
  */
@@ -23,12 +23,13 @@ use Modules\Media\Models\NullMedia;
 use Modules\Profile\Models\ContactElement;
 use Modules\Profile\Models\NullContactElement;
 use Modules\Profile\Models\Profile;
+use Modules\Payment\Models\Payment;
 
 /**
  * Supplier class.
  *
  * @package Modules\SupplierManagement\Models
- * @license OMS License 1.0
+ * @license OMS License 2.0
  * @link    https://jingga.app
  * @since   1.0.0
  */
@@ -88,6 +89,14 @@ class Supplier
 
     private array $partners = [];
 
+        /**
+     * Payments.
+     *
+     * @var Payment[]
+     * @since 1.0.0
+     */
+    private array $payments = [];
+
     /**
      * Unit
      *
@@ -144,6 +153,40 @@ class Supplier
     public function setStatus(int $status) : void
     {
         $this->status = $status;
+    }
+
+    /**
+     * Get payments
+     *
+     * @return Payment[]
+     *
+     * @since 1.0.0
+     */
+    public function getPayments() : array
+    {
+        return $this->payments;
+    }
+
+    /**
+     * Get payments
+     *
+     * @param int $type Payment type
+     *
+     * @return array
+     *
+     * @since 1.0.0
+     */
+    public function getPaymentsByType(int $type) : array
+    {
+        $payments = [];
+
+        foreach ($this->payments as $payment) {
+            if ($payment->getType() === $type) {
+                $payments[] = $payment;
+            }
+        }
+
+        return $payments;
     }
 
     /**
