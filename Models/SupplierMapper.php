@@ -120,7 +120,6 @@ final class SupplierMapper extends DataMapperFactory
             'mapper'      => SupplierAttributeMapper::class,
             'table'       => 'suppliermgmt_supplier_attr',
             'self'        => 'suppliermgmt_supplier_attr_supplier',
-            'conditional' => true,
             'external'    => null,
         ],
     ];
