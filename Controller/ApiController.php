@@ -126,8 +126,8 @@ final class ApiController extends Controller
     private function validateSupplierCreate(RequestAbstract $request) : array
     {
         $val = [];
-        if (($val['number'] = empty($request->getData('number')))
-            || ($val['name1'] = empty($request->getData('name1')))
+        if (($val['number'] = !$request->hasData('number'))
+            || ($val['name1'] = !$request->hasData('name1'))
         ) {
             return $val;
         }
@@ -196,9 +196,9 @@ final class ApiController extends Controller
     private function validateSupplierL11nCreate(RequestAbstract $request) : array
     {
         $val = [];
-        if (($val['supplier'] = empty($request->getData('supplier')))
-            || ($val['type'] = empty($request->getData('type')))
-            || ($val['description'] = empty($request->getData('description')))
+        if (($val['supplier'] = !$request->hasData('supplier'))
+            || ($val['type'] = !$request->hasData('type'))
+            || ($val['description'] = !$request->hasData('description'))
         ) {
             return $val;
         }
@@ -263,7 +263,7 @@ final class ApiController extends Controller
     private function validateSupplierL11nTypeCreate(RequestAbstract $request) : array
     {
         $val = [];
-        if (($val['title'] = empty($request->getData('title')))) {
+        if (($val['title'] = !$request->hasData('title'))) {
             return $val;
         }
 
@@ -328,9 +328,9 @@ final class ApiController extends Controller
     private function validateSupplierAttributeCreate(RequestAbstract $request) : array
     {
         $val = [];
-        if (($val['type'] = empty($request->getData('type')))
-            || ($val['value'] = empty($request->getData('value')))
-            || ($val['supplier'] = empty($request->getData('supplier')))
+        if (($val['type'] = !$request->hasData('type'))
+            || ($val['value'] = !$request->hasData('value'))
+            || ($val['supplier'] = !$request->hasData('supplier'))
         ) {
             return $val;
         }
@@ -398,8 +398,8 @@ final class ApiController extends Controller
     private function validateSupplierAttributeTypeL11nCreate(RequestAbstract $request) : array
     {
         $val = [];
-        if (($val['title'] = empty($request->getData('title')))
-            || ($val['type'] = empty($request->getData('type')))
+        if (($val['title'] = !$request->hasData('title'))
+            || ($val['type'] = !$request->hasData('type'))
         ) {
             return $val;
         }
@@ -469,8 +469,8 @@ final class ApiController extends Controller
     private function validateSupplierAttributeTypeCreate(RequestAbstract $request) : array
     {
         $val = [];
-        if (($val['title'] = empty($request->getData('title')))
-            || ($val['name'] = empty($request->getData('name')))
+        if (($val['title'] = !$request->hasData('title'))
+            || ($val['name'] = !$request->hasData('name'))
         ) {
             return $val;
         }
@@ -554,8 +554,8 @@ final class ApiController extends Controller
     private function validateSupplierAttributeValueCreate(RequestAbstract $request) : array
     {
         $val = [];
-        if (($val['type'] = empty($request->getData('type')))
-            || ($val['value'] = empty($request->getData('value')))
+        if (($val['type'] = !$request->hasData('type'))
+            || ($val['value'] = !$request->hasData('value'))
         ) {
             return $val;
         }
@@ -623,8 +623,8 @@ final class ApiController extends Controller
     private function validateSupplierAttributeValueL11nCreate(RequestAbstract $request) : array
     {
         $val = [];
-        if (($val['title'] = empty($request->getData('title')))
-            || ($val['value'] = empty($request->getData('value')))
+        if (($val['title'] = !$request->hasData('title'))
+            || ($val['value'] = !$request->hasData('value'))
         ) {
             return $val;
         }
