@@ -56,7 +56,7 @@ final class BackendController extends Controller
         $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/attribute-type-list');
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1004801001, $request, $response));
 
-        /** @var \Modules\SupplierManagement\Models\SupplierAttributeType[] $attributes */
+        /** @var \Modules\Attribute\Models\AttributeType[] $attributes */
         $attributes = SupplierAttributeTypeMapper::getAll()
             ->with('l11n')
             ->where('l11n/language', $response->getLanguage())
@@ -85,7 +85,7 @@ final class BackendController extends Controller
         $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/attribute-value-list');
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1004801001, $request, $response));
 
-        /** @var \Modules\SupplierManagement\Models\SupplierAttributeValue[] $attributes */
+        /** @var \Modules\Attribute\Models\AttributeValue[] $attributes */
         $attributes = SupplierAttributeValueMapper::getAll()
             ->with('l11n')
             ->where('l11n/language', $response->getLanguage())
@@ -114,7 +114,7 @@ final class BackendController extends Controller
         $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/attribute-type');
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1004801001, $request, $response));
 
-        /** @var \Modules\SupplierManagement\Models\SupplierAttributeType $attribute */
+        /** @var \Modules\Attribute\Models\AttributeType $attribute */
         $attribute = SupplierAttributeTypeMapper::get()
             ->with('l11n')
             ->where('id', (int) $request->getData('id'))

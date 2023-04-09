@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Modules\SupplierManagement\Models;
 
+use Modules\Attribute\Models\AttributeValueType;
 use phpOMS\DataStorage\Database\Mapper\DataMapperFactory;
 
 /**
@@ -58,6 +59,14 @@ final class SupplierAttributeValueMapper extends DataMapperFactory
             'external' => null,
         ],
     ];
+
+    /**
+     * Model to use by the mapper.
+     *
+     * @var class-string
+     * @since 1.0.0
+     */
+    public const MODEL = AttributeValueType::class;
 
     /**
      * Primary table.

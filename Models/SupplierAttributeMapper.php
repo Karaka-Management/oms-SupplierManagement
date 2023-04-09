@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Modules\SupplierManagement\Models;
 
+use Modules\Attribute\Models\Attribute;
 use phpOMS\DataStorage\Database\Mapper\DataMapperFactory;
 
 /**
@@ -34,7 +35,7 @@ final class SupplierAttributeMapper extends DataMapperFactory
      */
     public const COLUMNS = [
         'suppliermgmt_supplier_attr_id'       => ['name' => 'suppliermgmt_supplier_attr_id',       'type' => 'int', 'internal' => 'id'],
-        'suppliermgmt_supplier_attr_supplier' => ['name' => 'suppliermgmt_supplier_attr_supplier', 'type' => 'int', 'internal' => 'supplier'],
+        'suppliermgmt_supplier_attr_supplier' => ['name' => 'suppliermgmt_supplier_attr_supplier', 'type' => 'int', 'internal' => 'ref'],
         'suppliermgmt_supplier_attr_type'     => ['name' => 'suppliermgmt_supplier_attr_type',     'type' => 'int', 'internal' => 'type'],
         'suppliermgmt_supplier_attr_value'    => ['name' => 'suppliermgmt_supplier_attr_value',    'type' => 'int', 'internal' => 'value'],
     ];
@@ -55,6 +56,14 @@ final class SupplierAttributeMapper extends DataMapperFactory
             'external' => 'suppliermgmt_supplier_attr_value',
         ],
     ];
+
+    /**
+     * Model to use by the mapper.
+     *
+     * @var class-string
+     * @since 1.0.0
+     */
+    public const MODEL = Attribute::class;
 
     /**
      * Primary table.

@@ -20,10 +20,9 @@ use Modules\Admin\Models\NullAddress;
 use Modules\Editor\Models\EditorDoc;
 use Modules\Media\Models\Media;
 use Modules\Media\Models\NullMedia;
+use Modules\Payment\Models\Payment;
 use Modules\Profile\Models\ContactElement;
 use Modules\Profile\Models\NullContactElement;
-use Modules\Profile\Models\Profile;
-use Modules\Payment\Models\Payment;
 
 /**
  * Supplier class.
@@ -60,7 +59,7 @@ class Supplier
     /**
      * Attributes.
      *
-     * @var SupplierAttribute[]
+     * @var \Modules\Attribute\Models\Attribute[]
      * @since 1.0.0
      */
     private array $attributes = [];
@@ -294,43 +293,6 @@ class Supplier
     }
 
     /**
-     * Add attribute to supplier
-     *
-     * @param SupplierAttribute $attribute Attribute
-     *
-     * @return void
-     *
-     * @since 1.0.0
-     */
-    public function addAttribute(SupplierAttribute $attribute) : void
-    {
-        $this->attributes[] = $attribute;
-    }
-
-    /**
-     * Get attributes
-     *
-     * @return SupplierAttribute[]
-     *
-     * @since 1.0.0
-     */
-    public function getAttributes() : array
-    {
-        return $this->attributes;
-    }
-
-    public function getAttributeByTypeName(string $name) : SupplierAttribute
-    {
-        foreach ($this->attributes as $attribute) {
-            if ($attribute->type->name === $name) {
-                return $attribute;
-            }
-        }
-
-        return new NullSupplierAttribute();
-    }
-
-    /**
      * Get contacts.
      *
      * @return array
@@ -467,4 +429,6 @@ class Supplier
     {
         return $this->toArray();
     }
+
+    use \Modules\Attribute\Models\AttributeHolderTrait;
 }

@@ -16,20 +16,18 @@ namespace Modules\SupplierManagement\Controller;
 
 use Modules\Admin\Models\Account;
 use Modules\Admin\Models\Address;
+use Modules\Attribute\Models\Attribute;
+use Modules\Attribute\Models\AttributeType;
+use Modules\Attribute\Models\AttributeValue;
+use Modules\Attribute\Models\NullAttributeType;
+use Modules\Attribute\Models\NullAttributeValue;
 use Modules\Media\Models\MediaMapper;
 use Modules\Media\Models\PathSettings;
-use Modules\Profile\Models\ContactElementMapper;
-use Modules\Profile\Models\Profile;
-use Modules\SupplierManagement\Models\NullSupplierAttributeType;
-use Modules\SupplierManagement\Models\NullSupplierAttributeValue;
 use Modules\SupplierManagement\Models\NullSupplierL11nType;
 use Modules\SupplierManagement\Models\Supplier;
-use Modules\SupplierManagement\Models\SupplierAttribute;
 use Modules\SupplierManagement\Models\SupplierAttributeMapper;
-use Modules\SupplierManagement\Models\SupplierAttributeType;
 use Modules\SupplierManagement\Models\SupplierAttributeTypeL11nMapper;
 use Modules\SupplierManagement\Models\SupplierAttributeTypeMapper;
-use Modules\SupplierManagement\Models\SupplierAttributeValue;
 use Modules\SupplierManagement\Models\SupplierAttributeValueL11nMapper;
 use Modules\SupplierManagement\Models\SupplierAttributeValueMapper;
 use Modules\SupplierManagement\Models\SupplierL11n;
@@ -302,16 +300,16 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract $request Request
      *
-     * @return SupplierAttribute
+     * @return Attribute
      *
      * @since 1.0.0
      */
-    private function createSupplierAttributeFromRequest(RequestAbstract $request) : SupplierAttribute
+    private function createSupplierAttributeFromRequest(RequestAbstract $request) : Attribute
     {
-        $attribute           = new SupplierAttribute();
-        $attribute->supplier = (int) $request->getData('supplier');
-        $attribute->type     = new NullSupplierAttributeType((int) $request->getData('type'));
-        $attribute->value    = new NullSupplierAttributeValue((int) $request->getData('value'));
+        $attribute        = new Attribute();
+        $attribute->ref   = (int) $request->getData('supplier');
+        $attribute->type  = new NullAttributeType((int) $request->getData('type'));
+        $attribute->value = new NullAttributeValue((int) $request->getData('value'));
 
         return $attribute;
     }
@@ -440,13 +438,13 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract $request Request
      *
-     * @return SupplierAttributeType
+     * @return AttributeType
      *
      * @since 1.0.0
      */
-    private function createSupplierAttributeTypeFromRequest(RequestAbstract $request) : SupplierAttributeType
+    private function createSupplierAttributeTypeFromRequest(RequestAbstract $request) : AttributeType
     {
-        $attrType                    = new SupplierAttributeType($request->getDataString('name') ?? '');
+        $attrType                    = new AttributeType($request->getDataString('name') ?? '');
         $attrType->datatype          = $request->getDataInt('datatype') ?? 0;
         $attrType->custom            = $request->getDataBool('custom') ?? false;
         $attrType->isRequired        = (bool) ($request->getData('is_required') ?? false);
@@ -520,18 +518,18 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract $request Request
      *
-     * @return SupplierAttributeValue
+     * @return AttributeValue
      *
      * @since 1.0.0
      */
-    private function createSupplierAttributeValueFromRequest(RequestAbstract $request) : SupplierAttributeValue
+    private function createSupplierAttributeValueFromRequest(RequestAbstract $request) : AttributeValue
     {
-        /** @var SupplierAttributeType $type */
+        /** @var AttributeType $type */
         $type = SupplierAttributeTypeMapper::get()
             ->where('id', $request->getDataInt('type') ?? 0)
             ->execute();
 
-        $attrValue            = new SupplierAttributeValue();
+        $attrValue            = new AttributeValue();
         $attrValue->isDefault = $request->getDataBool('default') ?? false;
         $attrValue->setValue($request->getData('value'), $type->datatype);
 
