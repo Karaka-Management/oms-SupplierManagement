@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Modules\SupplierManagement\Models;
 
-use Modules\Attribute\Models\AttributeTypeMapper;
+use Modules\Attribute\Models\AttributeType;
 use phpOMS\DataStorage\Database\Mapper\DataMapperFactory;
 
 /**
@@ -24,6 +24,9 @@ use phpOMS\DataStorage\Database\Mapper\DataMapperFactory;
  * @license OMS License 2.0
  * @link    https://jingga.app
  * @since   1.0.0
+ *
+ * @template T of AttributeType
+ * @extends DataMapperFactory<T>
  */
 final class SupplierAttributeTypeMapper extends DataMapperFactory
 {
@@ -68,10 +71,10 @@ final class SupplierAttributeTypeMapper extends DataMapperFactory
     /**
      * Model to use by the mapper.
      *
-     * @var class-string
+     * @var class-string<T>
      * @since 1.0.0
      */
-    public const MODEL = AttributeTypeMapper::class;
+    public const MODEL = AttributeType::class;
 
     /**
      * Primary table.
