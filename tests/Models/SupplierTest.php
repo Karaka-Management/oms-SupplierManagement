@@ -52,7 +52,7 @@ final class SupplierTest extends \PHPUnit\Framework\TestCase
         self::assertEquals([], $this->supplier->getAddresses());
         self::assertEquals([], $this->supplier->getContactElements());
         self::assertEquals((new \DateTime('now'))->format('Y-m-d'), $this->supplier->createdAt->format('Y-m-d'));
-        self::assertInstanceOf('\Modules\Profile\Models\Profile', $this->supplier->profile);
+        self::assertInstanceOf('\Modules\Admin\Models\Account', $this->supplier->account);
         self::assertInstanceOf('\Modules\Admin\Models\Address', $this->supplier->mainAddress);
         self::assertInstanceOf('\Modules\Profile\Models\NullContactElement', $this->supplier->getMainContactElement(0));
     }
