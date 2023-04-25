@@ -57,28 +57,12 @@ class Supplier
     public Account $account;
 
     /**
-     * Attributes.
-     *
-     * @var \Modules\Attribute\Models\Attribute[]
-     * @since 1.0.0
-     */
-    private array $attributes = [];
-
-    /**
-     * Files.
+     * Notes.
      *
      * @var EditorDoc[]
      * @since 1.0.0
      */
     private array $notes = [];
-
-    /**
-     * Files.
-     *
-     * @var Media[]
-     * @since 1.0.0
-     */
-    private array $files = [];
 
     private array $contactElements = [];
 
@@ -241,20 +225,6 @@ class Supplier
     }
 
     /**
-     * Add media.
-     *
-     * @param Media $file Media
-     *
-     * @return void
-     *
-     * @since 1.0.0
-     */
-    public function addFile(Media $file) : void
-    {
-        $this->files[] = $file;
-    }
-
-    /**
      * Get addresses.
      *
      * @return array
@@ -356,58 +326,6 @@ class Supplier
     }
 
     /**
-     * Get files
-     *
-     * @return Media[]
-     *
-     * @since 1.0.0
-     */
-    public function getFiles() : array
-    {
-        return $this->files;
-    }
-
-    /**
-     * Get media file by type
-     *
-     * @param int $type Media type
-     *
-     * @return Media
-     *
-     * @since 1.0.0
-     */
-    public function getFileByType(int $type) : Media
-    {
-        foreach ($this->files as $file) {
-            if ($file->hasMediaTypeId($type)) {
-                return $file;
-            }
-        }
-
-        return new NullMedia();
-    }
-
-    /**
-     * Get all media files by type name
-     *
-     * @param string $type Media type
-     *
-     * @return Media
-     *
-     * @since 1.0.0
-     */
-    public function getFileByTypeName(string $type) : Media
-    {
-        foreach ($this->files as $file) {
-            if ($file->hasMediaTypeName($type)) {
-                return $file;
-            }
-        }
-
-        return new NullMedia();
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function toArray() : array
@@ -430,5 +348,6 @@ class Supplier
         return $this->toArray();
     }
 
+    use \Modules\Media\Models\MediaListTrait;
     use \Modules\Attribute\Models\AttributeHolderTrait;
 }
