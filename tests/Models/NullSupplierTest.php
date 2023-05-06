@@ -37,6 +37,6 @@ final class NullSupplierTest extends \PHPUnit\Framework\TestCase
     public function testId() : void
     {
         $null = new NullSupplier(2);
-        self::assertEquals(2, $null->getId());
+        self::assertEquals(2, $null->id);
     }
 }

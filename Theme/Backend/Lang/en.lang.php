@@ -13,6 +13,8 @@
 declare(strict_types=1);
 
 return ['SupplierManagement' => [
+    'AttributeTypes'             => 'Attribute Types',
+    'Attribute'             => 'Attribute',
     'Accounting'             => 'Accounting',
     'Addition'               => 'Addition',
     'Address'                => 'Address',

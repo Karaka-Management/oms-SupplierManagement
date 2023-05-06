@@ -40,15 +40,15 @@ class Supplier
      * @var int
      * @since 1.0.0
      */
-    protected int $id = 0;
+    public int $id = 0;
 
     public string $number = '';
 
     public string $numberReverse = '';
 
-    private int $status = SupplierStatus::ACTIVE;
+    public int $status = SupplierStatus::ACTIVE;
 
-    private int $type = 0;
+    public int $type = 0;
 
     public string $info = '';
 

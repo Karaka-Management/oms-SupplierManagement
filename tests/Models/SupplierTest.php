@@ -41,7 +41,7 @@ final class SupplierTest extends \PHPUnit\Framework\TestCase
      */
     public function testDefault() : void
     {
-        self::assertEquals(0, $this->supplier->getId());
+        self::assertEquals(0, $this->supplier->id);
         self::assertEquals('', $this->supplier->number);
         self::assertEquals('', $this->supplier->numberReverse);
         self::assertEquals('', $this->supplier->info);

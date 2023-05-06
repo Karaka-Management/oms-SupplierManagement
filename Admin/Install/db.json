@@ -379,6 +379,30 @@
             }
         }
     },
+    "suppliermgmt_supplier_account": {
+        "name": "suppliermgmt_supplier_account",
+        "fields": {
+            "suppliermgmt_supplier_account_id": {
+                "name": "suppliermgmt_supplier_account_id",
+                "type": "INT",
+                "null": false,
+                "primary": true,
+                "autoincrement": true
+            },
+            "suppliermgmt_supplier_account_account": {
+                "name": "suppliermgmt_supplier_account_account",
+                "type": "VARCHAR(50)",
+                "null": false
+            },
+            "suppliermgmt_supplier_account_supplier": {
+                "name": "suppliermgmt_supplier_account_supplier",
+                "type": "INT(11)",
+                "null": false,
+                "foreignTable": "suppliermgmt_supplier",
+                "foreignKey": "suppliermgmt_supplier_id"
+            }
+        }
+    },
     "suppliermgmt_supplier_media": {
         "name": "suppliermgmt_supplier_media",
         "fields": {

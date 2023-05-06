@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Modules\SupplierManagement\Controller;
 
 use Modules\Billing\Models\PurchaseBillMapper;
+use Modules\SupplierManagement\Models\SupplierAttributeTypeL11nMapper;
 use Modules\SupplierManagement\Models\SupplierAttributeTypeMapper;
 use Modules\SupplierManagement\Models\SupplierAttributeValueMapper;
 use Modules\SupplierManagement\Models\SupplierMapper;
@@ -50,7 +51,7 @@ final class BackendController extends Controller
      * @since 1.0.0
      * @codeCoverageIgnore
      */
-    public function SupplierManagementAttributeTypeList(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : RenderableInterface
+    public function viewSupplierManagementAttributeTypeList(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : RenderableInterface
     {
         $view = new View($this->app->l11nManager, $request, $response);
         $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/attribute-type-list');
@@ -79,7 +80,7 @@ final class BackendController extends Controller
      * @since 1.0.0
      * @codeCoverageIgnore
      */
-    public function SupplierManagementAttributeValues(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : RenderableInterface
+    public function viewSupplierManagementAttributeValues(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : RenderableInterface
     {
         $view = new View($this->app->l11nManager, $request, $response);
         $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/attribute-value-list');
@@ -108,7 +109,7 @@ final class BackendController extends Controller
      * @since 1.0.0
      * @codeCoverageIgnore
      */
-    public function SupplierManagementAttributeType(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : RenderableInterface
+    public function viewSupplierManagementAttributeType(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : RenderableInterface
     {
         $view = new View($this->app->l11nManager, $request, $response);
         $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/attribute-type');
@@ -121,7 +122,12 @@ final class BackendController extends Controller
             ->where('l11n/language', $response->getLanguage())
             ->execute();
 
+        $l11ns = SupplierAttributeTypeL11nMapper::getAll()
+            ->where('ref', $attribute->id)
+            ->execute();
+
         $view->addData('attribute', $attribute);
+        $view->addData('l11ns', $l11ns);
 
         return $view;
     }
@@ -214,11 +220,11 @@ final class BackendController extends Controller
 
         // stats
         if ($this->app->moduleManager->isActive('Billing')) {
-            $ytd                  = PurchaseBillMapper::getPurchaseBySupplierId($supplier->getId(), new SmartDateTime('Y-01-01'), new SmartDateTime('now'));
-            $mtd                  = PurchaseBillMapper::getPurchaseBySupplierId($supplier->getId(), new SmartDateTime('Y-m-01'), new SmartDateTime('now'));
-            $lastOrder            = PurchaseBillMapper::getLastOrderDateBySupplierId($supplier->getId());
-            $newestInvoices       = PurchaseBillMapper::getAll()->with('supplier')->where('supplier', $supplier->getId())->sort('id', OrderType::DESC)->limit(5)->execute();
-            $monthlyPurchaseCosts = PurchaseBillMapper::getSupplierMonthlyPurchaseCosts($supplier->getId(), (new SmartDateTime('now'))->createModify(-1), new SmartDateTime('now'));
+            $ytd                  = PurchaseBillMapper::getPurchaseBySupplierId($supplier->id, new SmartDateTime('Y-01-01'), new SmartDateTime('now'));
+            $mtd                  = PurchaseBillMapper::getPurchaseBySupplierId($supplier->id, new SmartDateTime('Y-m-01'), new SmartDateTime('now'));
+            $lastOrder            = PurchaseBillMapper::getLastOrderDateBySupplierId($supplier->id);
+            $newestInvoices       = PurchaseBillMapper::getAll()->with('supplier')->where('supplier', $supplier->id)->sort('id', OrderType::DESC)->limit(5)->execute();
+            $monthlyPurchaseCosts = PurchaseBillMapper::getSupplierMonthlyPurchaseCosts($supplier->id, (new SmartDateTime('now'))->createModify(-1), new SmartDateTime('now'));
         } else {
             $ytd                  = new Money();
             $mtd                  = new Money();

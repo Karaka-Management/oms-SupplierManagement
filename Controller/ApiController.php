@@ -505,7 +505,7 @@ final class ApiController extends Controller
             $this->createModelRelation(
                 $request->header->account,
                 (int) $request->getData('type'),
-                $attrValue->getId(),
+                $attrValue->id,
                 SupplierAttributeTypeMapper::class, 'defaults', '', $request->getOrigin()
             );
         }
@@ -668,7 +668,7 @@ final class ApiController extends Controller
             foreach ($uploaded as $file) {
                 $this->createModelRelation(
                     $request->header->account,
-                    $file->getId(),
+                    $file->id,
                     $request->getDataInt('type'),
                     MediaMapper::class,
                     'types',
@@ -681,7 +681,7 @@ final class ApiController extends Controller
         $this->createModelRelation(
             $request->header->account,
             (int) $request->getData('supplier'),
-            \reset($uploaded)->getId(),
+            \reset($uploaded)->id,
             SupplierMapper::class, 'files', '', $request->getOrigin()
         );
 
@@ -715,7 +715,7 @@ final class ApiController extends Controller
         $this->createModelRelation(
             $request->header->account,
             $request->getData('id'),
-            $model->getId(),
+            $model->id,
             SupplierMapper::class,
             'notes',
             '',
