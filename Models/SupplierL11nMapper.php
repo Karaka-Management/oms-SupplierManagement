@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Modules\SupplierManagement\Models;
 
 use phpOMS\DataStorage\Database\Mapper\DataMapperFactory;
+use phpOMS\Localization\BaseStringL11n;
 
 /**
  * Supplier mapper class.
@@ -24,7 +25,7 @@ use phpOMS\DataStorage\Database\Mapper\DataMapperFactory;
  * @link    https://jingga.app
  * @since   1.0.0
  *
- * @template T of SupplierL11n
+ * @template T of BaseStringL11n
  * @extends DataMapperFactory<T>
  */
 final class SupplierL11nMapper extends DataMapperFactory
@@ -37,8 +38,8 @@ final class SupplierL11nMapper extends DataMapperFactory
      */
     public const COLUMNS = [
         'suppliermgmt_supplier_l11n_id'          => ['name' => 'suppliermgmt_supplier_l11n_id',          'type' => 'int',    'internal' => 'id'],
-        'suppliermgmt_supplier_l11n_description' => ['name' => 'suppliermgmt_supplier_l11n_description', 'type' => 'string', 'internal' => 'description', 'autocomplete' => true],
-        'suppliermgmt_supplier_l11n_supplier'        => ['name' => 'suppliermgmt_supplier_l11n_supplier',        'type' => 'int',    'internal' => 'supplier'],
+        'suppliermgmt_supplier_l11n_description' => ['name' => 'suppliermgmt_supplier_l11n_description', 'type' => 'string', 'internal' => 'content', 'autocomplete' => true],
+        'suppliermgmt_supplier_l11n_supplier'        => ['name' => 'suppliermgmt_supplier_l11n_supplier',        'type' => 'int',    'internal' => 'ref'],
         'suppliermgmt_supplier_l11n_lang'        => ['name' => 'suppliermgmt_supplier_l11n_lang',        'type' => 'string', 'internal' => 'language'],
         'suppliermgmt_supplier_l11n_typeref'     => ['name' => 'suppliermgmt_supplier_l11n_typeref',     'type' => 'int',    'internal' => 'type'],
     ];
@@ -71,4 +72,12 @@ final class SupplierL11nMapper extends DataMapperFactory
      * @since 1.0.0
      */
     public const PRIMARYFIELD = 'suppliermgmt_supplier_l11n_id';
+
+    /**
+     * Model to use by the mapper.
+     *
+     * @var class-string<T>
+     * @since 1.0.0
+     */
+    public const MODEL = BaseStringL11n::class;
 }

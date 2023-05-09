@@ -23,20 +23,19 @@ use Modules\Attribute\Models\NullAttributeType;
 use Modules\Attribute\Models\NullAttributeValue;
 use Modules\Media\Models\MediaMapper;
 use Modules\Media\Models\PathSettings;
-use Modules\SupplierManagement\Models\NullSupplierL11nType;
 use Modules\SupplierManagement\Models\Supplier;
 use Modules\SupplierManagement\Models\SupplierAttributeMapper;
 use Modules\SupplierManagement\Models\SupplierAttributeTypeL11nMapper;
 use Modules\SupplierManagement\Models\SupplierAttributeTypeMapper;
 use Modules\SupplierManagement\Models\SupplierAttributeValueL11nMapper;
 use Modules\SupplierManagement\Models\SupplierAttributeValueMapper;
-use Modules\SupplierManagement\Models\SupplierL11n;
 use Modules\SupplierManagement\Models\SupplierL11nMapper;
-use Modules\SupplierManagement\Models\SupplierL11nType;
 use Modules\SupplierManagement\Models\SupplierL11nTypeMapper;
 use Modules\SupplierManagement\Models\SupplierMapper;
 use phpOMS\Localization\BaseStringL11n;
+use phpOMS\Localization\BaseStringL11nType;
 use phpOMS\Localization\ISO639x1Enum;
+use phpOMS\Localization\NullBaseStringL11nType;
 use phpOMS\Message\Http\RequestStatusCode;
 use phpOMS\Message\NotificationLevel;
 use phpOMS\Message\RequestAbstract;
@@ -165,19 +164,19 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract $request Request
      *
-     * @return SupplierL11n
+     * @return BaseStringL11n
      *
      * @since 1.0.0
      */
-    private function createSupplierL11nFromRequest(RequestAbstract $request) : SupplierL11n
+    private function createSupplierL11nFromRequest(RequestAbstract $request) : BaseStringL11n
     {
-        $supplierL11n           = new SupplierL11n();
-        $supplierL11n->supplier = $request->getDataInt('supplier') ?? 0;
-        $supplierL11n->type     = new NullSupplierL11nType($request->getDataInt('type') ?? 0);
+        $supplierL11n           = new BaseStringL11n();
+        $supplierL11n->ref = $request->getDataInt('supplier') ?? 0;
+        $supplierL11n->type     = new NullBaseStringL11nType($request->getDataInt('type') ?? 0);
         $supplierL11n->setLanguage(
             $request->getDataString('language') ?? $request->getLanguage()
         );
-        $supplierL11n->description = $request->getDataString('description') ?? '';
+        $supplierL11n->content = $request->getDataString('description') ?? '';
 
         return $supplierL11n;
     }
@@ -236,13 +235,13 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract $request Request
      *
-     * @return SupplierL11nType
+     * @return BaseStringL11nType
      *
      * @since 1.0.0
      */
-    private function createSupplierL11nTypeFromRequest(RequestAbstract $request) : SupplierL11nType
+    private function createSupplierL11nTypeFromRequest(RequestAbstract $request) : BaseStringL11nType
     {
-        $supplierL11nType             = new SupplierL11nType();
+        $supplierL11nType             = new BaseStringL11nType();
         $supplierL11nType->title      = $request->getDataString('title') ?? '';
         $supplierL11nType->isRequired = (bool) ($request->getData('is_required') ?? false);
 
