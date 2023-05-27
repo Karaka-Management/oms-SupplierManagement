@@ -63,8 +63,8 @@ final class SupplierTest extends \PHPUnit\Framework\TestCase
      */
     public function testStatusInputOutput() : void
     {
-    	$this->supplier->setStatus(SupplierStatus::INACTIVE);
-    	self::assertEquals(SupplierStatus::INACTIVE, $this->supplier->getStatus());
+        $this->supplier->setStatus(SupplierStatus::INACTIVE);
+        self::assertEquals(SupplierStatus::INACTIVE, $this->supplier->getStatus());
     }
 
     /**
