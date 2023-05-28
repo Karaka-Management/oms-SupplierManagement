@@ -15,7 +15,7 @@ declare(strict_types=1);
 use phpOMS\Localization\ISO639Enum;
 
 $attribute = $this->getData('attribute');
-$l11ns = $this->getData('l11ns');
+$l11ns     = $this->getData('l11ns');
 
 echo $this->getData('nav')->render(); ?>
 

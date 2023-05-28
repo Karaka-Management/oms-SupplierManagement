@@ -70,7 +70,7 @@ class Supplier
 
     private array $partners = [];
 
-        /**
+    /**
      * Payments.
      *
      * @var Payment[]

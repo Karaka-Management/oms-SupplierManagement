@@ -171,7 +171,7 @@ final class ApiController extends Controller
     private function createSupplierL11nFromRequest(RequestAbstract $request) : BaseStringL11n
     {
         $supplierL11n           = new BaseStringL11n();
-        $supplierL11n->ref = $request->getDataInt('supplier') ?? 0;
+        $supplierL11n->ref      = $request->getDataInt('supplier') ?? 0;
         $supplierL11n->type     = new NullBaseStringL11nType($request->getDataInt('type') ?? 0);
         $supplierL11n->setLanguage(
             $request->getDataString('language') ?? $request->getLanguage()
