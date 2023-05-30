@@ -21,17 +21,17 @@ $countries    = \phpOMS\Localization\ISO3166NameEnum::getConstants();
 /**
  * @var \Modules\SupplierManagement\Models\Supplier $supplier
  */
-$supplier = $this->getData('supplier');
+$supplier = $this->data['supplier'];
 $notes    = $supplier->getNotes();
 $files    = $supplier->files;
 
-$newestInvoices       = $this->getData('newestInvoices') ?? [];
-$monthlyPurchaseCosts = $this->getData('monthlyPurchaseCosts') ?? [];
+$newestInvoices       = $this->data['newestInvoices'] ?? [];
+$monthlyPurchaseCosts = $this->data['monthlyPurchaseCosts'] ?? [];
 
 /**
  * @var \phpOMS\Views\View $this
  */
-echo $this->getData('nav')->render();
+echo $this->data['nav']->render();
 ?>
 <div class="tabview tab-2">
     <div class="box">
