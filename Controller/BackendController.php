@@ -60,7 +60,7 @@ final class BackendController extends Controller
         /** @var \Modules\Attribute\Models\AttributeType[] $attributes */
         $attributes = SupplierAttributeTypeMapper::getAll()
             ->with('l11n')
-            ->where('l11n/language', $response->getLanguage())
+            ->where('l11n/language', $response->header->l11n->language)
             ->execute();
 
         $view->addData('attributes', $attributes);
@@ -89,7 +89,7 @@ final class BackendController extends Controller
         /** @var \Modules\Attribute\Models\AttributeValue[] $attributes */
         $attributes = SupplierAttributeValueMapper::getAll()
             ->with('l11n')
-            ->where('l11n/language', $response->getLanguage())
+            ->where('l11n/language', $response->header->l11n->language)
             ->execute();
 
         $view->addData('attributes', $attributes);
@@ -119,7 +119,7 @@ final class BackendController extends Controller
         $attribute = SupplierAttributeTypeMapper::get()
             ->with('l11n')
             ->where('id', (int) $request->getData('id'))
-            ->where('l11n/language', $response->getLanguage())
+            ->where('l11n/language', $response->header->l11n->language)
             ->execute();
 
         $l11ns = SupplierAttributeTypeL11nMapper::getAll()
