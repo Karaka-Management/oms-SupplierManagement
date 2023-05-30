@@ -14,10 +14,10 @@ declare(strict_types=1);
 
 use phpOMS\Localization\ISO639Enum;
 
-$attribute = $this->getData('attribute');
-$l11ns     = $this->getData('l11ns');
+$attribute = $this->data['attribute'];
+$l11ns     = $this->data['l11ns'];
 
-echo $this->getData('nav')->render(); ?>
+echo $this->data['nav']->render(); ?>
 
 <div class="row">
     <div class="col-md-6 col-xs-12">

@@ -48,7 +48,7 @@ final class SupplierTest extends \PHPUnit\Framework\TestCase
         self::assertEquals(SupplierStatus::ACTIVE, $this->supplier->getStatus());
         self::assertEquals(0, $this->supplier->getType());
         self::assertEquals([], $this->supplier->getNotes());
-        self::assertEquals([], $this->supplier->getFiles());
+        self::assertEquals([], $this->supplier->files);
         self::assertEquals([], $this->supplier->getAddresses());
         self::assertEquals([], $this->supplier->getContactElements());
         self::assertEquals((new \DateTime('now'))->format('Y-m-d'), $this->supplier->createdAt->format('Y-m-d'));
@@ -84,7 +84,7 @@ final class SupplierTest extends \PHPUnit\Framework\TestCase
     public function testFileInputOutput() : void
     {
         $this->supplier->addFile($temp = new Media());
-        self::assertCount(1, $this->supplier->getFiles());
+        self::assertCount(1, $this->supplier->files);
     }
 
     /**

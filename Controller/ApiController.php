@@ -68,7 +68,7 @@ final class ApiController extends Controller
     public function apiSupplierCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateSupplierCreate($request))) {
-            $response->set('supplier_create', new FormValidation($val));
+            $response->data['supplier_create'] = new FormValidation($val);
             $response->header->status = RequestStatusCode::R_400;
 
             return;
@@ -148,7 +148,7 @@ final class ApiController extends Controller
     public function apiSupplierL11nCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateSupplierL11nCreate($request))) {
-            $response->set('supplier_l11n_create', new FormValidation($val));
+            $response->data['supplier_l11n_create'] = new FormValidation($val);
             $response->header->status = RequestStatusCode::R_400;
 
             return;
@@ -174,7 +174,7 @@ final class ApiController extends Controller
         $supplierL11n->ref  = $request->getDataInt('supplier') ?? 0;
         $supplierL11n->type = new NullBaseStringL11nType($request->getDataInt('type') ?? 0);
         $supplierL11n->setLanguage(
-            $request->getDataString('language') ?? $request->getLanguage()
+            $request->getDataString('language') ?? $request->header->l11n->language
         );
         $supplierL11n->content = $request->getDataString('description') ?? '';
 
@@ -219,7 +219,7 @@ final class ApiController extends Controller
     public function apiSupplierL11nTypeCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateSupplierL11nTypeCreate($request))) {
-            $response->set('supplier_l11n_type_create', new FormValidation($val));
+            $response->data['supplier_l11n_type_create'] = new FormValidation($val);
             $response->header->status = RequestStatusCode::R_400;
 
             return;
@@ -283,7 +283,7 @@ final class ApiController extends Controller
     public function apiSupplierAttributeCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateSupplierAttributeCreate($request))) {
-            $response->set('attribute_create', new FormValidation($val));
+            $response->data['attribute_create'] = new FormValidation($val);
             $response->header->status = RequestStatusCode::R_400;
 
             return;
@@ -351,7 +351,7 @@ final class ApiController extends Controller
     public function apiSupplierAttributeTypeL11nCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateSupplierAttributeTypeL11nCreate($request))) {
-            $response->set('attr_type_l11n_create', new FormValidation($val));
+            $response->data['attr_type_l11n_create'] = new FormValidation($val);
             $response->header->status = RequestStatusCode::R_400;
 
             return;
@@ -376,7 +376,7 @@ final class ApiController extends Controller
         $attrL11n      = new BaseStringL11n();
         $attrL11n->ref = $request->getDataInt('type') ?? 0;
         $attrL11n->setLanguage(
-            $request->getDataString('language') ?? $request->getLanguage()
+            $request->getDataString('language') ?? $request->header->l11n->language
         );
         $attrL11n->content = $request->getDataString('title') ?? '';
 
@@ -420,7 +420,7 @@ final class ApiController extends Controller
     public function apiSupplierAttributeTypeCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateSupplierAttributeTypeCreate($request))) {
-            $response->set('attr_type_create', new FormValidation($val));
+            $response->data['attr_type_create'] = new FormValidation($val);
             $response->header->status = RequestStatusCode::R_400;
 
             return;
@@ -491,7 +491,7 @@ final class ApiController extends Controller
     public function apiSupplierAttributeValueCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateSupplierAttributeValueCreate($request))) {
-            $response->set('attr_value_create', new FormValidation($val));
+            $response->data['attr_value_create'] = new FormValidation($val);
             $response->header->status = RequestStatusCode::R_400;
 
             return;
@@ -576,7 +576,7 @@ final class ApiController extends Controller
     public function apiSupplierAttributeValueL11nCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateSupplierAttributeValueL11nCreate($request))) {
-            $response->set('attr_value_l11n_create', new FormValidation($val));
+            $response->data['attr_value_l11n_create'] = new FormValidation($val);
             $response->header->status = RequestStatusCode::R_400;
 
             return;
@@ -601,7 +601,7 @@ final class ApiController extends Controller
         $attrL11n      = new BaseStringL11n();
         $attrL11n->ref = $request->getDataInt('value') ?? 0;
         $attrL11n->setLanguage(
-            $request->getDataString('language') ?? $request->getLanguage()
+            $request->getDataString('language') ?? $request->header->l11n->language
         );
         $attrL11n->content = $request->getDataString('title') ?? '';
 
@@ -644,7 +644,7 @@ final class ApiController extends Controller
      */
     public function apiFileCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
-        $uploadedFiles = $request->getFiles();
+        $uploadedFiles = $request->files;
 
         if (empty($uploadedFiles)) {
             $this->fillJsonResponse($request, $response, NotificationLevel::ERROR, 'Item', 'Invalid supplier image', $uploadedFiles);

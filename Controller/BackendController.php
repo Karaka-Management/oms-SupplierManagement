@@ -55,15 +55,15 @@ final class BackendController extends Controller
     {
         $view = new View($this->app->l11nManager, $request, $response);
         $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/attribute-type-list');
-        $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1004801001, $request, $response));
+        $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1004801001, $request, $response);
 
         /** @var \Modules\Attribute\Models\AttributeType[] $attributes */
         $attributes = SupplierAttributeTypeMapper::getAll()
             ->with('l11n')
-            ->where('l11n/language', $response->getLanguage())
+            ->where('l11n/language', $response->header->l11n->language)
             ->execute();
 
-        $view->addData('attributes', $attributes);
+        $view->data['attributes'] = $attributes;
 
         return $view;
     }
@@ -84,15 +84,15 @@ final class BackendController extends Controller
     {
         $view = new View($this->app->l11nManager, $request, $response);
         $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/attribute-value-list');
-        $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1004801001, $request, $response));
+        $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1004801001, $request, $response);
 
         /** @var \Modules\Attribute\Models\AttributeValue[] $attributes */
         $attributes = SupplierAttributeValueMapper::getAll()
             ->with('l11n')
-            ->where('l11n/language', $response->getLanguage())
+            ->where('l11n/language', $response->header->l11n->language)
             ->execute();
 
-        $view->addData('attributes', $attributes);
+        $view->data['attributes'] = $attributes;
 
         return $view;
     }
@@ -113,21 +113,21 @@ final class BackendController extends Controller
     {
         $view = new View($this->app->l11nManager, $request, $response);
         $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/attribute-type');
-        $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1004801001, $request, $response));
+        $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1004801001, $request, $response);
 
         /** @var \Modules\Attribute\Models\AttributeType $attribute */
         $attribute = SupplierAttributeTypeMapper::get()
             ->with('l11n')
             ->where('id', (int) $request->getData('id'))
-            ->where('l11n/language', $response->getLanguage())
+            ->where('l11n/language', $response->header->l11n->language)
             ->execute();
 
         $l11ns = SupplierAttributeTypeL11nMapper::getAll()
             ->where('ref', $attribute->id)
             ->execute();
 
-        $view->addData('attribute', $attribute);
-        $view->addData('l11ns', $l11ns);
+        $view->data['attribute'] = $attribute;
+        $view->data['l11ns'] = $l11ns;
 
         return $view;
     }
@@ -148,7 +148,7 @@ final class BackendController extends Controller
     {
         $view = new View($this->app->l11nManager, $request, $response);
         $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/supplier-list');
-        $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1003202001, $request, $response));
+        $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1003202001, $request, $response);
 
         $supplier = SupplierMapper::getAll()
             ->with('account')
@@ -156,7 +156,7 @@ final class BackendController extends Controller
             ->limit(25)
             ->execute();
 
-        $view->addData('supplier', $supplier);
+        $view->data['supplier'] = $supplier;
 
         return $view;
     }
@@ -177,7 +177,7 @@ final class BackendController extends Controller
     {
         $view = new View($this->app->l11nManager, $request, $response);
         $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/supplier-create');
-        $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1003202001, $request, $response));
+        $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1003202001, $request, $response);
 
         return $view;
     }
@@ -197,14 +197,14 @@ final class BackendController extends Controller
     public function viewSupplierManagementSupplierProfile(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : RenderableInterface
     {
         /** @var \phpOMS\Model\Html\Head $head */
-        $head = $response->get('Content')->getData('head');
+        $head = $response->get('Content')->head;
         $head->addAsset(AssetType::CSS, 'Resources/chartjs/Chartjs/chart.css');
         $head->addAsset(AssetType::JSLATE, 'Resources/chartjs/Chartjs/chart.js');
         $head->addAsset(AssetType::JSLATE, 'Modules/SupplierManagement/Controller.js', ['type' => 'module']);
 
         $view = new View($this->app->l11nManager, $request, $response);
         $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/supplier-profile');
-        $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1003202001, $request, $response));
+        $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1003202001, $request, $response);
 
         /** @var \Modules\SupplierManagement\Models\Supplier $supplier */
         $supplier = SupplierMapper::get()
@@ -216,7 +216,7 @@ final class BackendController extends Controller
             ->where('id', (int) $request->getData('id'))
             ->execute();
 
-        $view->setData('supplier', $supplier);
+        $view->data['supplier'] = $supplier;
 
         // stats
         if ($this->app->moduleManager->isActive('Billing')) {
@@ -233,11 +233,11 @@ final class BackendController extends Controller
             $monthlyPurchaseCosts = [];
         }
 
-        $view->addData('ytd', $ytd);
-        $view->addData('mtd', $mtd);
-        $view->addData('lastOrder', $lastOrder);
-        $view->addData('newestInvoices', $newestInvoices);
-        $view->addData('monthlyPurchaseCosts', $monthlyPurchaseCosts);
+        $view->data['ytd'] = $ytd;
+        $view->data['mtd'] = $mtd;
+        $view->data['lastOrder'] = $lastOrder;
+        $view->data['newestInvoices'] = $newestInvoices;
+        $view->data['monthlyPurchaseCosts'] = $monthlyPurchaseCosts;
 
         return $view;
     }
