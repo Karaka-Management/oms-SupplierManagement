@@ -12,7 +12,8 @@
  */
 declare(strict_types=1);
 
-use Modules\Profile\Models\ContactType;
+use Modules\Admin\Models\ContactType;
+use Modules\Media\Models\NullMedia;
 use phpOMS\Uri\UriFactory;
 
 $countryCodes = \phpOMS\Localization\ISO3166TwoEnum::getConstants();
@@ -22,11 +23,13 @@ $countries    = \phpOMS\Localization\ISO3166NameEnum::getConstants();
  * @var \Modules\SupplierManagement\Models\Supplier $supplier
  */
 $supplier = $this->data['supplier'];
-$notes    = $supplier->getNotes();
-$files    = $supplier->files;
+$notes  = $supplier->getNotes();
+$files  = $supplier->files;
 
-$newestInvoices       = $this->data['newestInvoices'] ?? [];
-$monthlyPurchaseCosts = $this->data['monthlyPurchaseCosts'] ?? [];
+$supplierImage = $this->getData('supplierImage') ?? new NullMedia();
+
+$newestInvoices    = $this->data['newestInvoices'] ?? [];
+$monthlySalesCosts = $this->data['monthlySalesCosts'] ?? [];
 
 /**
  * @var \phpOMS\Views\View $this
@@ -37,24 +40,20 @@ echo $this->data['nav']->render();
     <div class="box">
         <ul class="tab-links">
             <li><label for="c-tab-1"><?= $this->getHtml('Profile'); ?></label></li>
-            <li><label for="c-tab-2"><?= $this->getHtml('Contact'); ?></label></li>
             <li><label for="c-tab-3"><?= $this->getHtml('Addresses'); ?></label></li>
-            <li><label for="c-tab-4"><?= $this->getHtml('PaymentTerm'); ?></label></li>
             <li><label for="c-tab-5"><?= $this->getHtml('Payment'); ?></label></li>
             <li><label for="c-tab-6"><?= $this->getHtml('Prices'); ?></label></li>
-            <li><label for="c-tab-7"><?= $this->getHtml('AreaManager'); ?></label></li>
+            <li><label for="c-tab-7"><?= $this->getHtml('Attributes'); ?></label></li>
             <li><label for="c-tab-8"><?= $this->getHtml('Files'); ?></label></li>
-            <li><label for="c-tab-10"><?= $this->getHtml('Invoices'); ?></label>
+            <li><label for="c-tab-9"><?= $this->getHtml('Invoices'); ?></label>
             <li><label for="c-tab-10"><?= $this->getHtml('Articles'); ?></label>
-            <li><label for="c-tab-10"><?= $this->getHtml('Messages'); ?></label>
-            <li><label for="c-tab-10"><?= $this->getHtml('Support'); ?></label>
-            <li><label for="c-tab-10"><?= $this->getHtml('Modules'); ?></label>
-            <li><label for="c-tab-10"><?= $this->getHtml('Accounting'); ?></label>
-            <li><label for="c-tab-10"><?= $this->getHtml('Notes'); ?></label>
-            <li><label for="c-tab-10"><?= $this->getHtml('Tags'); ?></label>
-            <li><label for="c-tab-10"><?= $this->getHtml('Calendar'); ?></label>
-            <li><label for="c-tab-10"><?= $this->getHtml('Permission'); ?></label>
-            <li><label for="c-tab-9"><?= $this->getHtml('Logs'); ?></label>
+            <li><label for="c-tab-11"><?= $this->getHtml('Messages'); ?></label><!-- incl. support -->
+            <li><label for="c-tab-11"><?= $this->getHtml('Accounting'); ?></label>
+            <li><label for="c-tab-11"><?= $this->getHtml('Notes'); ?></label>
+            <li><label for="c-tab-11"><?= $this->getHtml('Tags'); ?></label>
+            <li><label for="c-tab-11"><?= $this->getHtml('Calendar'); ?></label>
+            <li><label for="c-tab-11"><?= $this->getHtml('Permission'); ?></label>
+            <li><label for="c-tab-12"><?= $this->getHtml('Logs'); ?></label>
         </ul>
     </div>
     <div class="tab-content">
@@ -62,7 +61,16 @@ echo $this->data['nav']->render();
         <div class="tab">
             <div class="row">
                 <div class="col-xs-12 col-lg-3 last-lg">
-                <section class="portlet">
+                    <div class="box">
+                        <?php if(true) : ?>
+                        <a class="button" href="<?= UriFactory::build('{/base}/purchase/bill/create?supplier=' . $supplier->id); ?>"><?= $this->getHtml('CreateBill', 'Billing'); ?></a>
+                        <?php endif; ?>
+                        <?php if (false) : ?>
+                            <a class="button"><?= $this->getHtml('ViewAccount', 'Accounting'); ?></a>
+                        <?php endif; ?>
+                    </div>
+
+                    <section class="portlet">
                         <form>
                             <div class="portlet-body">
                                 <table class="layout wf-100">
@@ -85,7 +93,7 @@ echo $this->data['nav']->render();
                     <section class="portlet">
                         <div class="portlet-head">
                             <?= $this->getHtml('Contact'); ?>
-                            <a class="floatRight" href=""><i class="fa fa-envelope-o btn"></i></a>
+                            <a class="end-xs" href=""><i class="fa fa-envelope-o btn"></i></a>
                         </div>
                         <div class="portlet-body">
                             <table class="layout wf-100">
@@ -99,10 +107,10 @@ echo $this->data['nav']->render();
                         </div>
                     </section>
 
-                    <section class="portlet">
+                    <section class="portlet map-small">
                         <div class="portlet-head">
                             <?= $this->getHtml('Address'); ?>
-                            <span class="clickPopup floatRight">
+                            <span class="clickPopup end-xs">
                                 <label for="addressDropdown"><i class="fa fa-print btn"></i></label>
                                 <input id="addressDropdown" name="addressDropdown" type="checkbox">
                                 <div class="popup">
@@ -135,41 +143,30 @@ echo $this->data['nav']->render();
                                 <tr><td><input type="text" id="iName1" name="name1" value="<?= $this->printHtml($supplier->mainAddress->postal); ?>" required>
                                 <tr><td><label for="iName1"><?= $this->getHtml('City'); ?></label>
                                 <tr><td><input type="text" id="iName1" name="name1" value="<?= $this->printHtml($supplier->mainAddress->city); ?>" required>
-                                <tr><td><label for="iCountry"><?= $this->getHtml('Country'); ?></label>
-                                <tr><td><select id="iCountry" name="country">
+                                <tr><td><label for="iName1"><?= $this->getHtml('Country'); ?></label>
+                                <tr><td><select name="country">
                                     <?php foreach ($countryCodes as $code3 => $code2) : ?>
                                         <option value="<?= $this->printHtml($code2); ?>"<?= $this->printHtml($code2 === $supplier->mainAddress->getCountry() ? ' selected' : ''); ?>><?= $this->printHtml($countries[$code3]); ?>
-                                    <?php endforeach; ?>
-                                </select>
-                                <tr><td>
-                                    <?php if (\is_file(__DIR__ . '/../../../../phpOMS/Localization/Maps/svg/' . \strtolower($supplier->mainAddress->getCountry()) . '.svg')) : ?>
-                                    <img alt="<?= $this->getHtml('IMG_alt_map'); ?>" id="iMap" style="width: 100%;" src="<?= UriFactory::build('phpOMS/Localization/Maps/svg/' . \strtolower($supplier->mainAddress->getCountry()) . '.svg'); ?>">
-                                    <?php endif; ?>
+                                        <?php endforeach; ?>
+                                    </select>
+                                <tr><td><label for="iName1"><?= $this->getHtml('Map'); ?></label>
+                                <tr><td><div id="supplierMap" class="map" data-lat="<?= $supplier->mainAddress->lat; ?>" data-lon="<?= $supplier->mainAddress->lon; ?>"></div>
                             </table>
+                        </div>
+                    </section>
+
+                    <section class="portlet">
+                        <div class="portlet-body">
+                            <img alt="<?= $this->printHtml($supplierImage->name); ?>" width="100%" loading="lazy" class="item-image"
+                                src="<?= $supplierImage->id === 0
+                                    ? 'Web/Backend/img/logo_grey.png'
+                                    : UriFactory::build($supplierImage->getPath()); ?>">
                         </div>
                     </section>
 
                     <section class="portlet highlight-4">
                         <div class="portlet-body">
                             <textarea class="undecorated"><?= $this->printHtml($supplier->info); ?></textarea>
-                        </div>
-                    </section>
-
-                    <section class="portlet">
-                        <div class="portlet-head"><?= $this->getHtml('Contact'); ?></div>
-                        <div class="portlet-body">
-                            <table>
-                                <tr><td><?= $this->getHtml('Main'); ?>:
-                                <tr><td><?= $this->getHtml('Phone'); ?>:
-                                    <td>
-                                <tr><td><?= $this->getHtml('Email'); ?>:
-                                    <td>
-                                <tr><td><?= $this->getHtml('Accounting'); ?>:
-                                <tr><td><?= $this->getHtml('Phone'); ?>:
-                                    <td>
-                                <tr><td><?= $this->getHtml('Email'); ?>:
-                                    <td>
-                            </table>
                         </div>
                     </section>
                 </div>
@@ -279,7 +276,6 @@ echo $this->data['nav']->render();
                         <div class="col-xs-12">
                             <section class="portlet">
                                 <div class="portlet-head"><?= $this->getHtml('RecentInvoices'); ?></div>
-                                <div class="slider">
                                 <table id="iSalesItemList" class="default">
                                     <thead>
                                     <tr>
@@ -298,11 +294,10 @@ echo $this->data['nav']->render();
                                         <td><a href="<?= $url; ?>"><?= $invoice->getNumber(); ?></a>
                                         <td><a href="<?= $url; ?>"><?= $invoice->type->getL11n(); ?></a>
                                         <td><a href="<?= $url; ?>"><?= $invoice->billTo; ?></a>
-                                        <td><a href="<?= $url; ?>"><?= $invoice->netSales->getCurrency(); ?></a>
+                                        <td><a href="<?= $url; ?>"><?= $this->getCurrency($invoice->netSales); ?></a>
                                         <td><a href="<?= $url; ?>"><?= $invoice->createdAt->format('Y-m-d'); ?></a>
                                     <?php endforeach; ?>
                                 </table>
-                                </div>
                             </section>
                         </div>
                     </div>
@@ -315,17 +310,17 @@ echo $this->data['nav']->render();
                             </section>
                         </div>
 
-                        <div class="col-xs-12 col-md-6">
+                        <div class="col-xs-12 col-lg-6">
                             <section class="portlet">
-                                <div class="portlet-head"><?= $this->getHtml('Purchase'); ?></div>
+                                <div class="portlet-head"><?= $this->getHtml('Sales'); ?></div>
                                 <div class="portlet-body">
-                                <canvas id="purchase-region" data-chart='{
+                                    <canvas id="sales-region" data-chart='{
                                             "type": "bar",
                                             "data": {
                                                 "labels": [
                                                     <?php
                                                         $temp = [];
-                                                        foreach ($monthlyPurchaseCosts as $monthly) {
+                                                        foreach ($monthlySalesCosts as $monthly) {
                                                             $temp[] = $monthly['month'] . '/' . \substr((string) $monthly['year'], -2);
                                                         }
                                                     ?>
@@ -338,61 +333,60 @@ echo $this->data['nav']->render();
                                                         "data": [
                                                             <?php
                                                                 $temp = [];
-                                                                foreach ($monthlyPurchaseCosts as $monthly) {
-                                                                    $temp[] = \round(((((int) $monthly['net_purchase']) - ((int) ($monthly['net_costs'] ?? 0))) / (((int) $monthly['net_purchase']) + 0.0001)) * 100, 2);
+                                                                foreach ($monthlySalesCosts as $monthly) {
+                                                                    $temp[] = \round(((((int) $monthly['net_sales']) - ((int) $monthly['net_costs'])) / ((int) $monthly['net_sales'])) * 100, 2);
                                                                 }
                                                             ?>
                                                             <?= \implode(',', $temp); ?>
                                                         ],
-                                                        "yAxisID": "axis-2",
+                                                        "yAxisID": "axis2",
                                                         "fill": false,
                                                         "borderColor": "rgb(255, 99, 132)",
                                                         "backgroundColor": "rgb(255, 99, 132)"
                                                     },
                                                     {
-                                                        "label": "<?= $this->getHtml('Purchase'); ?>",
+                                                        "label": "<?= $this->getHtml('Sales'); ?>",
                                                         "type": "bar",
                                                         "data": [
                                                             <?php
                                                                 $temp = [];
-                                                                foreach ($monthlyPurchaseCosts as $monthly) {
-                                                                    $temp[] = ((int) $monthly['net_purchase']) / 1000;
+                                                                foreach ($monthlySalesCosts as $monthly) {
+                                                                    $temp[] = (float) (((int) $monthly['net_sales']) / 1000);
                                                                 }
                                                             ?>
                                                             <?= \implode(',', $temp); ?>
                                                         ],
-                                                        "yAxisID": "axis-1",
+                                                        "yAxisID": "axis1",
                                                         "backgroundColor": "rgb(54, 162, 235)"
                                                     }
                                                 ]
                                             },
                                             "options": {
+                                                "responsive": true,
                                                 "scales": {
-                                                    "yAxes": [
-                                                        {
-                                                            "id": "axis-1",
+                                                    "axis1": {
+                                                        "id": "axis1",
+                                                        "display": true,
+                                                        "position": "left"
+                                                    },
+                                                    "axis2": {
+                                                        "id": "axis2",
+                                                        "display": true,
+                                                        "position": "right",
+                                                        "title": {
                                                             "display": true,
-                                                            "position": "left"
+                                                            "text": "<?= $this->getHtml('Margin'); ?> %"
                                                         },
-                                                        {
-                                                            "id": "axis-2",
-                                                            "display": true,
-                                                            "position": "right",
-                                                            "scaleLabel": {
-                                                                "display": true,
-                                                                "labelString": "<?= $this->getHtml('Margin'); ?> %"
-                                                            },
-                                                            "gridLines": {
-                                                                "display": false
-                                                            },
-                                                            "beginAtZero": true,
-                                                            "ticks": {
-                                                                "min": 0,
-                                                                "max": 100,
-                                                                "stepSize": 10
-                                                            }
+                                                        "grid": {
+                                                            "display": false
+                                                        },
+                                                        "beginAtZero": true,
+                                                        "ticks": {
+                                                            "min": 0,
+                                                            "max": 100,
+                                                            "stepSize": 10
                                                         }
-                                                    ]
+                                                    }
                                                 }
                                             }
                                     }'></canvas>
@@ -400,41 +394,6 @@ echo $this->data['nav']->render();
                             </section>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <input type="radio" id="c-tab-2" name="tabular-2"<?= $this->request->uri->fragment === 'c-tab-2' ? ' checked' : ''; ?>>
-        <div class="tab">
-            <div class="row">
-                <div class="col-xs-12 col-md-6 col-lg-4">
-                    <section class="box wf-100">
-                        <header><h1><?= $this->getHtml('Contact'); ?></h1></header>
-                        <div class="inner">
-                            <form>
-                                <table class="layout wf-100">
-                                    <tr><td><label for="iCType"><?= $this->getHtml('Type'); ?></label>
-                                    <tr><td><select id="iCType" name="actype">
-                                                <option><?= $this->getHtml('Email'); ?>
-                                                <option><?= $this->getHtml('Fax'); ?>
-                                                <option><?= $this->getHtml('Phone'); ?>
-                                            </select>
-                                    <tr><td><label for="iCStype"><?= $this->getHtml('Subtype'); ?></label>
-                                    <tr><td><select id="iCStype" name="acstype">
-                                                <option><?= $this->getHtml('Office'); ?>
-                                                <option><?= $this->getHtml('Sales'); ?>
-                                                <option><?= $this->getHtml('Purchase'); ?>
-                                                <option><?= $this->getHtml('Accounting'); ?>
-                                                <option><?= $this->getHtml('Support'); ?>
-                                            </select>
-                                    <tr><td><label for="iCInfo"><?= $this->getHtml('Info'); ?></label>
-                                    <tr><td><input type="text" id="iCInfo" name="cinfo">
-                                    <tr><td><label for="iCData"><?= $this->getHtml('Contact'); ?></label>
-                                    <tr><td><input type="text" id="iCData" name="cdata">
-                                    <tr><td colspan="2"><input type="submit" value="<?= $this->getHtml('Add', '0', '0'); ?>">
-                                </table>
-                            </form>
-                        </div>
-                    </section>
                 </div>
             </div>
         </div>
@@ -469,9 +428,62 @@ echo $this->data['nav']->render();
                     </section>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-md-6 col-lg-4">
+                    <section class="box wf-100">
+                        <header><h1><?= $this->getHtml('Contact'); ?></h1></header>
+                        <div class="inner">
+                            <form>
+                                <table class="layout wf-100">
+                                    <tr><td><label for="iCType"><?= $this->getHtml('Type'); ?></label>
+                                    <tr><td><select id="iCType" name="actype">
+                                                <option><?= $this->getHtml('Email'); ?>
+                                                <option><?= $this->getHtml('Fax'); ?>
+                                                <option><?= $this->getHtml('Phone'); ?>
+                                            </select>
+                                    <tr><td><label for="iCStype"><?= $this->getHtml('Subtype'); ?></label>
+                                    <tr><td><select id="iCStype" name="acstype">
+                                                <option><?= $this->getHtml('Office'); ?>
+                                                <option><?= $this->getHtml('Sales'); ?>
+                                                <option><?= $this->getHtml('Purchase'); ?>
+                                                <option><?= $this->getHtml('Accounting'); ?>
+                                                <option><?= $this->getHtml('Support'); ?>
+                                            </select>
+                                    <tr><td><label for="iCInfo"><?= $this->getHtml('Info'); ?></label>
+                                    <tr><td><input type="text" id="iCInfo" name="cinfo">
+                                    <tr><td><label for="iCData"><?= $this->getHtml('Contact'); ?></label>
+                                    <tr><td><input type="text" id="iCData" name="cdata">
+                                    <tr><td colspan="2"><input type="submit" value="<?= $this->getHtml('Add', '0', '0'); ?>">
+                                </table>
+                            </form>
+                        </div>
+                    </section>
+                </div>
+            </div>
         </div>
-        <input type="radio" id="c-tab-4" name="tabular-2"<?= $this->request->uri->fragment === 'c-tab-4' ? ' checked' : ''; ?>>
+        <input type="radio" id="c-tab-5" name="tabular-2"<?= $this->request->uri->fragment === 'c-tab-5' ? ' checked' : ''; ?>>
         <div class="tab">
+            <div class="row">
+                <div class="col-xs-12 col-md-6 col-lg-4">
+                    <section class="box wf-100">
+                        <header><h1><?= $this->getHtml('Payment'); ?></h1></header>
+                        <div class="inner">
+                            <form>
+                                <table class="layout wf-100">
+                                    <tr><td><label for="iACType"><?= $this->getHtml('Type'); ?></label>
+                                    <tr><td><select id="iACType" name="actype">
+                                                <option><?= $this->getHtml('Wire'); ?>
+                                                <option><?= $this->getHtml('Creditcard'); ?>
+                                            </select>
+                                    <tr><td colspan="2"><input type="submit" value="<?= $this->getHtml('Add', '0', '0'); ?>">
+                                </table>
+                            </form>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-xs-12 col-md-6 col-lg-4">
                     <section class="box wf-100">
@@ -502,28 +514,6 @@ echo $this->data['nav']->render();
                 </div>
             </div>
         </div>
-        <input type="radio" id="c-tab-5" name="tabular-2"<?= $this->request->uri->fragment === 'c-tab-5' ? ' checked' : ''; ?>>
-        <div class="tab">
-            <div class="row">
-                <div class="col-xs-12 col-md-6 col-lg-4">
-                    <section class="box wf-100">
-                        <header><h1><?= $this->getHtml('Payment'); ?></h1></header>
-                        <div class="inner">
-                            <form>
-                                <table class="layout wf-100">
-                                    <tr><td><label for="iACType"><?= $this->getHtml('Type'); ?></label>
-                                    <tr><td><select id="iACType" name="actype">
-                                                <option><?= $this->getHtml('Wire'); ?>
-                                                <option><?= $this->getHtml('Creditcard'); ?>
-                                            </select>
-                                    <tr><td colspan="2"><input type="submit" value="<?= $this->getHtml('Add', '0', '0'); ?>">
-                                </table>
-                            </form>
-                        </div>
-                    </section>
-                </div>
-            </div>
-        </div>
         <input type="radio" id="c-tab-6" name="tabular-2"<?= $this->request->uri->fragment === 'c-tab-6' ? ' checked' : ''; ?>>
         <div class="tab">
             <div class="row">
@@ -531,7 +521,7 @@ echo $this->data['nav']->render();
                     <section class="box wf-100">
                         <header><h1><?= $this->getHtml('Price'); ?></h1></header>
                         <div class="inner">
-                            <form action="<?= \phpOMS\Uri\UriFactory::build('{/api}...'); ?>" method="post">
+                            <form action="<?= UriFactory::build('{/api}...'); ?>" method="post">
                                 <table class="layout wf-100">
                                     <tbody>
                                     <tr><td colspan="2"><label for="iPType"><?= $this->getHtml('Type'); ?></label>
@@ -573,7 +563,7 @@ echo $this->data['nav']->render();
                     <section class="box wf-100">
                         <header><h1><?= $this->getHtml('AreaManager'); ?></h1></header>
                         <div class="inner">
-                            <form action="<?= \phpOMS\Uri\UriFactory::build('{/api}...'); ?>" method="post">
+                            <form action="<?= UriFactory::build('{/api}...'); ?>" method="post">
                                 <table class="layout wf-100">
                                     <tbody>
                                     <tr><td><label for="iManager"><?= $this->getHtml('AreaManager'); ?></label>
@@ -600,6 +590,14 @@ echo $this->data['nav']->render();
         <div class="tab">
         </div>
         <input type="radio" id="c-tab-9" name="tabular-2"<?= $this->request->uri->fragment === 'c-tab-9' ? ' checked' : ''; ?>>
+        <div class="tab">
+            <?php include __DIR__ . '/supplier-profile-bills.tpl.php'; ?>
+        </div>
+        <input type="radio" id="c-tab-10" name="tabular-2"<?= $this->request->uri->fragment === 'c-tab-9' ? ' checked' : ''; ?>>
+        <div class="tab">
+            <?php include __DIR__ . '/supplier-profile-items.tpl.php'; ?>
+        </div>
+        <input type="radio" id="c-tab-11" name="tabular-2"<?= $this->request->uri->fragment === 'c-tab-10' ? ' checked' : ''; ?>>
         <div class="tab">
             <div class="row">
                 <div class="col-xs-12">

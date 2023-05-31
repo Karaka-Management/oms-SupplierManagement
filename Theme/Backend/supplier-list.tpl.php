@@ -27,7 +27,6 @@ echo $this->data['nav']->render(); ?>
             <table id="iPurchaseSupplierList" class="default sticky">
                 <thead>
                 <tr>
-                    <td>
                     <td><?= $this->getHtml('ID', '0', '0'); ?>
                         <label for="iPurchaseSupplierList-sort-1">
                             <input type="radio" name="iPurchaseSupplierList-sort" id="iPurchaseSupplierList-sort-1">
@@ -102,15 +101,11 @@ echo $this->data['nav']->render(); ?>
                         </label>
                 <tbody>
                 <?php $count = 0; foreach ($suppliers as $key => $value) : ++$count;
-                 $url        = UriFactory::build('{/base}/purchase/supplier/profile?{?}&id=' . $value->id);
-                 $image      = $value->getFileByTypeName('supplier_profile_image'); ?>
+                $url        = UriFactory::build('{/base}/purchase/supplier/profile?{?}&id=' . $value->id);
+                ?>
                 <tr data-href="<?= $url; ?>">
-                    <td><a href="<?= $url; ?>"><img alt="<?= $this->getHtml('IMG_alt_supplier'); ?>" width="30" loading="lazy" class="item-image"
-                            src="<?= $image->id === 0 ?
-                                        UriFactory::build('Web/Backend/img/user_default_' . \mt_rand(1, 6) .'.png') :
-                                        UriFactory::build('{/base}/' . $image->getPath()); ?>"></a>
                     <td data-label="<?= $this->getHtml('ID', '0', '0'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->number); ?></a>
-                    <td data-label="<?= $this->getHtml('Name'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->profile->account->name1); ?> <?= $this->printHtml($value->profile->account->name2); ?></a>
+                    <td data-label="<?= $this->getHtml('Name'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->account->name1); ?> <?= $this->printHtml($value->account->name2); ?></a>
                     <td data-label="<?= $this->getHtml('City'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->mainAddress->city); ?></a>
                     <td data-label="<?= $this->getHtml('Zip'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->mainAddress->postal); ?></a>
                     <td data-label="<?= $this->getHtml('Address'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->mainAddress->address); ?></a>

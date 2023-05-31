@@ -15,12 +15,15 @@ declare(strict_types=1);
 namespace Modules\SupplierManagement\Controller;
 
 use Modules\Billing\Models\PurchaseBillMapper;
+use Modules\Media\Models\MediaMapper;
+use Modules\Media\Models\MediaTypeMapper;
 use Modules\SupplierManagement\Models\SupplierAttributeTypeL11nMapper;
 use Modules\SupplierManagement\Models\SupplierAttributeTypeMapper;
 use Modules\SupplierManagement\Models\SupplierAttributeValueMapper;
 use Modules\SupplierManagement\Models\SupplierMapper;
 use phpOMS\Asset\AssetType;
 use phpOMS\Contract\RenderableInterface;
+use phpOMS\DataStorage\Database\Query\Builder;
 use phpOMS\DataStorage\Database\Query\OrderType;
 use phpOMS\Localization\Money;
 use phpOMS\Message\RequestAbstract;
@@ -196,11 +199,11 @@ final class BackendController extends Controller
      */
     public function viewSupplierManagementSupplierProfile(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : RenderableInterface
     {
-        /** @var \phpOMS\Model\Html\Head $head */
-        $head = $response->get('Content')->head;
+        $head = $response->data['Content']->head;
         $head->addAsset(AssetType::CSS, 'Resources/chartjs/Chartjs/chart.css');
         $head->addAsset(AssetType::JSLATE, 'Resources/chartjs/Chartjs/chart.js');
-        $head->addAsset(AssetType::JSLATE, 'Modules/SupplierManagement/Controller.js', ['type' => 'module']);
+        $head->addAsset(AssetType::JSLATE, 'Resources/OpenLayers/OpenLayers.js');
+        $head->addAsset(AssetType::JSLATE, 'Modules/ClientManagement/Controller.js', ['type' => 'module']);
 
         $view = new View($this->app->l11nManager, $request, $response);
         $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/supplier-profile');
@@ -217,6 +220,34 @@ final class BackendController extends Controller
             ->execute();
 
         $view->data['supplier'] = $supplier;
+
+        // Get item profile image
+        // It might not be part of the 5 newest item files from above
+        // @todo: It would be nice to have something like this as a default method in the model e.g.
+        // ItemManagement::getRelations()->with('types')->where(...);
+        // This should return the relations and NOT the model itself
+        $query   = new Builder($this->app->dbPool->get());
+        $results = $query->selectAs(SupplierMapper::HAS_MANY['files']['external'], 'file')
+            ->from(SupplierMapper::TABLE)
+            ->leftJoin(SupplierMapper::HAS_MANY['files']['table'])
+                ->on(SupplierMapper::HAS_MANY['files']['table'] . '.' . SupplierMapper::HAS_MANY['files']['self'], '=', SupplierMapper::TABLE . '.' . SupplierMapper::PRIMARYFIELD)
+            ->leftJoin(MediaMapper::TABLE)
+                ->on(SupplierMapper::HAS_MANY['files']['table'] . '.' . SupplierMapper::HAS_MANY['files']['external'], '=', MediaMapper::TABLE . '.' . MediaMapper::PRIMARYFIELD)
+             ->leftJoin(MediaMapper::HAS_MANY['types']['table'])
+                ->on(MediaMapper::TABLE . '.' . MediaMapper::PRIMARYFIELD, '=', MediaMapper::HAS_MANY['types']['table'] . '.' . MediaMapper::HAS_MANY['types']['self'])
+            ->leftJoin(MediaTypeMapper::TABLE)
+                ->on(MediaMapper::HAS_MANY['types']['table'] . '.' . MediaMapper::HAS_MANY['types']['external'], '=', MediaTypeMapper::TABLE . '.' . MediaTypeMapper::PRIMARYFIELD)
+            ->where(SupplierMapper::HAS_MANY['files']['self'], '=', $supplier->id)
+            ->where(MediaTypeMapper::TABLE . '.' . MediaTypeMapper::getColumnByMember('name'), '=', 'supplier_profile_image');
+
+
+        $clientImage = MediaMapper::get()
+            ->with('types')
+            ->where('id', $results)
+            ->limit(1)
+            ->execute();
+
+        $view->data['clientImage'] = $clientImage;
 
         // stats
         if ($this->app->moduleManager->isActive('Billing')) {
