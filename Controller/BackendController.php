@@ -127,7 +127,7 @@ final class BackendController extends Controller
             ->execute();
 
         $view->data['attribute'] = $attribute;
-        $view->data['l11ns'] = $l11ns;
+        $view->data['l11ns']     = $l11ns;
 
         return $view;
     }
@@ -233,10 +233,10 @@ final class BackendController extends Controller
             $monthlyPurchaseCosts = [];
         }
 
-        $view->data['ytd'] = $ytd;
-        $view->data['mtd'] = $mtd;
-        $view->data['lastOrder'] = $lastOrder;
-        $view->data['newestInvoices'] = $newestInvoices;
+        $view->data['ytd']                  = $ytd;
+        $view->data['mtd']                  = $mtd;
+        $view->data['lastOrder']            = $lastOrder;
+        $view->data['newestInvoices']       = $newestInvoices;
         $view->data['monthlyPurchaseCosts'] = $monthlyPurchaseCosts;
 
         return $view;
