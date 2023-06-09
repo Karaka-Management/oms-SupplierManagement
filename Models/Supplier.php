@@ -54,14 +54,6 @@ class Supplier
 
     public Account $account;
 
-    /**
-     * Notes.
-     *
-     * @var EditorDoc[]
-     * @since 1.0.0
-     */
-    private array $notes = [];
-
     private array $contactElements = [];
 
     private array $address = [];
@@ -347,5 +339,6 @@ class Supplier
     }
 
     use \Modules\Media\Models\MediaListTrait;
+    use \Modules\Editor\Models\EditorDocListTrait;
     use \Modules\Attribute\Models\AttributeHolderTrait;
 }
