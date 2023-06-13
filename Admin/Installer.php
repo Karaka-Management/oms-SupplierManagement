@@ -54,6 +54,10 @@ final class Installer extends InstallerAbstract
         }
 
         $attributes = \json_decode($fileContent, true);
+        if (!\is_array($attributes)) {
+            return;
+        }
+
         $attrTypes  = self::createSupplierAttributeTypes($app, $attributes);
         $attrValues = self::createSupplierAttributeValues($app, $attrTypes, $attributes);
 
@@ -64,7 +68,11 @@ final class Installer extends InstallerAbstract
         }
 
         $localizations = \json_decode($fileContent, true);
-        $l11nTypes     = self::createSupplierL11nTypes($app, $localizations);
+        if (!\is_array($localizations)) {
+            return;
+        }
+
+        $l11nTypes = self::createSupplierL11nTypes($app, $localizations);
     }
 
     /**
@@ -73,7 +81,7 @@ final class Installer extends InstallerAbstract
      * @param ApplicationAbstract $app   Application
      * @param array               $l11ns Attribute definition
      *
-     * @return array<array>
+     * @return array
      *
      * @since 1.0.0
      */
@@ -111,10 +119,10 @@ final class Installer extends InstallerAbstract
     /**
      * Install default attribute types
      *
-     * @param ApplicationAbstract                                                                                                                                                              $app        Application
-     * @param array<array{name:string, l11n?:array<string, string>, is_required?:bool, is_custom_allowed?:bool, validation_pattern?:string, value_type?:string, values?:array<string, mixed>}> $attributes Attribute definition
+     * @param ApplicationAbstract $app        Application
+     * @param array               $attributes Attribute definition
      *
-     * @return array<string, array>
+     * @return array
      *
      * @since 1.0.0
      */
@@ -176,11 +184,11 @@ final class Installer extends InstallerAbstract
     /**
      * Create default attribute values for types
      *
-     * @param ApplicationAbstract                                                                                                                                                              $app              Application
-     * @param array                                                                                                                                                                            $supplierAttrType Attribute types
-     * @param array<array{name:string, l11n?:array<string, string>, is_required?:bool, is_custom_allowed?:bool, validation_pattern?:string, value_type?:string, values?:array<string, mixed>}> $attributes       Attribute definition
+     * @param ApplicationAbstract $app              Application
+     * @param array               $supplierAttrType Attribute types
+     * @param array               $attributes       Attribute definition
      *
-     * @return array<string, array>
+     * @return array
      *
      * @since 1.0.0
      */
