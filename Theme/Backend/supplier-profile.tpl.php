@@ -23,7 +23,7 @@ $countries    = \phpOMS\Localization\ISO3166NameEnum::getConstants();
  * @var \Modules\SupplierManagement\Models\Supplier $supplier
  */
 $supplier = $this->data['supplier'];
-$notes  = $supplier->getNotes();
+$notes  = $supplier->notes;
 $files  = $supplier->files;
 
 $supplierImage = $this->getData('supplierImage') ?? new NullMedia();
