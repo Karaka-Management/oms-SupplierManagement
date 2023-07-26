@@ -37,10 +37,8 @@ use phpOMS\Localization\BaseStringL11nType;
 use phpOMS\Localization\ISO639x1Enum;
 use phpOMS\Localization\NullBaseStringL11nType;
 use phpOMS\Message\Http\RequestStatusCode;
-use phpOMS\Message\NotificationLevel;
 use phpOMS\Message\RequestAbstract;
 use phpOMS\Message\ResponseAbstract;
-use phpOMS\Model\Message\FormValidation;
 
 /**
  * SupplierManagement class.
@@ -68,15 +66,15 @@ final class ApiController extends Controller
     public function apiSupplierCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateSupplierCreate($request))) {
-            $response->data['supplier_create'] = new FormValidation($val);
-            $response->header->status          = RequestStatusCode::R_400;
+            $response->header->status = RequestStatusCode::R_400;
+            $this->createInvalidCreateResponse($request, $response, $val);
 
             return;
         }
 
         $supplier = $this->createSupplierFromRequest($request);
         $this->createModel($request->header->account, $supplier, SupplierMapper::class, 'supplier', $request->getOrigin());
-        $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Supplier', 'Supplier successfully created', $supplier);
+        $this->createStandardCreateResponse($request, $response, $supplier);
     }
 
     /**
@@ -148,15 +146,15 @@ final class ApiController extends Controller
     public function apiSupplierL11nCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateSupplierL11nCreate($request))) {
-            $response->data['supplier_l11n_create'] = new FormValidation($val);
-            $response->header->status               = RequestStatusCode::R_400;
+            $response->header->status = RequestStatusCode::R_400;
+            $this->createInvalidCreateResponse($request, $response, $val);
 
             return;
         }
 
         $supplierL11n = $this->createSupplierL11nFromRequest($request);
         $this->createModel($request->header->account, $supplierL11n, SupplierL11nMapper::class, 'supplier_l11n', $request->getOrigin());
-        $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Localization', 'Localization successfully created', $supplierL11n);
+        $this->createStandardCreateResponse($request, $response, $supplierL11n);
     }
 
     /**
@@ -219,15 +217,15 @@ final class ApiController extends Controller
     public function apiSupplierL11nTypeCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateSupplierL11nTypeCreate($request))) {
-            $response->data['supplier_l11n_type_create'] = new FormValidation($val);
-            $response->header->status                    = RequestStatusCode::R_400;
+            $response->header->status = RequestStatusCode::R_400;
+            $this->createInvalidCreateResponse($request, $response, $val);
 
             return;
         }
 
         $supplierL11nType = $this->createSupplierL11nTypeFromRequest($request);
         $this->createModel($request->header->account, $supplierL11nType, SupplierL11nTypeMapper::class, 'supplier_l11n_type', $request->getOrigin());
-        $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Localization type', 'Localization type successfully created', $supplierL11nType);
+        $this->createStandardCreateResponse($request, $response, $supplierL11nType);
     }
 
     /**
@@ -243,7 +241,7 @@ final class ApiController extends Controller
     {
         $supplierL11nType             = new BaseStringL11nType();
         $supplierL11nType->title      = $request->getDataString('title') ?? '';
-        $supplierL11nType->isRequired = (bool) ($request->getData('is_required') ?? false);
+        $supplierL11nType->isRequired = $request->getDataBool('is_required') ?? false;
 
         return $supplierL11nType;
     }
@@ -283,15 +281,15 @@ final class ApiController extends Controller
     public function apiSupplierAttributeCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateSupplierAttributeCreate($request))) {
-            $response->data['attribute_create'] = new FormValidation($val);
-            $response->header->status           = RequestStatusCode::R_400;
+            $response->header->status = RequestStatusCode::R_400;
+            $this->createInvalidCreateResponse($request, $response, $val);
 
             return;
         }
 
         $attribute = $this->createSupplierAttributeFromRequest($request);
         $this->createModel($request->header->account, $attribute, SupplierAttributeMapper::class, 'attribute', $request->getOrigin());
-        $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Attribute', 'Attribute successfully created', $attribute);
+        $this->createStandardCreateResponse($request, $response, $attribute);
     }
 
     /**
@@ -351,15 +349,15 @@ final class ApiController extends Controller
     public function apiSupplierAttributeTypeL11nCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateSupplierAttributeTypeL11nCreate($request))) {
-            $response->data['attr_type_l11n_create'] = new FormValidation($val);
-            $response->header->status                = RequestStatusCode::R_400;
+            $response->header->status = RequestStatusCode::R_400;
+            $this->createInvalidCreateResponse($request, $response, $val);
 
             return;
         }
 
         $attrL11n = $this->createSupplierAttributeTypeL11nFromRequest($request);
         $this->createModel($request->header->account, $attrL11n, SupplierAttributeTypeL11nMapper::class, 'attr_type_l11n', $request->getOrigin());
-        $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Localization', 'Localization successfully created', $attrL11n);
+        $this->createStandardCreateResponse($request, $response, $attrL11n);
     }
 
     /**
@@ -420,16 +418,15 @@ final class ApiController extends Controller
     public function apiSupplierAttributeTypeCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateSupplierAttributeTypeCreate($request))) {
-            $response->data['attr_type_create'] = new FormValidation($val);
-            $response->header->status           = RequestStatusCode::R_400;
+            $response->header->status = RequestStatusCode::R_400;
+            $this->createInvalidCreateResponse($request, $response, $val);
 
             return;
         }
 
         $attrType = $this->createSupplierAttributeTypeFromRequest($request);
         $this->createModel($request->header->account, $attrType, SupplierAttributeTypeMapper::class, 'attr_type', $request->getOrigin());
-
-        $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Attribute type', 'Attribute type successfully created', $attrType);
+        $this->createStandardCreateResponse($request, $response, $attrType);
     }
 
     /**
@@ -446,7 +443,7 @@ final class ApiController extends Controller
         $attrType                    = new AttributeType($request->getDataString('name') ?? '');
         $attrType->datatype          = $request->getDataInt('datatype') ?? 0;
         $attrType->custom            = $request->getDataBool('custom') ?? false;
-        $attrType->isRequired        = (bool) ($request->getData('is_required') ?? false);
+        $attrType->isRequired        = $request->getDataBool('is_required') ?? false;
         $attrType->validationPattern = $request->getDataString('validation_pattern') ?? '';
         $attrType->setL11n($request->getDataString('title') ?? '', $request->getDataString('language') ?? ISO639x1Enum::_EN);
         $attrType->setFields($request->getDataInt('fields') ?? 0);
@@ -491,8 +488,8 @@ final class ApiController extends Controller
     public function apiSupplierAttributeValueCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateSupplierAttributeValueCreate($request))) {
-            $response->data['attr_value_create'] = new FormValidation($val);
-            $response->header->status            = RequestStatusCode::R_400;
+            $response->header->status = RequestStatusCode::R_400;
+            $this->createInvalidCreateResponse($request, $response, $val);
 
             return;
         }
@@ -509,7 +506,7 @@ final class ApiController extends Controller
             );
         }
 
-        $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Attribute value', 'Attribute value successfully created', $attrValue);
+        $this->createStandardCreateResponse($request, $response, $attrValue);
     }
 
     /**
@@ -576,15 +573,15 @@ final class ApiController extends Controller
     public function apiSupplierAttributeValueL11nCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateSupplierAttributeValueL11nCreate($request))) {
-            $response->data['attr_value_l11n_create'] = new FormValidation($val);
-            $response->header->status                 = RequestStatusCode::R_400;
+            $response->header->status = RequestStatusCode::R_400;
+            $this->createInvalidCreateResponse($request, $response, $val);
 
             return;
         }
 
         $attrL11n = $this->createSupplierAttributeValueL11nFromRequest($request);
         $this->createModel($request->header->account, $attrL11n, SupplierAttributeValueL11nMapper::class, 'attr_value_l11n', $request->getOrigin());
-        $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Localization', 'Localization successfully created', $attrL11n);
+        $this->createStandardCreateResponse($request, $response, $attrL11n);
     }
 
     /**
@@ -647,8 +644,8 @@ final class ApiController extends Controller
         $uploadedFiles = $request->files;
 
         if (empty($uploadedFiles)) {
-            $this->fillJsonResponse($request, $response, NotificationLevel::ERROR, 'Item', 'Invalid supplier image', $uploadedFiles);
             $response->header->status = RequestStatusCode::R_400;
+            $this->createInvalidAddResponse($request, $response, $uploadedFiles);
 
             return;
         }
@@ -684,7 +681,7 @@ final class ApiController extends Controller
             SupplierMapper::class, 'files', '', $request->getOrigin()
         );
 
-        $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Image', 'Image successfully updated', $uploaded);
+        $this->createStandardAddResponse($request, $response, $uploaded);
     }
 
     /**
