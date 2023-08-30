@@ -240,7 +240,6 @@ final class BackendController extends Controller
             ->where(SupplierMapper::HAS_MANY['files']['self'], '=', $supplier->id)
             ->where(MediaTypeMapper::TABLE . '.' . MediaTypeMapper::getColumnByMember('name'), '=', 'supplier_profile_image');
 
-
         $clientImage = MediaMapper::get()
             ->with('types')
             ->where('id', $results)
