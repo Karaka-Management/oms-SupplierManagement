@@ -13,6 +13,7 @@
 declare(strict_types=1);
 
 return ['SupplierManagement' => [
+    'AttributeTypes'             => 'Attributetypen',
     'Accounting'     => 'Buchhaltung',
     'Addition'       => 'Zusatz',
     'Address'        => 'Adresse',
@@ -100,4 +101,5 @@ return ['SupplierManagement' => [
     'Wire'           => 'Kabel',
     'YTDSales'       => 'Ytd Sales.',
     'Zip'            => 'Reißverschluss',
+    'IMG_alt_map'                => 'Karte',
 ]];
