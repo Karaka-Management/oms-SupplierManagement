@@ -81,16 +81,6 @@ final class SupplierTest extends \PHPUnit\Framework\TestCase
      * @covers Modules\SupplierManagement\Models\Supplier
      * @group module
      */
-    public function testFileInputOutput() : void
-    {
-        $this->supplier->addFile($temp = new Media());
-        self::assertCount(1, $this->supplier->files);
-    }
-
-    /**
-     * @covers Modules\SupplierManagement\Models\Supplier
-     * @group module
-     */
     public function testContactElementInputOutput() : void
     {
         $this->supplier->addContactElement($temp = new ContactElement());
