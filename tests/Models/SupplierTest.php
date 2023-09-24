@@ -15,7 +15,6 @@ declare(strict_types=1);
 namespace Modules\SupplierManagement\tests\Models;
 
 use Modules\Editor\Models\EditorDoc;
-use Modules\Media\Models\Media;
 use Modules\Profile\Models\ContactElement;
 use Modules\SupplierManagement\Models\Supplier;
 use Modules\SupplierManagement\Models\SupplierStatus;
