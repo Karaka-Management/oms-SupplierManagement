@@ -21,7 +21,7 @@ final class AdminTest extends \PHPUnit\Framework\TestCase
 {
     protected const NAME = 'SupplierManagement';
 
-    protected const URI_LOAD = 'http://127.0.0.1/en/purchase/supplier';
+    protected const URI_LOAD = 'http://127.0.0.1/en/backend/purchase/supplier';
 
     use \tests\Modules\ModuleTestTrait;
 }
