@@ -55,7 +55,7 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
-     * @param mixed            $data     Generic data
+     * @param array            $data     Generic data
      *
      * @return void
      *
@@ -63,7 +63,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiSupplierCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
+    public function apiSupplierCreate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         if (!empty($val = $this->validateSupplierCreate($request))) {
             $response->header->status = RequestStatusCode::R_400;
@@ -135,7 +135,7 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
-     * @param mixed            $data     Generic data
+     * @param array            $data     Generic data
      *
      * @return void
      *
@@ -143,7 +143,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiSupplierL11nCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
+    public function apiSupplierL11nCreate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         if (!empty($val = $this->validateSupplierL11nCreate($request))) {
             $response->header->status = RequestStatusCode::R_400;
@@ -206,7 +206,7 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
-     * @param mixed            $data     Generic data
+     * @param array            $data     Generic data
      *
      * @return void
      *
@@ -214,7 +214,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiSupplierL11nTypeCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
+    public function apiSupplierL11nTypeCreate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         if (!empty($val = $this->validateSupplierL11nTypeCreate($request))) {
             $response->header->status = RequestStatusCode::R_400;
@@ -270,7 +270,7 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
-     * @param mixed            $data     Generic data
+     * @param array            $data     Generic data
      *
      * @return void
      *
@@ -278,7 +278,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiSupplierAttributeCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
+    public function apiSupplierAttributeCreate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         if (!empty($val = $this->validateSupplierAttributeCreate($request))) {
             $response->header->status = RequestStatusCode::R_400;
@@ -338,7 +338,7 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
-     * @param mixed            $data     Generic data
+     * @param array            $data     Generic data
      *
      * @return void
      *
@@ -346,7 +346,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiSupplierAttributeTypeL11nCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
+    public function apiSupplierAttributeTypeL11nCreate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         if (!empty($val = $this->validateSupplierAttributeTypeL11nCreate($request))) {
             $response->header->status = RequestStatusCode::R_400;
@@ -407,7 +407,7 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
-     * @param mixed            $data     Generic data
+     * @param array            $data     Generic data
      *
      * @return void
      *
@@ -415,7 +415,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiSupplierAttributeTypeCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
+    public function apiSupplierAttributeTypeCreate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         if (!empty($val = $this->validateSupplierAttributeTypeCreate($request))) {
             $response->header->status = RequestStatusCode::R_400;
@@ -477,7 +477,7 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
-     * @param mixed            $data     Generic data
+     * @param array            $data     Generic data
      *
      * @return void
      *
@@ -485,7 +485,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiSupplierAttributeValueCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
+    public function apiSupplierAttributeValueCreate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         if (!empty($val = $this->validateSupplierAttributeValueCreate($request))) {
             $response->header->status = RequestStatusCode::R_400;
@@ -562,7 +562,7 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
-     * @param mixed            $data     Generic data
+     * @param array            $data     Generic data
      *
      * @return void
      *
@@ -570,7 +570,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiSupplierAttributeValueL11nCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
+    public function apiSupplierAttributeValueL11nCreate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         if (!empty($val = $this->validateSupplierAttributeValueL11nCreate($request))) {
             $response->header->status = RequestStatusCode::R_400;
@@ -631,7 +631,7 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
-     * @param mixed            $data     Generic data
+     * @param array            $data     Generic data
      *
      * @return void
      *
@@ -639,7 +639,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiFileCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
+    public function apiFileCreate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         $uploadedFiles = $request->files;
 
@@ -695,7 +695,7 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
-     * @param mixed            $data     Generic data
+     * @param array            $data     Generic data
      *
      * @return void
      *
@@ -703,7 +703,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiNoteCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
+    public function apiNoteCreate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         $request->setData('virtualpath', '/Modules/SupplierManagement/' . $request->getData('id'), true);
         $this->app->moduleManager->get('Editor')->apiEditorCreate($request, $response, $data);
