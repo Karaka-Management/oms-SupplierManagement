@@ -50,6 +50,8 @@ use phpOMS\Message\ResponseAbstract;
  */
 final class ApiController extends Controller
 {
+    use \Modules\Attribute\Controller\ApiAttributeTraitController;
+
     /**
      * Api method to create news article
      *
@@ -280,57 +282,16 @@ final class ApiController extends Controller
      */
     public function apiSupplierAttributeCreate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
-        if (!empty($val = $this->validateSupplierAttributeCreate($request))) {
+        if (!empty($val = $this->validateAttributeCreate($request))) {
             $response->header->status = RequestStatusCode::R_400;
             $this->createInvalidCreateResponse($request, $response, $val);
 
             return;
         }
 
-        $attribute = $this->createSupplierAttributeFromRequest($request);
+        $attribute = $this->createAttributeFromRequest($request);
         $this->createModel($request->header->account, $attribute, SupplierAttributeMapper::class, 'attribute', $request->getOrigin());
         $this->createStandardCreateResponse($request, $response, $attribute);
-    }
-
-    /**
-     * Method to create supplier attribute from request.
-     *
-     * @param RequestAbstract $request Request
-     *
-     * @return Attribute
-     *
-     * @since 1.0.0
-     */
-    private function createSupplierAttributeFromRequest(RequestAbstract $request) : Attribute
-    {
-        $attribute        = new Attribute();
-        $attribute->ref   = (int) $request->getData('supplier');
-        $attribute->type  = new NullAttributeType((int) $request->getData('type'));
-        $attribute->value = new NullAttributeValue((int) $request->getData('value'));
-
-        return $attribute;
-    }
-
-    /**
-     * Validate supplier attribute create request
-     *
-     * @param RequestAbstract $request Request
-     *
-     * @return array<string, bool>
-     *
-     * @since 1.0.0
-     */
-    private function validateSupplierAttributeCreate(RequestAbstract $request) : array
-    {
-        $val = [];
-        if (($val['type'] = !$request->hasData('type'))
-            || ($val['value'] = !$request->hasData('value'))
-            || ($val['supplier'] = !$request->hasData('supplier'))
-        ) {
-            return $val;
-        }
-
-        return [];
     }
 
     /**
@@ -348,58 +309,16 @@ final class ApiController extends Controller
      */
     public function apiSupplierAttributeTypeL11nCreate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
-        if (!empty($val = $this->validateSupplierAttributeTypeL11nCreate($request))) {
+        if (!empty($val = $this->validateAttributeTypeL11nCreate($request))) {
             $response->header->status = RequestStatusCode::R_400;
             $this->createInvalidCreateResponse($request, $response, $val);
 
             return;
         }
 
-        $attrL11n = $this->createSupplierAttributeTypeL11nFromRequest($request);
+        $attrL11n = $this->createAttributeTypeL11nFromRequest($request);
         $this->createModel($request->header->account, $attrL11n, SupplierAttributeTypeL11nMapper::class, 'attr_type_l11n', $request->getOrigin());
         $this->createStandardCreateResponse($request, $response, $attrL11n);
-    }
-
-    /**
-     * Method to create supplier attribute l11n from request.
-     *
-     * @param RequestAbstract $request Request
-     *
-     * @return BaseStringL11n
-     *
-     * @since 1.0.0
-     */
-    private function createSupplierAttributeTypeL11nFromRequest(RequestAbstract $request) : BaseStringL11n
-    {
-        $attrL11n      = new BaseStringL11n();
-        $attrL11n->ref = $request->getDataInt('type') ?? 0;
-        $attrL11n->setLanguage(
-            $request->getDataString('language') ?? $request->header->l11n->language
-        );
-        $attrL11n->content = $request->getDataString('title') ?? '';
-
-        return $attrL11n;
-    }
-
-    /**
-     * Validate supplier attribute l11n create request
-     *
-     * @param RequestAbstract $request Request
-     *
-     * @return array<string, bool>
-     *
-     * @since 1.0.0
-     */
-    private function validateSupplierAttributeTypeL11nCreate(RequestAbstract $request) : array
-    {
-        $val = [];
-        if (($val['title'] = !$request->hasData('title'))
-            || ($val['type'] = !$request->hasData('type'))
-        ) {
-            return $val;
-        }
-
-        return [];
     }
 
     /**
@@ -417,59 +336,16 @@ final class ApiController extends Controller
      */
     public function apiSupplierAttributeTypeCreate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
-        if (!empty($val = $this->validateSupplierAttributeTypeCreate($request))) {
+        if (!empty($val = $this->validateAttributeTypeCreate($request))) {
             $response->header->status = RequestStatusCode::R_400;
             $this->createInvalidCreateResponse($request, $response, $val);
 
             return;
         }
 
-        $attrType = $this->createSupplierAttributeTypeFromRequest($request);
+        $attrType = $this->createAttributeTypeFromRequest($request);
         $this->createModel($request->header->account, $attrType, SupplierAttributeTypeMapper::class, 'attr_type', $request->getOrigin());
         $this->createStandardCreateResponse($request, $response, $attrType);
-    }
-
-    /**
-     * Method to create supplier attribute from request.
-     *
-     * @param RequestAbstract $request Request
-     *
-     * @return AttributeType
-     *
-     * @since 1.0.0
-     */
-    private function createSupplierAttributeTypeFromRequest(RequestAbstract $request) : AttributeType
-    {
-        $attrType                    = new AttributeType($request->getDataString('name') ?? '');
-        $attrType->datatype          = $request->getDataInt('datatype') ?? 0;
-        $attrType->custom            = $request->getDataBool('custom') ?? false;
-        $attrType->isRequired        = $request->getDataBool('is_required') ?? false;
-        $attrType->validationPattern = $request->getDataString('validation_pattern') ?? '';
-        $attrType->setL11n($request->getDataString('title') ?? '', $request->getDataString('language') ?? ISO639x1Enum::_EN);
-        $attrType->setFields($request->getDataInt('fields') ?? 0);
-
-        return $attrType;
-    }
-
-    /**
-     * Validate supplier attribute create request
-     *
-     * @param RequestAbstract $request Request
-     *
-     * @return array<string, bool>
-     *
-     * @since 1.0.0
-     */
-    private function validateSupplierAttributeTypeCreate(RequestAbstract $request) : array
-    {
-        $val = [];
-        if (($val['title'] = !$request->hasData('title'))
-            || ($val['name'] = !$request->hasData('name'))
-        ) {
-            return $val;
-        }
-
-        return [];
     }
 
     /**
@@ -487,14 +363,19 @@ final class ApiController extends Controller
      */
     public function apiSupplierAttributeValueCreate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
-        if (!empty($val = $this->validateSupplierAttributeValueCreate($request))) {
+        if (!empty($val = $this->validateAttributeValueCreate($request))) {
             $response->header->status = RequestStatusCode::R_400;
             $this->createInvalidCreateResponse($request, $response, $val);
 
             return;
         }
 
-        $attrValue = $this->createSupplierAttributeValueFromRequest($request);
+        /** @var \Modules\Attribute\Models\AttributeType $type */
+        $type = SupplierAttributeTypeMapper::get()
+            ->where('id', $request->getDataInt('type') ?? 0)
+            ->execute();
+
+        $attrValue = $this->createAttributeValueFromRequest($request, $type);
         $this->createModel($request->header->account, $attrValue, SupplierAttributeValueMapper::class, 'attr_value', $request->getOrigin());
 
         if ($attrValue->isDefault) {
@@ -507,54 +388,6 @@ final class ApiController extends Controller
         }
 
         $this->createStandardCreateResponse($request, $response, $attrValue);
-    }
-
-    /**
-     * Method to create supplier attribute value from request.
-     *
-     * @param RequestAbstract $request Request
-     *
-     * @return AttributeValue
-     *
-     * @since 1.0.0
-     */
-    private function createSupplierAttributeValueFromRequest(RequestAbstract $request) : AttributeValue
-    {
-        /** @var AttributeType $type */
-        $type = SupplierAttributeTypeMapper::get()
-            ->where('id', $request->getDataInt('type') ?? 0)
-            ->execute();
-
-        $attrValue            = new AttributeValue();
-        $attrValue->isDefault = $request->getDataBool('default') ?? false;
-        $attrValue->setValue($request->getData('value'), $type->datatype);
-
-        if ($request->hasData('title')) {
-            $attrValue->setL11n($request->getDataString('title') ?? '', $request->getDataString('language') ?? ISO639x1Enum::_EN);
-        }
-
-        return $attrValue;
-    }
-
-    /**
-     * Validate supplier attribute value create request
-     *
-     * @param RequestAbstract $request Request
-     *
-     * @return array<string, bool>
-     *
-     * @since 1.0.0
-     */
-    private function validateSupplierAttributeValueCreate(RequestAbstract $request) : array
-    {
-        $val = [];
-        if (($val['type'] = !$request->hasData('type'))
-            || ($val['value'] = !$request->hasData('value'))
-        ) {
-            return $val;
-        }
-
-        return [];
     }
 
     /**
@@ -572,58 +405,16 @@ final class ApiController extends Controller
      */
     public function apiSupplierAttributeValueL11nCreate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
-        if (!empty($val = $this->validateSupplierAttributeValueL11nCreate($request))) {
+        if (!empty($val = $this->validateAttributeValueL11nCreate($request))) {
             $response->header->status = RequestStatusCode::R_400;
             $this->createInvalidCreateResponse($request, $response, $val);
 
             return;
         }
 
-        $attrL11n = $this->createSupplierAttributeValueL11nFromRequest($request);
+        $attrL11n = $this->createAttributeValueL11nFromRequest($request);
         $this->createModel($request->header->account, $attrL11n, SupplierAttributeValueL11nMapper::class, 'attr_value_l11n', $request->getOrigin());
         $this->createStandardCreateResponse($request, $response, $attrL11n);
-    }
-
-    /**
-     * Method to create Supplier attribute l11n from request.
-     *
-     * @param RequestAbstract $request Request
-     *
-     * @return BaseStringL11n
-     *
-     * @since 1.0.0
-     */
-    private function createSupplierAttributeValueL11nFromRequest(RequestAbstract $request) : BaseStringL11n
-    {
-        $attrL11n      = new BaseStringL11n();
-        $attrL11n->ref = $request->getDataInt('value') ?? 0;
-        $attrL11n->setLanguage(
-            $request->getDataString('language') ?? $request->header->l11n->language
-        );
-        $attrL11n->content = $request->getDataString('title') ?? '';
-
-        return $attrL11n;
-    }
-
-    /**
-     * Validate Supplier attribute l11n create request
-     *
-     * @param RequestAbstract $request Request
-     *
-     * @return array<string, bool>
-     *
-     * @since 1.0.0
-     */
-    private function validateSupplierAttributeValueL11nCreate(RequestAbstract $request) : array
-    {
-        $val = [];
-        if (($val['title'] = !$request->hasData('title'))
-            || ($val['value'] = !$request->hasData('value'))
-        ) {
-            return $val;
-        }
-
-        return [];
     }
 
     /**
