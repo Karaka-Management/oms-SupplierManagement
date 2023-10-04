@@ -54,13 +54,13 @@ class Supplier
 
     public Account $account;
 
-    private array $contactElements = [];
+    public array $contactElements = [];
 
-    private array $address = [];
+    public array $address = [];
 
     public Address $mainAddress;
 
-    private array $partners = [];
+    public array $partners = [];
 
     /**
      * Payments.
@@ -68,7 +68,7 @@ class Supplier
      * @var Payment[]
      * @since 1.0.0
      */
-    private array $payments = [];
+    public array $payments = [];
 
     /**
      * Unit
