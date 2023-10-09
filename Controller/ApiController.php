@@ -289,7 +289,8 @@ final class ApiController extends Controller
             return;
         }
 
-        $attribute = $this->createAttributeFromRequest($request);
+        $type      = SupplierAttributeTypeMapper::get()->where('id', (int) $request->getData('type'))->execute();
+        $attribute = $this->createAttributeFromRequest($request, $type);
         $this->createModel($request->header->account, $attribute, SupplierAttributeMapper::class, 'attribute', $request->getOrigin());
         $this->createStandardCreateResponse($request, $response, $attribute);
     }
@@ -499,7 +500,7 @@ final class ApiController extends Controller
         $request->setData('virtualpath', '/Modules/SupplierManagement/' . $request->getData('id'), true);
         $this->app->moduleManager->get('Editor')->apiEditorCreate($request, $response, $data);
 
-        $data = $response->get($request->uri->__toString());
+        $data = $response->getDataArray($request->uri->__toString());
         if (!\is_array($data)) {
             return;
         }

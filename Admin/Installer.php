@@ -103,7 +103,7 @@ final class Installer extends InstallerAbstract
 
             $module->apiSupplierL11nTypeCreate($request, $response);
 
-            $responseData = $response->get('');
+            $responseData = $response->getData('');
             if (!\is_array($responseData)) {
                 continue;
             }
@@ -150,7 +150,7 @@ final class Installer extends InstallerAbstract
 
             $module->apiSupplierAttributeTypeCreate($request, $response);
 
-            $responseData = $response->get('');
+            $responseData = $response->getData('');
             if (!\is_array($responseData)) {
                 continue;
             }
@@ -221,7 +221,7 @@ final class Installer extends InstallerAbstract
 
                 $module->apiSupplierAttributeValueCreate($request, $response);
 
-                $responseData = $response->get('');
+                $responseData = $response->getData('');
                 if (!\is_array($responseData)) {
                     continue;
                 }

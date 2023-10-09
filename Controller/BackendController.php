@@ -202,8 +202,8 @@ final class BackendController extends Controller
         $head  = $response->data['Content']->head;
         $nonce = $this->app->appSettings->getOption('script-nonce');
 
-        $head->addAsset(AssetType::CSS, 'Resources/chartjs/Chartjs/chart.css');
-        $head->addAsset(AssetType::JSLATE, 'Resources/chartjs/Chartjs/chart.js', ['nonce' => $nonce]);
+        $head->addAsset(AssetType::CSS, 'Resources/chartjs/chart.css');
+        $head->addAsset(AssetType::JSLATE, 'Resources/chartjs/chart.js', ['nonce' => $nonce]);
         $head->addAsset(AssetType::JSLATE, 'Resources/OpenLayers/OpenLayers.js', ['nonce' => $nonce]);
         $head->addAsset(AssetType::JSLATE, 'Modules/ClientManagement/Controller.js', ['nonce' => $nonce, 'type' => 'module']);
 
@@ -217,7 +217,7 @@ final class BackendController extends Controller
             ->with('contactElements')
             ->with('mainAddress')
             ->with('files')->limit(5, 'files')->sort('files/id', OrderType::DESC)
-            ->with('notes')->limit(5, 'files')->sort('notes/id', OrderType::DESC)
+            ->with('notes')->limit(5, 'notes')->sort('notes/id', OrderType::DESC)
             ->where('id', (int) $request->getData('id'))
             ->execute();
 
