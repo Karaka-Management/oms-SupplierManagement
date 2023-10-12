@@ -289,7 +289,7 @@ final class ApiController extends Controller
             return;
         }
 
-        $type      = SupplierAttributeTypeMapper::get()->where('id', (int) $request->getData('type'))->execute();
+        $type      = SupplierAttributeTypeMapper::get()->with('defaults')->where('id', (int) $request->getData('type'))->execute();
         $attribute = $this->createAttributeFromRequest($request, $type);
         $this->createModel($request->header->account, $attribute, SupplierAttributeMapper::class, 'attribute', $request->getOrigin());
         $this->createStandardCreateResponse($request, $response, $attribute);
