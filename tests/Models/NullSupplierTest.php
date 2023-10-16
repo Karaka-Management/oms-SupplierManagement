@@ -23,7 +23,7 @@ final class NullSupplierTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @covers Modules\SupplierManagement\Models\NullSupplier
-     * @group framework
+     * @group module
      */
     public function testNull() : void
     {
@@ -32,11 +32,21 @@ final class NullSupplierTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @covers Modules\SupplierManagement\Models\NullSupplier
-     * @group framework
+     * @group module
      */
     public function testId() : void
     {
         $null = new NullSupplier(2);
         self::assertEquals(2, $null->id);
+    }
+
+    /**
+     * @covers Modules\SupplierManagement\Models\NullSupplier
+     * @group module
+     */
+    public function testJsonSerialize() : void
+    {
+        $null = new NullSupplier(2);
+        self::assertEquals(['id' => 2], $null);
     }
 }
