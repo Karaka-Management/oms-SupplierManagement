@@ -133,24 +133,24 @@ echo $this->data['nav']->render();
                         </div>
                         <div class="portlet-body">
                             <table class="layout wf-100">
-                                <?php if (!empty($supplier->mainAddress->addition)) : ?>
-                                    <tr><td><label for="iName1"><?= $this->getHtml('Addition'); ?></label>
-                                <tr><td><input type="text" id="iName1" name="name1" value="<?= $this->printHtml($supplier->mainAddress->addition); ?>">
+                                <?php if (!empty($supplier->mainAddress->fao)) : ?>
+                                    <tr><td><label for="iFAO"><?= $this->getHtml('FAO'); ?></label>
+                                <tr><td><input type="text" id="iFAO" name="fao" value="<?= $this->printHtml($supplier->mainAddress->fao); ?>">
                                 <?php endif; ?>
-                                <tr><td><label for="iName1"><?= $this->getHtml('Address'); ?></label>
-                                <tr><td><input type="text" id="iName1" name="name1" value="<?= $this->printHtml($supplier->mainAddress->address); ?>" required>
-                                <tr><td><label for="iName1"><?= $this->getHtml('Postal'); ?></label>
-                                <tr><td><input type="text" id="iName1" name="name1" value="<?= $this->printHtml($supplier->mainAddress->postal); ?>" required>
-                                <tr><td><label for="iName1"><?= $this->getHtml('City'); ?></label>
-                                <tr><td><input type="text" id="iName1" name="name1" value="<?= $this->printHtml($supplier->mainAddress->city); ?>" required>
-                                <tr><td><label for="iName1"><?= $this->getHtml('Country'); ?></label>
-                                <tr><td><select name="country">
+                                <tr><td><label for="iAddress"><?= $this->getHtml('Address'); ?></label>
+                                <tr><td><input type="text" id="iAddress" name="address" value="<?= $this->printHtml($supplier->mainAddress->address); ?>" required>
+                                <tr><td><label for="iZip"><?= $this->getHtml('Postal'); ?></label>
+                                <tr><td><input type="text" id="iZip" name="zip" value="<?= $this->printHtml($supplier->mainAddress->postal); ?>" required>
+                                <tr><td><label for="iCity"><?= $this->getHtml('City'); ?></label>
+                                <tr><td><input type="text" id="iCity" name="city" value="<?= $this->printHtml($supplier->mainAddress->city); ?>" required>
+                                <tr><td><label for="iCountry"><?= $this->getHtml('Country'); ?></label>
+                                <tr><td><select id="iCountry" name="country">
                                     <?php foreach ($countryCodes as $code3 => $code2) : ?>
                                         <option value="<?= $this->printHtml($code2); ?>"<?= $this->printHtml($code2 === $supplier->mainAddress->getCountry() ? ' selected' : ''); ?>><?= $this->printHtml($countries[$code3]); ?>
-                                        <?php endforeach; ?>
+                                    <?php endforeach; ?>
                                     </select>
-                                <tr><td><label for="iName1"><?= $this->getHtml('Map'); ?></label>
-                                <tr><td><div id="supplierMap" class="map" data-lat="<?= $supplier->mainAddress->lat; ?>" data-lon="<?= $supplier->mainAddress->lon; ?>"></div>
+                                <tr><td><label for="iSupplierMap"><?= $this->getHtml('Map'); ?></label>
+                                <tr><td><div id="iSupplierMap" class="map" data-lat="<?= $supplier->mainAddress->lat; ?>" data-lon="<?= $supplier->mainAddress->lon; ?>"></div>
                             </table>
                         </div>
                     </section>

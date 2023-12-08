@@ -15,12 +15,12 @@ declare(strict_types=1);
 namespace Modules\SupplierManagement\Models;
 
 use Modules\Admin\Models\Account;
-use Modules\Admin\Models\Address;
-use Modules\Admin\Models\NullAddress;
 use Modules\Editor\Models\EditorDoc;
 use Modules\Payment\Models\Payment;
 use Modules\Profile\Models\ContactElement;
 use Modules\Profile\Models\NullContactElement;
+use phpOMS\Stdlib\Base\Address;
+use phpOMS\Stdlib\Base\NullAddress;
 
 /**
  * Supplier class.

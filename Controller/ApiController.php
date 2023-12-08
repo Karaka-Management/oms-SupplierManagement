@@ -15,12 +15,6 @@ declare(strict_types=1);
 namespace Modules\SupplierManagement\Controller;
 
 use Modules\Admin\Models\Account;
-use Modules\Admin\Models\Address;
-use Modules\Attribute\Models\Attribute;
-use Modules\Attribute\Models\AttributeType;
-use Modules\Attribute\Models\AttributeValue;
-use Modules\Attribute\Models\NullAttributeType;
-use Modules\Attribute\Models\NullAttributeValue;
 use Modules\Media\Models\MediaMapper;
 use Modules\Media\Models\PathSettings;
 use Modules\SupplierManagement\Models\Supplier;
@@ -34,11 +28,11 @@ use Modules\SupplierManagement\Models\SupplierL11nTypeMapper;
 use Modules\SupplierManagement\Models\SupplierMapper;
 use phpOMS\Localization\BaseStringL11n;
 use phpOMS\Localization\BaseStringL11nType;
-use phpOMS\Localization\ISO639x1Enum;
 use phpOMS\Localization\NullBaseStringL11nType;
 use phpOMS\Message\Http\RequestStatusCode;
 use phpOMS\Message\RequestAbstract;
 use phpOMS\Message\ResponseAbstract;
+use phpOMS\Stdlib\Base\Address;
 
 /**
  * SupplierManagement class.
