@@ -22,7 +22,7 @@ $bills = $this->data['newestInvoices'] ?? [];
     <div class="col-xs-12">
         <div class="portlet">
             <div class="portlet-head"><?= $this->getHtml('Bills'); ?><i class="g-icon download btn end-xs">download</i></div>
-            <table id="billList" class="default">
+            <table id="billList" class="default sticky">
                 <thead>
                 <tr>
                     <td><label class="checkbox" for="iBillSelect-">

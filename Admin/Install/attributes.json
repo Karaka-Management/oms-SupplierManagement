@@ -56,10 +56,52 @@
         ]
     },
     {
-        "name": "group",
+        "name": "segment",
         "l11n": {
-            "en": "Group",
-            "de": "Gruppe"
+            "en": "Segment",
+            "de": "Segment"
+        },
+        "value_type": 1,
+        "is_custom_allowed": false,
+        "validation_pattern": "",
+        "is_required": true,
+        "default_value": "",
+        "values": [
+            {
+                "value": 1,
+                "l11n": {
+                    "en": "Segment 1",
+                    "de": "Segment 1"
+                }
+            }
+        ]
+    },
+    {
+        "name": "section",
+        "l11n": {
+            "en": "Section",
+            "de": "Sparte"
+        },
+        "value_type": 1,
+        "is_custom_allowed": false,
+        "validation_pattern": "",
+        "is_required": true,
+        "default_value": "",
+        "values": [
+            {
+                "value": 1,
+                "l11n": {
+                    "en": "Section 1",
+                    "de": "Section 1"
+                }
+            }
+        ]
+    },
+    {
+        "name": "supplier_group",
+        "l11n": {
+            "en": "Supplier Group",
+            "de": "Lieferantengruppe"
         },
         "value_type": 1,
         "is_custom_allowed": false,
@@ -72,6 +114,27 @@
                 "l11n": {
                     "en": "Group 1",
                     "de": "Gruppe 1"
+                }
+            }
+        ]
+    },
+    {
+        "name": "supplier_type",
+        "l11n": {
+            "en": "Supplier Type",
+            "de": "Lieferantentyp"
+        },
+        "value_type": 1,
+        "is_custom_allowed": false,
+        "validation_pattern": "",
+        "is_required": true,
+        "default_value": "",
+        "values": [
+            {
+                "value": 1,
+                "l11n": {
+                    "en": "Type 1",
+                    "de": "Typ 1"
                 }
             }
         ]

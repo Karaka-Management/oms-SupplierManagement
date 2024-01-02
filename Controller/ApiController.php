@@ -15,24 +15,26 @@ declare(strict_types=1);
 namespace Modules\SupplierManagement\Controller;
 
 use Modules\Admin\Models\Account;
+use Modules\Admin\Models\NullAccount;
 use Modules\Media\Models\MediaMapper;
 use Modules\Media\Models\PathSettings;
+use Modules\SupplierManagement\Models\SettingsEnum;
 use Modules\SupplierManagement\Models\Supplier;
-use Modules\SupplierManagement\Models\SupplierAttributeMapper;
-use Modules\SupplierManagement\Models\SupplierAttributeTypeL11nMapper;
-use Modules\SupplierManagement\Models\SupplierAttributeTypeMapper;
-use Modules\SupplierManagement\Models\SupplierAttributeValueL11nMapper;
-use Modules\SupplierManagement\Models\SupplierAttributeValueMapper;
+use Modules\SupplierManagement\Models\Attribute\SupplierAttributeTypeMapper;
 use Modules\SupplierManagement\Models\SupplierL11nMapper;
 use Modules\SupplierManagement\Models\SupplierL11nTypeMapper;
 use Modules\SupplierManagement\Models\SupplierMapper;
+use phpOMS\Api\Geocoding\Nominatim;
 use phpOMS\Localization\BaseStringL11n;
 use phpOMS\Localization\BaseStringL11nType;
+use phpOMS\Localization\ISO3166TwoEnum;
 use phpOMS\Localization\NullBaseStringL11nType;
+use phpOMS\Message\Http\HttpRequest;
 use phpOMS\Message\Http\RequestStatusCode;
 use phpOMS\Message\RequestAbstract;
 use phpOMS\Message\ResponseAbstract;
 use phpOMS\Stdlib\Base\Address;
+use phpOMS\Uri\HttpUri;
 
 /**
  * SupplierManagement class.
@@ -70,6 +72,9 @@ final class ApiController extends Controller
 
         $supplier = $this->createSupplierFromRequest($request);
         $this->createModel($request->header->account, $supplier, SupplierMapper::class, 'supplier', $request->getOrigin());
+
+        $this->createSupplierSegmentation($request, $response, $supplier);
+
         $this->createStandardCreateResponse($request, $response, $supplier);
     }
 
@@ -84,25 +89,68 @@ final class ApiController extends Controller
      */
     private function createSupplierFromRequest(RequestAbstract $request) : Supplier
     {
-        $account        = new Account();
-        $account->name1 = $request->getDataString('name1') ?? '';
-        $account->name2 = $request->getDataString('name2') ?? '';
+        $account = null;
+        if (!$request->hasData('account')) {
+            $account        = new Account();
+            $account->name1 = $request->getDataString('name1') ?? '';
+            $account->name2 = $request->getDataString('name2') ?? '';
+        } else {
+            $account = new NullAccount((int) $request->getData('account'));
+        }
 
         $supplier          = new Supplier();
         $supplier->number  = $request->getDataString('number') ?? '';
         $supplier->account = $account;
+        $supplier->unit = $request->getDataInt('unit') ?? 1;
 
+        // Handle main address
         $addr          = new Address();
         $addr->address = $request->getDataString('address') ?? '';
         $addr->postal  = $request->getDataString('postal') ?? '';
         $addr->city    = $request->getDataString('city') ?? '';
         $addr->state   = $request->getDataString('state') ?? '';
-        $addr->setCountry($request->getDataString('country') ?? '');
+        $addr->setCountry($request->getDataString('country') ?? ISO3166TwoEnum::_XXX);
         $supplier->mainAddress = $addr;
 
-        $supplier->unit = $request->getDataInt('unit');
+        // Try to find lat/lon through external API
+        $geocoding = Nominatim::geocoding($addr->country, $addr->city, $addr->address);
+        if ($geocoding === ['lat' => 0.0, 'lon' => 0.0]) {
+            $geocoding = Nominatim::geocoding($addr->country, $addr->city);
+        }
+
+        $supplier->mainAddress->lat = $geocoding['lat'];
+        $supplier->mainAddress->lon = $geocoding['lon'];
 
         return $supplier;
+    }
+
+    private function createSupplierSegmentation(RequestAbstract $request, ResponseAbstract $response, Supplier $supplier) : void
+    {
+        /** @var \Model\Setting $settings */
+        $settings = $this->app->appSettings->get(null, [
+            SettingsEnum::DEFAULT_SEGMENTATION,
+        ]);
+
+        $segmentation = \json_decode($settings->content, true);
+        if ($segmentation === false) {
+            return;
+        }
+
+        $types = SupplierAttributeTypeMapper::get()
+            ->where('name', \array_keys($segmentation), 'IN')
+            ->execute();
+
+        foreach ($types as $type) {
+            $internalResponse = clone $response;
+            $internalRequest  = new HttpRequest(new HttpUri(''));
+
+            $internalRequest->header->account = $request->header->account;
+            $internalRequest->setData('ref', $supplier->id);
+            $internalRequest->setData('type', $type->id);
+            $internalRequest->setData('value_id', $segmentation[$type->name]);
+
+            $this->app->moduleManager->get('SupplierManagement', 'ApiAttribute')->apiItemAttributeCreate($internalRequest, $internalResponse);
+        }
     }
 
     /**
@@ -259,157 +307,6 @@ final class ApiController extends Controller
         }
 
         return [];
-    }
-
-    /**
-     * Api method to create supplier attribute
-     *
-     * @param RequestAbstract  $request  Request
-     * @param ResponseAbstract $response Response
-     * @param array            $data     Generic data
-     *
-     * @return void
-     *
-     * @api
-     *
-     * @since 1.0.0
-     */
-    public function apiSupplierAttributeCreate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
-    {
-        if (!empty($val = $this->validateAttributeCreate($request))) {
-            $response->header->status = RequestStatusCode::R_400;
-            $this->createInvalidCreateResponse($request, $response, $val);
-
-            return;
-        }
-
-        $type      = SupplierAttributeTypeMapper::get()->with('defaults')->where('id', (int) $request->getData('type'))->execute();
-        $attribute = $this->createAttributeFromRequest($request, $type);
-        $this->createModel($request->header->account, $attribute, SupplierAttributeMapper::class, 'attribute', $request->getOrigin());
-        $this->createStandardCreateResponse($request, $response, $attribute);
-    }
-
-    /**
-     * Api method to create supplier attribute l11n
-     *
-     * @param RequestAbstract  $request  Request
-     * @param ResponseAbstract $response Response
-     * @param array            $data     Generic data
-     *
-     * @return void
-     *
-     * @api
-     *
-     * @since 1.0.0
-     */
-    public function apiSupplierAttributeTypeL11nCreate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
-    {
-        if (!empty($val = $this->validateAttributeTypeL11nCreate($request))) {
-            $response->header->status = RequestStatusCode::R_400;
-            $this->createInvalidCreateResponse($request, $response, $val);
-
-            return;
-        }
-
-        $attrL11n = $this->createAttributeTypeL11nFromRequest($request);
-        $this->createModel($request->header->account, $attrL11n, SupplierAttributeTypeL11nMapper::class, 'attr_type_l11n', $request->getOrigin());
-        $this->createStandardCreateResponse($request, $response, $attrL11n);
-    }
-
-    /**
-     * Api method to create supplier attribute type
-     *
-     * @param RequestAbstract  $request  Request
-     * @param ResponseAbstract $response Response
-     * @param array            $data     Generic data
-     *
-     * @return void
-     *
-     * @api
-     *
-     * @since 1.0.0
-     */
-    public function apiSupplierAttributeTypeCreate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
-    {
-        if (!empty($val = $this->validateAttributeTypeCreate($request))) {
-            $response->header->status = RequestStatusCode::R_400;
-            $this->createInvalidCreateResponse($request, $response, $val);
-
-            return;
-        }
-
-        $attrType = $this->createAttributeTypeFromRequest($request);
-        $this->createModel($request->header->account, $attrType, SupplierAttributeTypeMapper::class, 'attr_type', $request->getOrigin());
-        $this->createStandardCreateResponse($request, $response, $attrType);
-    }
-
-    /**
-     * Api method to create supplier attribute value
-     *
-     * @param RequestAbstract  $request  Request
-     * @param ResponseAbstract $response Response
-     * @param array            $data     Generic data
-     *
-     * @return void
-     *
-     * @api
-     *
-     * @since 1.0.0
-     */
-    public function apiSupplierAttributeValueCreate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
-    {
-        if (!empty($val = $this->validateAttributeValueCreate($request))) {
-            $response->header->status = RequestStatusCode::R_400;
-            $this->createInvalidCreateResponse($request, $response, $val);
-
-            return;
-        }
-
-        /** @var \Modules\Attribute\Models\AttributeType $type */
-        $type = SupplierAttributeTypeMapper::get()
-            ->where('id', $request->getDataInt('type') ?? 0)
-            ->execute();
-
-        $attrValue = $this->createAttributeValueFromRequest($request, $type);
-        $this->createModel($request->header->account, $attrValue, SupplierAttributeValueMapper::class, 'attr_value', $request->getOrigin());
-
-        if ($attrValue->isDefault) {
-            $this->createModelRelation(
-                $request->header->account,
-                (int) $request->getData('type'),
-                $attrValue->id,
-                SupplierAttributeTypeMapper::class, 'defaults', '', $request->getOrigin()
-            );
-        }
-
-        $this->createStandardCreateResponse($request, $response, $attrValue);
-    }
-
-    /**
-     * Api method to create item attribute l11n
-     *
-     * @param RequestAbstract  $request  Request
-     * @param ResponseAbstract $response Response
-     * @param array            $data     Generic data
-     *
-     * @return void
-     *
-     * @api
-     *
-     * @since 1.0.0
-     */
-    public function apiSupplierAttributeValueL11nCreate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
-    {
-        if (!empty($val = $this->validateAttributeValueL11nCreate($request))) {
-            $response->header->status = RequestStatusCode::R_400;
-            $this->createInvalidCreateResponse($request, $response, $val);
-
-            return;
-        }
-
-        $attrL11n = $this->createAttributeValueL11nFromRequest($request);
-        $this->createModel($request->header->account, $attrL11n, SupplierAttributeValueL11nMapper::class, 'attr_value_l11n', $request->getOrigin());
-        $this->createStandardCreateResponse($request, $response, $attrL11n);
     }
 
     /**
