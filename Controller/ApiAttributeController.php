@@ -61,7 +61,23 @@ final class ApiAttributeController extends Controller
             return;
         }
 
-        $type      = SupplierAttributeTypeMapper::get()->with('defaults')->where('id', (int) $request->getData('type'))->execute();
+        $type = SupplierAttributeTypeMapper::get()->with('defaults')->where('id', (int) $request->getData('type'))->execute();
+
+        if (!$type->repeatable) {
+            $attr = SupplierAttributeMapper::count()
+                ->with('type')
+                ->where('type/id', (int) $request->getData('type'))
+                ->where('ref', (int) $request->getData('ref'))
+                ->execute();
+
+            if ($attr > 0) {
+                $response->header->status = RequestStatusCode::R_409;
+                $this->createInvalidCreateResponse($request, $response, $val);
+
+                return;
+            }
+        }
+
         $attribute = $this->createAttributeFromRequest($request, $type);
         $this->createModel($request->header->account, $attribute, SupplierAttributeMapper::class, 'attribute', $request->getOrigin());
         $this->createStandardCreateResponse($request, $response, $attribute);

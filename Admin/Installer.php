@@ -47,6 +47,8 @@ final class Installer extends InstallerAbstract
     {
         parent::install($app, $info, $cfgHandler);
 
+        \Modules\Admin\Admin\Installer::installExternal($app, ['path' => __DIR__ . '/Install/Admin.install.json']);
+
         /* Attributes */
         $fileContent = \file_get_contents(__DIR__ . '/Install/attributes.json');
         if ($fileContent === false) {
@@ -131,8 +133,8 @@ final class Installer extends InstallerAbstract
         /** @var array<string, array> $supplierAttrType */
         $supplierAttrType = [];
 
-        /** @var \Modules\SupplierManagement\Controller\ApiController $module */
-        $module = $app->moduleManager->getModuleInstance('SupplierManagement');
+        /** @var \Modules\SupplierManagement\Controller\ApiAttributeController $module */
+        $module = $app->moduleManager->getModuleInstance('SupplierManagement', 'ApiAttribute');
 
         /** @var array $attribute */
         foreach ($attributes as $attribute) {
@@ -197,8 +199,8 @@ final class Installer extends InstallerAbstract
         /** @var array<string, array> $supplierAttrValue */
         $supplierAttrValue = [];
 
-        /** @var \Modules\SupplierManagement\Controller\ApiController $module */
-        $module = $app->moduleManager->getModuleInstance('SupplierManagement');
+        /** @var \Modules\SupplierManagement\Controller\ApiAttributeController $module */
+        $module = $app->moduleManager->getModuleInstance('SupplierManagement', 'ApiAttribute');
 
         foreach ($attributes as $attribute) {
             $supplierAttrValue[$attribute['name']] = [];

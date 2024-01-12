@@ -59,6 +59,7 @@ final class SupplierAttributeValueMapper extends DataMapperFactory
             'mapper'   => SupplierAttributeValueL11nMapper::class,
             'table'    => 'suppliermgmt_attr_value_l11n',
             'self'     => 'suppliermgmt_attr_value_l11n_value',
+            'column'   => 'content',
             'external' => null,
         ],
     ];

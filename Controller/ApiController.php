@@ -127,12 +127,10 @@ final class ApiController extends Controller
     private function createSupplierSegmentation(RequestAbstract $request, ResponseAbstract $response, Supplier $supplier) : void
     {
         /** @var \Model\Setting $settings */
-        $settings = $this->app->appSettings->get(null, [
-            SettingsEnum::DEFAULT_SEGMENTATION,
-        ]);
+        $settings = $this->app->appSettings->get(null, SettingsEnum::DEFAULT_SEGMENTATION);
 
         $segmentation = \json_decode($settings->content, true);
-        if ($segmentation === false) {
+        if ($segmentation === false || $segmentation === null) {
             return;
         }
 
@@ -149,7 +147,7 @@ final class ApiController extends Controller
             $internalRequest->setData('type', $type->id);
             $internalRequest->setData('value_id', $segmentation[$type->name]);
 
-            $this->app->moduleManager->get('SupplierManagement', 'ApiAttribute')->apiItemAttributeCreate($internalRequest, $internalResponse);
+            $this->app->moduleManager->get('SupplierManagement', 'ApiAttribute')->apiSupplierAttributeCreate($internalRequest, $internalResponse);
         }
     }
 

@@ -19,6 +19,7 @@ use Modules\Admin\Models\AddressMapper;
 use Modules\Editor\Models\EditorDocMapper;
 use Modules\Media\Models\MediaMapper;
 use Modules\Profile\Models\ContactElementMapper;
+use Modules\SupplierManagement\Models\Attribute\SupplierAttributeMapper;
 use phpOMS\DataStorage\Database\Mapper\DataMapperFactory;
 
 /**

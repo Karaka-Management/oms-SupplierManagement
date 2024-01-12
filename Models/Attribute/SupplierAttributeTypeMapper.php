@@ -42,6 +42,7 @@ final class SupplierAttributeTypeMapper extends DataMapperFactory
         'suppliermgmt_attr_type_datatype'   => ['name' => 'suppliermgmt_attr_type_datatype',   'type' => 'int',    'internal' => 'datatype'],
         'suppliermgmt_attr_type_fields'     => ['name' => 'suppliermgmt_attr_type_fields',   'type' => 'int',    'internal' => 'fields'],
         'suppliermgmt_attr_type_custom'     => ['name' => 'suppliermgmt_attr_type_custom',   'type' => 'bool',   'internal' => 'custom'],
+        'suppliermgmt_attr_type_repeatable'     => ['name' => 'suppliermgmt_attr_type_repeatable',   'type' => 'bool',   'internal' => 'repeatable'],
         'suppliermgmt_attr_type_pattern'    => ['name' => 'suppliermgmt_attr_type_pattern',  'type' => 'string', 'internal' => 'validationPattern'],
         'suppliermgmt_attr_type_required'   => ['name' => 'suppliermgmt_attr_type_required', 'type' => 'bool',   'internal' => 'isRequired'],
     ];
