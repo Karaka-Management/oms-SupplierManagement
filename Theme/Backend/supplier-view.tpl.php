@@ -146,7 +146,7 @@ echo $this->data['nav']->render();
                                 <tr><td><label for="iCountry"><?= $this->getHtml('Country'); ?></label>
                                 <tr><td><select id="iCountry" name="country">
                                     <?php foreach ($countryCodes as $code3 => $code2) : ?>
-                                        <option value="<?= $this->printHtml($code2); ?>"<?= $this->printHtml($code2 === $supplier->mainAddress->getCountry() ? ' selected' : ''); ?>><?= $this->printHtml($countries[$code3]); ?>
+                                        <option value="<?= $this->printHtml($code2); ?>"<?= $this->printHtml($code2 === $supplier->mainAddress->country ? ' selected' : ''); ?>><?= $this->printHtml($countries[$code3]); ?>
                                     <?php endforeach; ?>
                                     </select>
                                 <tr><td><label for="iSupplierMap"><?= $this->getHtml('Map'); ?></label>
@@ -236,7 +236,7 @@ echo $this->data['nav']->render();
                                         <td><?= $this->getHtml('CreatedAt'); ?>
                                     <tbody>
                                     <?php foreach ($notes as $note) :
-                                        $url = UriFactory::build('{/base}/editor/single?{?}&id=' . $note->id);
+                                        $url = UriFactory::build('{/base}/editor/view?{?}&id=' . $note->id);
                                         ?>
                                     <tr data-href="<?= $url; ?>">
                                         <td><a href="<?= $url; ?>"><?= $note->title; ?></a>
@@ -259,7 +259,7 @@ echo $this->data['nav']->render();
                                         <td><?= $this->getHtml('CreatedAt'); ?>
                                     <tbody>
                                     <?php foreach ($files as $file) :
-                                        $url = UriFactory::build('{/base}/media/single?{?}&id=' . $file->id);
+                                        $url = UriFactory::build('{/base}/media/view?{?}&id=' . $file->id);
                                         ?>
                                     <tr data-href="<?= $url; ?>">
                                         <td><a href="<?= $url; ?>"><?= $file->name; ?></a>

@@ -18,23 +18,21 @@ use Modules\Admin\Models\Account;
 use Modules\Admin\Models\NullAccount;
 use Modules\Media\Models\MediaMapper;
 use Modules\Media\Models\PathSettings;
+use Modules\SupplierManagement\Models\Attribute\SupplierAttributeTypeMapper;
 use Modules\SupplierManagement\Models\SettingsEnum;
 use Modules\SupplierManagement\Models\Supplier;
-use Modules\SupplierManagement\Models\Attribute\SupplierAttributeTypeMapper;
 use Modules\SupplierManagement\Models\SupplierL11nMapper;
 use Modules\SupplierManagement\Models\SupplierL11nTypeMapper;
 use Modules\SupplierManagement\Models\SupplierMapper;
-use phpOMS\Api\Geocoding\Nominatim;
 use phpOMS\Localization\BaseStringL11n;
 use phpOMS\Localization\BaseStringL11nType;
-use phpOMS\Localization\ISO3166TwoEnum;
+use phpOMS\Localization\ISO639x1Enum;
 use phpOMS\Localization\NullBaseStringL11nType;
 use phpOMS\Message\Http\HttpRequest;
+use phpOMS\Message\Http\HttpResponse;
 use phpOMS\Message\Http\RequestStatusCode;
 use phpOMS\Message\RequestAbstract;
 use phpOMS\Message\ResponseAbstract;
-use phpOMS\Stdlib\Base\Address;
-use phpOMS\Uri\HttpUri;
 
 /**
  * SupplierManagement class.
@@ -46,8 +44,6 @@ use phpOMS\Uri\HttpUri;
  */
 final class ApiController extends Controller
 {
-    use \Modules\Attribute\Controller\ApiAttributeTraitController;
-
     /**
      * Api method to create news article
      *
@@ -72,6 +68,19 @@ final class ApiController extends Controller
 
         $supplier = $this->createSupplierFromRequest($request);
         $this->createModel($request->header->account, $supplier, SupplierMapper::class, 'supplier', $request->getOrigin());
+
+        // Create stock
+        if ($this->app->moduleManager->isActive('WarehouseManagement')) {
+            $internalResponse = new HttpResponse();
+            $internalRequest  = new HttpRequest($request->uri);
+
+            $internalRequest->header->account = $request->header->account;
+            $internalRequest->setData('name', $supplier->number);
+            $internalRequest->setData('supplier', $supplier->id);
+
+            $this->app->moduleManager->get('WarehouseManagement', 'Api')
+                ->apiStockCreate($internalRequest, $internalResponse);
+        }
 
         $this->createSupplierSegmentation($request, $response, $supplier);
 
@@ -101,25 +110,10 @@ final class ApiController extends Controller
         $supplier          = new Supplier();
         $supplier->number  = $request->getDataString('number') ?? '';
         $supplier->account = $account;
-        $supplier->unit = $request->getDataInt('unit') ?? 1;
+        $supplier->unit    = $request->getDataInt('unit') ?? 1;
 
-        // Handle main address
-        $addr          = new Address();
-        $addr->address = $request->getDataString('address') ?? '';
-        $addr->postal  = $request->getDataString('postal') ?? '';
-        $addr->city    = $request->getDataString('city') ?? '';
-        $addr->state   = $request->getDataString('state') ?? '';
-        $addr->setCountry($request->getDataString('country') ?? ISO3166TwoEnum::_XXX);
-        $supplier->mainAddress = $addr;
-
-        // Try to find lat/lon through external API
-        $geocoding = Nominatim::geocoding($addr->country, $addr->city, $addr->address);
-        if ($geocoding === ['lat' => 0.0, 'lon' => 0.0]) {
-            $geocoding = Nominatim::geocoding($addr->country, $addr->city);
-        }
-
-        $supplier->mainAddress->lat = $geocoding['lat'];
-        $supplier->mainAddress->lon = $geocoding['lon'];
+        $request->setData('name', null, true);
+        $supplier->mainAddress = $this->app->moduleManager->get('Admin', 'Api')->createAddressFromRequest($request);
 
         return $supplier;
     }
@@ -134,13 +128,13 @@ final class ApiController extends Controller
             return;
         }
 
-        $types = SupplierAttributeTypeMapper::get()
+        $types = SupplierAttributeTypeMapper::getAll()
             ->where('name', \array_keys($segmentation), 'IN')
             ->execute();
 
         foreach ($types as $type) {
             $internalResponse = clone $response;
-            $internalRequest  = new HttpRequest(new HttpUri(''));
+            $internalRequest  = new HttpRequest();
 
             $internalRequest->header->account = $request->header->account;
             $internalRequest->setData('ref', $supplier->id);
@@ -210,13 +204,11 @@ final class ApiController extends Controller
      */
     private function createSupplierL11nFromRequest(RequestAbstract $request) : BaseStringL11n
     {
-        $supplierL11n       = new BaseStringL11n();
-        $supplierL11n->ref  = $request->getDataInt('supplier') ?? 0;
-        $supplierL11n->type = new NullBaseStringL11nType($request->getDataInt('type') ?? 0);
-        $supplierL11n->setLanguage(
-            $request->getDataString('language') ?? $request->header->l11n->language
-        );
-        $supplierL11n->content = $request->getDataString('description') ?? '';
+        $supplierL11n           = new BaseStringL11n();
+        $supplierL11n->ref      = $request->getDataInt('supplier') ?? 0;
+        $supplierL11n->type     = new NullBaseStringL11nType($request->getDataInt('type') ?? 0);
+        $supplierL11n->language = ISO639x1Enum::tryFromValue($request->getDataString('language')) ?? $request->header->l11n->language;
+        $supplierL11n->content  = $request->getDataString('description') ?? '';
 
         return $supplierL11n;
     }

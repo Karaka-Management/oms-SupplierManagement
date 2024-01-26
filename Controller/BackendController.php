@@ -197,7 +197,7 @@ final class BackendController extends Controller
      * @since 1.0.0
      * @codeCoverageIgnore
      */
-    public function viewSupplierManagementSupplierProfile(RequestAbstract $request, ResponseAbstract $response, array $data = []) : RenderableInterface
+    public function viewSupplierManagementSupplierView(RequestAbstract $request, ResponseAbstract $response, array $data = []) : RenderableInterface
     {
         $head  = $response->data['Content']->head;
         $nonce = $this->app->appSettings->getOption('script-nonce');
@@ -208,7 +208,7 @@ final class BackendController extends Controller
         $head->addAsset(AssetType::JSLATE, 'Modules/ClientManagement/Controller.js', ['nonce' => $nonce, 'type' => 'module']);
 
         $view = new View($this->app->l11nManager, $request, $response);
-        $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/supplier-profile');
+        $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/supplier-view');
         $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1003202001, $request, $response);
 
         /** @var \Modules\SupplierManagement\Models\Supplier $supplier */

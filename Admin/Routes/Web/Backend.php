@@ -18,7 +18,7 @@ use phpOMS\Account\PermissionType;
 use phpOMS\Router\RouteVerb;
 
 return [
-    '^.*/purchase/supplier/attribute/type/list.*$' => [
+    '^.*/purchase/supplier/attribute/type/list(\?.*$|$)' => [
         [
             'dest'       => '\Modules\SupplierManagement\Controller\BackendController:viewSupplierManagementAttributeTypeList',
             'verb'       => RouteVerb::GET,
@@ -29,7 +29,7 @@ return [
             ],
         ],
     ],
-    '^.*/purchase/supplier/attribute/type\?.*$' => [
+    '^.*/purchase/supplier/attribute/type(\?.*$|$)' => [
         [
             'dest'       => '\Modules\SupplierManagement\Controller\BackendController:viewSupplierManagementAttributeType',
             'verb'       => RouteVerb::GET,
@@ -40,7 +40,7 @@ return [
             ],
         ],
     ],
-    '^.*/purchase/supplier/list.*$' => [
+    '^.*/purchase/supplier/list(\?.*$|$)' => [
         [
             'dest'       => '\Modules\SupplierManagement\Controller\BackendController:viewSupplierManagementSupplierList',
             'verb'       => RouteVerb::GET,
@@ -51,7 +51,7 @@ return [
             ],
         ],
     ],
-    '^.*/purchase/supplier/create.*$' => [
+    '^.*/purchase/supplier/create(\?.*$|$)' => [
         [
             'dest'       => '\Modules\SupplierManagement\Controller\BackendController:viewSupplierManagementSupplierCreate',
             'verb'       => RouteVerb::GET,
@@ -62,9 +62,9 @@ return [
             ],
         ],
     ],
-    '^.*/purchase/supplier/profile.*$' => [
+    '^.*/purchase/supplier/view(\?.*$|$)' => [
         [
-            'dest'       => '\Modules\SupplierManagement\Controller\BackendController:viewSupplierManagementSupplierProfile',
+            'dest'       => '\Modules\SupplierManagement\Controller\BackendController:viewSupplierManagementSupplierView',
             'verb'       => RouteVerb::GET,
             'permission' => [
                 'module' => BackendController::NAME,
@@ -73,7 +73,7 @@ return [
             ],
         ],
     ],
-    '^.*/purchase/analysis/supplier.*$' => [
+    '^.*/purchase/analysis/supplier(\?.*$|$)' => [
         [
             'dest'       => '\Modules\SupplierManagement\Controller\BackendController:viewSupplierManagementSupplierAnalysis',
             'verb'       => RouteVerb::GET,

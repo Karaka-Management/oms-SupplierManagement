@@ -91,44 +91,6 @@ class Supplier
     }
 
     /**
-     * Get id.
-     *
-     * @return int Model id
-     *
-     * @since 1.0.0
-     */
-    public function getId() : int
-    {
-        return $this->id;
-    }
-
-    /**
-     * Get status.
-     *
-     * @return int
-     *
-     * @since 1.0.0
-     */
-    public function getStatus() : int
-    {
-        return $this->status;
-    }
-
-    /**
-     * Set status.
-     *
-     * @param int $status Status
-     *
-     * @return void
-     *
-     * @since 1.0.0
-     */
-    public function setStatus(int $status) : void
-    {
-        $this->status = $status;
-    }
-
-    /**
      * Get payments
      *
      * @return Payment[]
@@ -154,38 +116,12 @@ class Supplier
         $payments = [];
 
         foreach ($this->payments as $payment) {
-            if ($payment->getType() === $type) {
+            if ($payment->type === $type) {
                 $payments[] = $payment;
             }
         }
 
         return $payments;
-    }
-
-    /**
-     * Get supplier type.
-     *
-     * @return int
-     *
-     * @since 1.0.0
-     */
-    public function getType() : int
-    {
-        return $this->type;
-    }
-
-    /**
-     * Set supplier type.
-     *
-     * @param int $type Type
-     *
-     * @return void
-     *
-     * @since 1.0.0
-     */
-    public function setType(int $type) : void
-    {
-        $this->type = $type;
     }
 
     /**
@@ -293,7 +229,7 @@ class Supplier
         \uasort($this->contactElements, [$this, 'orderContactElements']);
 
         foreach ($this->contactElements as $element) {
-            if ($element->getType() === $type) {
+            if ($element->type === $type) {
                 return $element;
             }
         }

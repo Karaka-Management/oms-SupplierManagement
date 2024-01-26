@@ -128,31 +128,31 @@ $items = $this->data['items'] ?? [];
                         </label>
                 <tbody>
                 <?php
-                    $count = 0;
-                    foreach ($items as $key => $value) :
-                        if ($value->itemNumber === '') {
-                            continue;
-                        }
+                $count = 0;
+                foreach ($items as $key => $value) :
+                    if ($value->itemNumber === '') {
+                        continue;
+                    }
 
-                        ++$count;
-                        $url = UriFactory::build('{/base}/purchase/item/profile?{?}&id=' . $value->id);
+                    ++$count;
+                    $url = UriFactory::build('{/base}/purchase/item/view?{?}&id=' . $value->id);
                 ?>
                 <tr data-href="<?= $url; ?>">
                     <td><label class="checkbox" for="iPurchaseItemSelect-<?= $key; ?>">
-                                    <input type="checkbox" id="iPurchaseItemSelect-<?= $key; ?>" name="itemselect">
-                                    <span class="checkmark"></span>
-                                </label>
+                            <input type="checkbox" id="iPurchaseItemSelect-<?= $key; ?>" name="itemselect">
+                            <span class="checkmark"></span>
+                        </label>
                     <td><a href="<?= $url; ?>"><?= $this->printHtml($value->itemNumber); ?></a>
                     <td><a href="<?= $url; ?>"><?= $this->printHtml($value->itemName); ?></a>
-                    <td><a href="<?= $url; ?>"><?= $this->printHtml((string) $value->getQuantity()); ?></a>
-                    <td><a href="<?= $url; ?>"><?= $this->getcurrency($value->singlePurchasePriceNet); ?></a>
+                    <td><a href="<?= $url; ?>"><?= $this->printHtml((string) $value->quantity->getAmount()); ?></a>
+                    <td><a href="<?= $url; ?>"><?= $this->getCurrency($value->singlePurchasePriceNet); ?></a>
                     <td>
                     <td>
                     <td>
-                    <td><a href="<?= $url; ?>"><?= $this->getcurrency($value->totalPurchasePriceNet); ?></a>
+                    <td><a href="<?= $url; ?>"><?= $this->getCurrency($value->totalPurchasePriceNet); ?></a>
                 <?php endforeach; ?>
                 <?php if ($count === 0) : ?>
-                    <tr><td colspan="9" class="empty"><?= $this->getHtml('Empty', '0', '0'); ?>
+                <tr><td colspan="9" class="empty"><?= $this->getHtml('Empty', '0', '0'); ?>
                 <?php endif; ?>
             </table>
         </section>

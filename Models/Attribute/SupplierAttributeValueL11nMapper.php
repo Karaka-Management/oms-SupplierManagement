@@ -37,10 +37,10 @@ final class SupplierAttributeValueL11nMapper extends DataMapperFactory
      * @since 1.0.0
      */
     public const COLUMNS = [
-        'suppliermgmt_attr_value_l11n_id'     => ['name' => 'suppliermgmt_attr_value_l11n_id',    'type' => 'int',    'internal' => 'id'],
-        'suppliermgmt_attr_value_l11n_title'  => ['name' => 'suppliermgmt_attr_value_l11n_title', 'type' => 'string', 'internal' => 'content', 'autocomplete' => true],
-        'suppliermgmt_attr_value_l11n_value'  => ['name' => 'suppliermgmt_attr_value_l11n_value',  'type' => 'int',    'internal' => 'ref'],
-        'suppliermgmt_attr_value_l11n_lang'   => ['name' => 'suppliermgmt_attr_value_l11n_lang',  'type' => 'string', 'internal' => 'language'],
+        'suppliermgmt_attr_value_l11n_id'    => ['name' => 'suppliermgmt_attr_value_l11n_id',    'type' => 'int',    'internal' => 'id'],
+        'suppliermgmt_attr_value_l11n_title' => ['name' => 'suppliermgmt_attr_value_l11n_title', 'type' => 'string', 'internal' => 'content', 'autocomplete' => true],
+        'suppliermgmt_attr_value_l11n_value' => ['name' => 'suppliermgmt_attr_value_l11n_value',  'type' => 'int',    'internal' => 'ref'],
+        'suppliermgmt_attr_value_l11n_lang'  => ['name' => 'suppliermgmt_attr_value_l11n_lang',  'type' => 'string', 'internal' => 'language'],
     ];
 
     /**

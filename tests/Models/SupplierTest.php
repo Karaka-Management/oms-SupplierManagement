@@ -44,36 +44,15 @@ final class SupplierTest extends \PHPUnit\Framework\TestCase
         self::assertEquals('', $this->supplier->number);
         self::assertEquals('', $this->supplier->numberReverse);
         self::assertEquals('', $this->supplier->info);
-        self::assertEquals(SupplierStatus::ACTIVE, $this->supplier->getStatus());
-        self::assertEquals(0, $this->supplier->getType());
+        self::assertEquals(SupplierStatus::ACTIVE, $this->supplier->status);
+        self::assertEquals(0, $this->supplier->type);
         self::assertEquals([], $this->supplier->getNotes());
         self::assertEquals([], $this->supplier->files);
         self::assertEquals([], $this->supplier->getAddresses());
         self::assertEquals([], $this->supplier->getContactElements());
         self::assertEquals((new \DateTime('now'))->format('Y-m-d'), $this->supplier->createdAt->format('Y-m-d'));
         self::assertInstanceOf('\Modules\Admin\Models\Account', $this->supplier->account);
-        self::assertInstanceOf('\Modules\Admin\Models\Address', $this->supplier->mainAddress);
-        self::assertInstanceOf('\Modules\Profile\Models\NullContactElement', $this->supplier->getMainContactElement(0));
-    }
-
-    /**
-     * @covers Modules\SupplierManagement\Models\Supplier
-     * @group module
-     */
-    public function testStatusInputOutput() : void
-    {
-        $this->supplier->setStatus(SupplierStatus::INACTIVE);
-        self::assertEquals(SupplierStatus::INACTIVE, $this->supplier->getStatus());
-    }
-
-    /**
-     * @covers Modules\SupplierManagement\Models\Supplier
-     * @group module
-     */
-    public function testTypeInputOutput() : void
-    {
-        $this->supplier->setType(2);
-        self::assertEquals(2, $this->supplier->getType());
+        self::assertInstanceOf('\phpOMS\Stdlib\Base\Address', $this->supplier->mainAddress);
     }
 
     /**
@@ -105,9 +84,9 @@ final class SupplierTest extends \PHPUnit\Framework\TestCase
     {
         $this->supplier->number        = '123456';
         $this->supplier->numberReverse = '654321';
-        $this->supplier->setStatus(SupplierStatus::INACTIVE);
-        $this->supplier->setType(2);
-        $this->supplier->info = 'Test info';
+        $this->supplier->status        = SupplierStatus::INACTIVE;
+        $this->supplier->type          = 2;
+        $this->supplier->info          = 'Test info';
 
         self::assertEquals(
             [
