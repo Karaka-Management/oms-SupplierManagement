@@ -25,7 +25,8 @@
     "providing": {
         "Navigation": "*",
         "Editor": "*",
-        "Media": "*"
+        "Media": "*",
+        "Search": "*"
     },
     "load": [
         {

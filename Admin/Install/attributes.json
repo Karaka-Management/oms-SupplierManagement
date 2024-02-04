@@ -6,7 +6,7 @@
             "de": "Bewertung"
         },
         "value_type": 2,
-        "is_custom_allowed": true,
+        "is_custom_allowed": false,
         "validation_pattern": "",
         "is_required": false,
         "default_value": "",
@@ -54,6 +54,89 @@
                 }
             }
         ]
+    },
+    {
+        "name": "supplier_area",
+        "l11n": {
+            "en": "Supplier area",
+            "de": "Lieferantenebiet"
+        },
+        "value_type": 2,
+        "is_custom_allowed": false,
+        "validation_pattern": "",
+        "is_required": false,
+        "default_value": "01",
+        "values": [
+            {
+                "value": "01"
+            }
+        ]
+    },
+    {
+        "name": "bill_emails",
+        "l11n": {
+            "en": "Send bills as emails",
+            "de": "Sende Rechnungen als Email"
+        },
+        "value_type": 5,
+        "is_custom_allowed": false,
+        "validation_pattern": "",
+        "is_required": false,
+        "default_value": true,
+        "values": [
+            {
+                "value": false
+            },
+            {
+                "value": true
+            }
+        ]
+    },
+    {
+        "name": "bill_email_address",
+        "l11n": {
+            "en": "Email address for billing",
+            "de": "Emailadresse für Rechnungen"
+        },
+        "value_type": 2,
+        "is_custom_allowed": true,
+        "validation_pattern": "",
+        "is_required": false,
+        "default_value": "",
+        "values": []
+    },
+    {
+        "name": "support_emails",
+        "l11n": {
+            "en": "Send ticket as emails",
+            "de": "Sende Ticket als Email"
+        },
+        "value_type": 5,
+        "is_custom_allowed": false,
+        "validation_pattern": "",
+        "is_required": false,
+        "default_value": 1,
+        "values": [
+            {
+                "value": false
+            },
+            {
+                "value": true
+            }
+        ]
+    },
+    {
+        "name": "support_email_address",
+        "l11n": {
+            "en": "Email address for tickets",
+            "de": "Emailadresse für Tickets"
+        },
+        "value_type": 2,
+        "is_custom_allowed": true,
+        "validation_pattern": "",
+        "is_required": false,
+        "default_value": "",
+        "values": []
     },
     {
         "name": "segment",
