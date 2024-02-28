@@ -32,7 +32,7 @@ echo $this->data['nav']->render(); ?>
     <div class="tab-content">
         <input type="radio" id="c-tab-1" name="tabular-2"<?= $this->request->uri->fragment === 'c-tab-1' ? ' checked' : ''; ?>>
         <div class="tab">
-            <section class="box w-33 floatLeft">
+            <section class="box w-33 lf">
                 <header><h1><?= $this->getHtml('Supplier'); ?></h1></header>
                 <div class="inner">
                     <form>
@@ -53,7 +53,7 @@ echo $this->data['nav']->render(); ?>
         </div>
         <input type="radio" id="c-tab-2" name="tabular-2"<?= $this->request->uri->fragment === 'c-tab-2' ? ' checked' : ''; ?>>
         <div class="tab">
-            <section class="box w-33 floatLeft">
+            <section class="box w-33 lf">
                 <header><h1><?= $this->getHtml('Contact'); ?></h1></header>
                 <div class="inner">
                     <form>
@@ -84,7 +84,7 @@ echo $this->data['nav']->render(); ?>
         </div>
         <input type="radio" id="c-tab-3" name="tabular-2"<?= $this->request->uri->fragment === 'c-tab-3' ? ' checked' : ''; ?>>
         <div class="tab">
-            <section class="box w-33 floatLeft">
+            <section class="box w-33 lf">
                 <header><h1><?= $this->getHtml('Address'); ?></h1></header>
                 <div class="inner">
                     <form>
@@ -112,7 +112,7 @@ echo $this->data['nav']->render(); ?>
         </div>
         <input type="radio" id="c-tab-4" name="tabular-2"<?= $this->request->uri->fragment === 'c-tab-4' ? ' checked' : ''; ?>>
         <div class="tab">
-            <section class="box w-33 floatLeft">
+            <section class="box w-33 lf">
                 <header><h1><?= $this->getHtml('PaymentTerm'); ?></h1></header>
                 <div class="inner">
                     <form>
@@ -140,7 +140,7 @@ echo $this->data['nav']->render(); ?>
         </div>
         <input type="radio" id="c-tab-5" name="tabular-2"<?= $this->request->uri->fragment === 'c-tab-5' ? ' checked' : ''; ?>>
         <div class="tab">
-            <section class="box w-33 floatLeft">
+            <section class="box w-33 lf">
                 <header><h1><?= $this->getHtml('Payment'); ?></h1></header>
                 <div class="inner">
                     <form>

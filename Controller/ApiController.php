@@ -110,7 +110,7 @@ final class ApiController extends Controller
         $supplier          = new Supplier();
         $supplier->number  = $request->getDataString('number') ?? '';
         $supplier->account = $account;
-        $supplier->unit    = $request->getDataInt('unit') ?? 1;
+        $supplier->unit    = $request->getDataInt('unit') ?? $this->app->unitId;
 
         $request->setData('name', null, true);
         $supplier->mainAddress = $this->app->moduleManager->get('Admin', 'Api')->createAddressFromRequest($request);

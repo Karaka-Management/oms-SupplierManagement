@@ -60,7 +60,7 @@ final class Installer extends InstallerAbstract
         $attrTypes  = self::createSupplierAttributeTypes($app, $attributes);
         $attrValues = self::createSupplierAttributeValues($app, $attrTypes, $attributes);
 
-        $data    = \json_decode(\file_get_contents(__DIR__ . '/Install/Admin.install.json'), true);
+        $data = include __DIR__ . '/Install/Admin.install.php';
         $content = \json_decode($data[0]['content'], true);
 
         foreach ($content as $type => $_) {
@@ -100,7 +100,7 @@ final class Installer extends InstallerAbstract
         $l11nTypes = [];
 
         /** @var \Modules\SupplierManagement\Controller\ApiController $module */
-        $module = $app->moduleManager->getModuleInstance('SupplierManagement');
+        $module = $app->moduleManager->get('SupplierManagement');
 
         foreach ($l11ns as $l11n) {
             $response = new HttpResponse();
@@ -141,7 +141,7 @@ final class Installer extends InstallerAbstract
         $supplierAttrType = [];
 
         /** @var \Modules\SupplierManagement\Controller\ApiAttributeController $module */
-        $module = $app->moduleManager->getModuleInstance('SupplierManagement', 'ApiAttribute');
+        $module = $app->moduleManager->get('SupplierManagement', 'ApiAttribute');
 
         /** @var array $attribute */
         foreach ($attributes as $attribute) {
@@ -209,7 +209,7 @@ final class Installer extends InstallerAbstract
         $supplierAttrValue = [];
 
         /** @var \Modules\SupplierManagement\Controller\ApiAttributeController $module */
-        $module = $app->moduleManager->getModuleInstance('SupplierManagement', 'ApiAttribute');
+        $module = $app->moduleManager->get('SupplierManagement', 'ApiAttribute');
 
         foreach ($attributes as $attribute) {
             $supplierAttrValue[$attribute['name']] = [];
