@@ -118,16 +118,31 @@ final class ApiController extends Controller
         return $supplier;
     }
 
+    /**
+     * Create supplier segmentation.
+     *
+     * Default: segment->section->sales_group and to the side supplier_type
+     *
+     * @param RequestAbstract  $request  Request
+     * @param ResponseAbstract $response Response
+     * @param Supplier         $supplier Supplier
+     *
+     * @return void
+     *
+     * @since 1.0.0
+     */
     private function createSupplierSegmentation(RequestAbstract $request, ResponseAbstract $response, Supplier $supplier) : void
     {
         /** @var \Model\Setting $settings */
         $settings = $this->app->appSettings->get(null, SettingsEnum::DEFAULT_SEGMENTATION);
 
+        /** @var array $segmentation */
         $segmentation = \json_decode($settings->content, true);
         if ($segmentation === false || $segmentation === null) {
             return;
         }
 
+        /** @var \Modules\Attribute\Models\AttributeType[] $types */
         $types = SupplierAttributeTypeMapper::getAll()
             ->where('name', \array_keys($segmentation), 'IN')
             ->execute();
