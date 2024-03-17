@@ -36,7 +36,7 @@ trait ApiControllerAttributeTrait
         $request->setData('name', 'test_name');
         $request->setData('language', ISO639x1Enum::_EN);
 
-        $this->module->apiSupplierAttributeTypeCreate($request, $response);
+        $this->moduleAttr->apiSupplierAttributeTypeCreate($request, $response);
         self::assertGreaterThan(0, $response->getDataArray('')['response']->id);
     }
 
@@ -54,7 +54,7 @@ trait ApiControllerAttributeTrait
         $request->setData('type', '1');
         $request->setData('language', ISO639x1Enum::_DE);
 
-        $this->module->apiSupplierAttributeTypeL11nCreate($request, $response);
+        $this->moduleAttr->apiSupplierAttributeTypeL11nCreate($request, $response);
         self::assertGreaterThan(0, $response->getDataArray('')['response']->id);
     }
 
@@ -74,7 +74,7 @@ trait ApiControllerAttributeTrait
         $request->setData('language', ISO639x1Enum::_DE);
         $request->setData('country', ISO3166TwoEnum::_DEU);
 
-        $this->module->apiSupplierAttributeValueCreate($request, $response);
+        $this->moduleAttr->apiSupplierAttributeValueCreate($request, $response);
         self::assertGreaterThan(0, $response->getDataArray('')['response']->id);
     }
 
@@ -93,7 +93,7 @@ trait ApiControllerAttributeTrait
         $request->setData('language', ISO639x1Enum::_DE);
         $request->setData('country', ISO3166TwoEnum::_DEU);
 
-        $this->module->apiSupplierAttributeValueCreate($request, $response);
+        $this->moduleAttr->apiSupplierAttributeValueCreate($request, $response);
         self::assertGreaterThan(0, $response->getDataArray('')['response']->id);
     }
 
@@ -112,7 +112,7 @@ trait ApiControllerAttributeTrait
         $request->setData('language', ISO639x1Enum::_DE);
         $request->setData('country', ISO3166TwoEnum::_DEU);
 
-        $this->module->apiSupplierAttributeValueCreate($request, $response);
+        $this->moduleAttr->apiSupplierAttributeValueCreate($request, $response);
         self::assertGreaterThan(0, $response->getDataArray('')['response']->id);
     }
 
@@ -131,7 +131,7 @@ trait ApiControllerAttributeTrait
         $request->setData('language', ISO639x1Enum::_DE);
         $request->setData('country', ISO3166TwoEnum::_DEU);
 
-        $this->module->apiSupplierAttributeValueCreate($request, $response);
+        $this->moduleAttr->apiSupplierAttributeValueCreate($request, $response);
         self::assertGreaterThan(0, $response->getDataArray('')['response']->id);
     }
 
@@ -149,7 +149,7 @@ trait ApiControllerAttributeTrait
         $request->setData('value', '1');
         $request->setData('type', '1');
 
-        $this->module->apiSupplierAttributeCreate($request, $response);
+        $this->moduleAttr->apiSupplierAttributeCreate($request, $response);
         self::assertGreaterThan(0, $response->getDataArray('')['response']->id);
     }
 
@@ -165,7 +165,7 @@ trait ApiControllerAttributeTrait
         $request->header->account = 1;
         $request->setData('invalid', '1');
 
-        $this->module->apiSupplierAttributeValueCreate($request, $response);
+        $this->moduleAttr->apiSupplierAttributeValueCreate($request, $response);
         self::assertEquals(RequestStatusCode::R_400, $response->header->status);
     }
 
@@ -181,7 +181,7 @@ trait ApiControllerAttributeTrait
         $request->header->account = 1;
         $request->setData('invalid', '1');
 
-        $this->module->apiSupplierAttributeTypeCreate($request, $response);
+        $this->moduleAttr->apiSupplierAttributeTypeCreate($request, $response);
         self::assertEquals(RequestStatusCode::R_400, $response->header->status);
     }
 
@@ -197,7 +197,7 @@ trait ApiControllerAttributeTrait
         $request->header->account = 1;
         $request->setData('invalid', '1');
 
-        $this->module->apiSupplierAttributeTypeL11nCreate($request, $response);
+        $this->moduleAttr->apiSupplierAttributeTypeL11nCreate($request, $response);
         self::assertEquals(RequestStatusCode::R_400, $response->header->status);
     }
 
@@ -213,7 +213,7 @@ trait ApiControllerAttributeTrait
         $request->header->account = 1;
         $request->setData('invalid', '1');
 
-        $this->module->apiSupplierAttributeCreate($request, $response);
+        $this->moduleAttr->apiSupplierAttributeCreate($request, $response);
         self::assertEquals(RequestStatusCode::R_400, $response->header->status);
     }
 }

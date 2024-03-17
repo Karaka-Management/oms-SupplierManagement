@@ -46,6 +46,11 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
     protected ModuleAbstract $module;
 
     /**
+     * @var \Modules\SupplierManagement\Controller\ApiAttributeController
+     */
+    protected ModuleAbstract $moduleAttr;
+
+    /**
      * {@inheritdoc}
      */
     protected function setUp() : void
@@ -86,8 +91,10 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         $this->app->router = new WebRouter();
 
         $this->module = $this->app->moduleManager->get('SupplierManagement');
+        $this->moduleAttr = $this->app->moduleManager->get('SupplierManagement', 'ApiAttribute');
 
         TestUtils::setMember($this->module, 'app', $this->app);
+        TestUtils::setMember($this->moduleAttr, 'app', $this->app);
     }
 
     use ApiControllerSupplierTrait;
