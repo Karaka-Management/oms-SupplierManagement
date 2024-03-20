@@ -23,7 +23,7 @@ use phpOMS\Message\Http\RequestStatusCode;
 trait ApiControllerAttributeTrait
 {
     /**
-     * @covers Modules\SupplierManagement\Controller\ApiController
+     * @covers \Modules\SupplierManagement\Controller\ApiController
      * @group module
      */
     public function testApiSupplierAttributeTypeCreate() : void
@@ -41,7 +41,7 @@ trait ApiControllerAttributeTrait
     }
 
     /**
-     * @covers Modules\SupplierManagement\Controller\ApiController
+     * @covers \Modules\SupplierManagement\Controller\ApiController
      * @group module
      */
     public function testApiSupplierAttributeTypeL11nCreate() : void
@@ -59,7 +59,7 @@ trait ApiControllerAttributeTrait
     }
 
     /**
-     * @covers Modules\SupplierManagement\Controller\ApiController
+     * @covers \Modules\SupplierManagement\Controller\ApiController
      * @group module
      */
     public function testApiSupplierAttributeValueIntCreate() : void
@@ -79,7 +79,7 @@ trait ApiControllerAttributeTrait
     }
 
     /**
-     * @covers Modules\SupplierManagement\Controller\ApiController
+     * @covers \Modules\SupplierManagement\Controller\ApiController
      * @group module
      */
     public function testApiSupplierAttributeValueStrCreate() : void
@@ -98,7 +98,7 @@ trait ApiControllerAttributeTrait
     }
 
     /**
-     * @covers Modules\SupplierManagement\Controller\ApiController
+     * @covers \Modules\SupplierManagement\Controller\ApiController
      * @group module
      */
     public function testApiSupplierAttributeValueFloatCreate() : void
@@ -117,7 +117,7 @@ trait ApiControllerAttributeTrait
     }
 
     /**
-     * @covers Modules\SupplierManagement\Controller\ApiController
+     * @covers \Modules\SupplierManagement\Controller\ApiController
      * @group module
      */
     public function testApiSupplierAttributeValueDatCreate() : void
@@ -136,7 +136,7 @@ trait ApiControllerAttributeTrait
     }
 
     /**
-     * @covers Modules\SupplierManagement\Controller\ApiController
+     * @covers \Modules\SupplierManagement\Controller\ApiController
      * @group module
      */
     public function testApiSupplierAttributeCreate() : void
@@ -154,7 +154,7 @@ trait ApiControllerAttributeTrait
     }
 
     /**
-     * @covers Modules\SupplierManagement\Controller\ApiController
+     * @covers \Modules\SupplierManagement\Controller\ApiController
      * @group module
      */
     public function testApiSupplierAttributeValueCreateInvalidData() : void
@@ -170,7 +170,7 @@ trait ApiControllerAttributeTrait
     }
 
     /**
-     * @covers Modules\SupplierManagement\Controller\ApiController
+     * @covers \Modules\SupplierManagement\Controller\ApiController
      * @group module
      */
     public function testApiSupplierAttributeTypeCreateInvalidData() : void
@@ -186,7 +186,7 @@ trait ApiControllerAttributeTrait
     }
 
     /**
-     * @covers Modules\SupplierManagement\Controller\ApiController
+     * @covers \Modules\SupplierManagement\Controller\ApiController
      * @group module
      */
     public function testApiSupplierAttributeTypeL11nCreateInvalidData() : void
@@ -202,7 +202,7 @@ trait ApiControllerAttributeTrait
     }
 
     /**
-     * @covers Modules\SupplierManagement\Controller\ApiController
+     * @covers \Modules\SupplierManagement\Controller\ApiController
      * @group module
      */
     public function testApiSupplierAttributeCreateInvalidData() : void

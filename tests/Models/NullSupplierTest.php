@@ -22,7 +22,7 @@ use Modules\SupplierManagement\Models\NullSupplier;
 final class NullSupplierTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @covers Modules\SupplierManagement\Models\NullSupplier
+     * @covers \Modules\SupplierManagement\Models\NullSupplier
      * @group module
      */
     public function testNull() : void
@@ -31,7 +31,7 @@ final class NullSupplierTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\SupplierManagement\Models\NullSupplier
+     * @covers \Modules\SupplierManagement\Models\NullSupplier
      * @group module
      */
     public function testId() : void
@@ -41,7 +41,7 @@ final class NullSupplierTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\SupplierManagement\Models\NullSupplier
+     * @covers \Modules\SupplierManagement\Models\NullSupplier
      * @group module
      */
     public function testJsonSerialize() : void

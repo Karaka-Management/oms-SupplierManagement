@@ -35,7 +35,7 @@ final class SupplierTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\SupplierManagement\Models\Supplier
+     * @covers \Modules\SupplierManagement\Models\Supplier
      * @group module
      */
     public function testDefault() : void
@@ -56,7 +56,7 @@ final class SupplierTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\SupplierManagement\Models\Supplier
+     * @covers \Modules\SupplierManagement\Models\Supplier
      * @group module
      */
     public function testContactElementInputOutput() : void
@@ -67,7 +67,7 @@ final class SupplierTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\SupplierManagement\Models\Supplier
+     * @covers \Modules\SupplierManagement\Models\Supplier
      * @group module
      */
     public function testNoteInputOutput() : void
@@ -77,7 +77,7 @@ final class SupplierTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\SupplierManagement\Models\Supplier
+     * @covers \Modules\SupplierManagement\Models\Supplier
      * @group module
      */
     public function testSerialize() : void

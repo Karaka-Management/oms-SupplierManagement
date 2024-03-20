@@ -35,7 +35,7 @@ trait ApiControllerSupplierTrait
     }
 
     /**
-     * @covers Modules\SupplierManagement\Controller\ApiController
+     * @covers \Modules\SupplierManagement\Controller\ApiController
      * @group module
      */
     public function testApiSupplierCreate() : void
@@ -58,7 +58,7 @@ trait ApiControllerSupplierTrait
     }
 
     /**
-     * @covers Modules\SupplierManagement\Controller\ApiController
+     * @covers \Modules\SupplierManagement\Controller\ApiController
      * @group module
      */
     public function testApiSupplierCreateInvalidData() : void
@@ -74,7 +74,7 @@ trait ApiControllerSupplierTrait
     }
 
     /**
-     * @covers Modules\SupplierManagement\Controller\ApiController
+     * @covers \Modules\SupplierManagement\Controller\ApiController
      * @group module
      */
     public function testApiSupplierProfileImageCreate() : void
@@ -105,7 +105,7 @@ trait ApiControllerSupplierTrait
     }
 
     /**
-     * @covers Modules\SupplierManagement\Controller\ApiController
+     * @covers \Modules\SupplierManagement\Controller\ApiController
      * @group module
      */
     public function testApiSupplierFileCreate() : void
@@ -135,7 +135,7 @@ trait ApiControllerSupplierTrait
     }
 
     /**
-     * @covers Modules\SupplierManagement\Controller\ApiController
+     * @covers \Modules\SupplierManagement\Controller\ApiController
      * @group module
      */
     public function testApiSupplierNoteCreate() : void
@@ -156,7 +156,7 @@ trait ApiControllerSupplierTrait
     }
 
     /**
-     * @covers Modules\SupplierManagement\Controller\ApiController
+     * @covers \Modules\SupplierManagement\Controller\ApiController
      * @group module
      */
     public function testApiFileCreateInvalidData() : void
