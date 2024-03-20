@@ -19,31 +19,23 @@ use Modules\SupplierManagement\Models\NullSupplier;
 /**
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\CoversClass(\Modules\SupplierManagement\Models\NullSupplier::class)]
 final class NullSupplierTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @covers \Modules\SupplierManagement\Models\NullSupplier
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testNull() : void
     {
         self::assertInstanceOf('\Modules\SupplierManagement\Models\Supplier', new NullSupplier());
     }
 
-    /**
-     * @covers \Modules\SupplierManagement\Models\NullSupplier
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testId() : void
     {
         $null = new NullSupplier(2);
         self::assertEquals(2, $null->id);
     }
 
-    /**
-     * @covers \Modules\SupplierManagement\Models\NullSupplier
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testJsonSerialize() : void
     {
         $null = new NullSupplier(2);

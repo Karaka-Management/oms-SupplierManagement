@@ -36,8 +36,8 @@ trait ApiControllerSupplierTrait
 
     /**
      * @covers \Modules\SupplierManagement\Controller\ApiController
-     * @group module
      */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testApiSupplierCreate() : void
     {
         $response = new HttpResponse();
@@ -59,8 +59,8 @@ trait ApiControllerSupplierTrait
 
     /**
      * @covers \Modules\SupplierManagement\Controller\ApiController
-     * @group module
      */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testApiSupplierCreateInvalidData() : void
     {
         $response = new HttpResponse();
@@ -75,8 +75,8 @@ trait ApiControllerSupplierTrait
 
     /**
      * @covers \Modules\SupplierManagement\Controller\ApiController
-     * @group module
      */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testApiSupplierProfileImageCreate() : void
     {
         $response = new HttpResponse();
@@ -106,8 +106,8 @@ trait ApiControllerSupplierTrait
 
     /**
      * @covers \Modules\SupplierManagement\Controller\ApiController
-     * @group module
      */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testApiSupplierFileCreate() : void
     {
         $response = new HttpResponse();
@@ -136,8 +136,8 @@ trait ApiControllerSupplierTrait
 
     /**
      * @covers \Modules\SupplierManagement\Controller\ApiController
-     * @group module
      */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testApiSupplierNoteCreate() : void
     {
         $response = new HttpResponse();
@@ -157,8 +157,8 @@ trait ApiControllerSupplierTrait
 
     /**
      * @covers \Modules\SupplierManagement\Controller\ApiController
-     * @group module
      */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testApiFileCreateInvalidData() : void
     {
         $response = new HttpResponse();

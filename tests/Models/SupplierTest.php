@@ -22,6 +22,7 @@ use Modules\SupplierManagement\Models\SupplierStatus;
 /**
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\CoversClass(\Modules\SupplierManagement\Models\Supplier::class)]
 final class SupplierTest extends \PHPUnit\Framework\TestCase
 {
     private Supplier $supplier;
@@ -34,10 +35,7 @@ final class SupplierTest extends \PHPUnit\Framework\TestCase
         $this->supplier = new Supplier();
     }
 
-    /**
-     * @covers \Modules\SupplierManagement\Models\Supplier
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testDefault() : void
     {
         self::assertEquals(0, $this->supplier->id);
@@ -55,10 +53,7 @@ final class SupplierTest extends \PHPUnit\Framework\TestCase
         self::assertInstanceOf('\phpOMS\Stdlib\Base\Address', $this->supplier->mainAddress);
     }
 
-    /**
-     * @covers \Modules\SupplierManagement\Models\Supplier
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testContactElementInputOutput() : void
     {
         $this->supplier->addContactElement($temp = new ContactElement());
@@ -66,20 +61,14 @@ final class SupplierTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($temp, $this->supplier->getMainContactElement(0));
     }
 
-    /**
-     * @covers \Modules\SupplierManagement\Models\Supplier
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testNoteInputOutput() : void
     {
         $this->supplier->addNote(new EditorDoc());
         self::assertCount(1, $this->supplier->getNotes());
     }
 
-    /**
-     * @covers \Modules\SupplierManagement\Models\Supplier
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testSerialize() : void
     {
         $this->supplier->number        = '123456';
