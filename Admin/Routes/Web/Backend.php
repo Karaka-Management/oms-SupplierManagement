@@ -18,7 +18,7 @@ use phpOMS\Account\PermissionType;
 use phpOMS\Router\RouteVerb;
 
 return [
-    '^.*/purchase/supplier/attribute/type/list(\?.*$|$)' => [
+    '^/purchase/supplier/attribute/type/list(\?.*$|$)' => [
         [
             'dest'       => '\Modules\SupplierManagement\Controller\BackendController:viewSupplierManagementAttributeTypeList',
             'verb'       => RouteVerb::GET,
@@ -29,7 +29,7 @@ return [
             ],
         ],
     ],
-    '^.*/purchase/supplier/attribute/type/view(\?.*$|$)' => [
+    '^/purchase/supplier/attribute/type/view(\?.*$|$)' => [
         [
             'dest'       => '\Modules\SupplierManagement\Controller\BackendController:viewSupplierManagementAttributeType',
             'verb'       => RouteVerb::GET,
@@ -40,7 +40,7 @@ return [
             ],
         ],
     ],
-    '^.*/purchase/supplier/attribute/type/create(\?.*$|$)' => [
+    '^/purchase/supplier/attribute/type/create(\?.*$|$)' => [
         [
             'dest'       => '\Modules\SupplierManagement\Controller\BackendController:viewSupplierManagementAttributeType',
             'verb'       => RouteVerb::GET,
@@ -51,7 +51,7 @@ return [
             ],
         ],
     ],
-    '^.*/purchase/supplier/attribute/value/view(\?.*$|$)' => [
+    '^/purchase/supplier/attribute/value/view(\?.*$|$)' => [
         [
             'dest'       => '\Modules\SupplierManagement\Controller\BackendController:viewSupplierManagementAttributeValue',
             'verb'       => RouteVerb::GET,
@@ -62,7 +62,7 @@ return [
             ],
         ],
     ],
-    '^.*/purchase/supplier/attribute/value/create(\?.*$|$)' => [
+    '^/purchase/supplier/attribute/value/create(\?.*$|$)' => [
         [
             'dest'       => '\Modules\SupplierManagement\Controller\BackendController:viewSupplierManagementAttributeValueCreate',
             'verb'       => RouteVerb::GET,
@@ -73,7 +73,7 @@ return [
             ],
         ],
     ],
-    '^.*/purchase/supplier/list(\?.*$|$)' => [
+    '^/purchase/supplier/list(\?.*$|$)' => [
         [
             'dest'       => '\Modules\SupplierManagement\Controller\BackendController:viewSupplierManagementSupplierList',
             'verb'       => RouteVerb::GET,
@@ -84,7 +84,7 @@ return [
             ],
         ],
     ],
-    '^.*/purchase/supplier/create(\?.*$|$)' => [
+    '^/purchase/supplier/create(\?.*$|$)' => [
         [
             'dest'       => '\Modules\SupplierManagement\Controller\BackendController:viewSupplierManagementSupplierCreate',
             'verb'       => RouteVerb::GET,
@@ -95,7 +95,7 @@ return [
             ],
         ],
     ],
-    '^.*/purchase/supplier/view(\?.*$|$)' => [
+    '^/purchase/supplier/view(\?.*$|$)' => [
         [
             'dest'       => '\Modules\SupplierManagement\Controller\BackendController:viewSupplierManagementSupplierView',
             'verb'       => RouteVerb::GET,
@@ -106,7 +106,7 @@ return [
             ],
         ],
     ],
-    '^.*/purchase/analysis/supplier(\?.*$|$)' => [
+    '^/purchase/analysis/supplier(\?.*$|$)' => [
         [
             'dest'       => '\Modules\SupplierManagement\Controller\BackendController:viewSupplierManagementSupplierAnalysis',
             'verb'       => RouteVerb::GET,
