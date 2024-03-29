@@ -16,6 +16,8 @@ namespace Modules\SupplierManagement\Controller;
 
 use Modules\Admin\Models\Account;
 use Modules\Admin\Models\NullAccount;
+use Modules\Media\Models\Collection;
+use Modules\Media\Models\CollectionMapper;
 use Modules\Media\Models\MediaMapper;
 use Modules\Media\Models\PathSettings;
 use Modules\SupplierManagement\Models\Attribute\SupplierAttributeTypeMapper;
@@ -69,6 +71,10 @@ final class ApiController extends Controller
         $supplier = $this->createSupplierFromRequest($request);
         $this->createModel($request->header->account, $supplier, SupplierMapper::class, 'supplier', $request->getOrigin());
 
+        // Create media dir
+        // @todo should this collection get added to the parent collection?
+        $this->createMediaDirForSupplier($supplier->id, $request->header->account);
+
         // Create stock
         if ($this->app->moduleManager->isActive('WarehouseManagement')) {
             $internalResponse = new HttpResponse();
@@ -85,6 +91,29 @@ final class ApiController extends Controller
         $this->createSupplierSegmentation($request, $response, $supplier);
 
         $this->createStandardCreateResponse($request, $response, $supplier);
+    }
+
+    /**
+     * Create directory for an account
+     *
+     * @param int $id    Item number
+     * @param int $createdBy Creator of the directory
+     *
+     * @return Collection
+     *
+     * @since 1.0.0
+     */
+    private function createMediaDirForSupplier(int $id, int $createdBy) : Collection
+    {
+        $collection       = new Collection();
+        $collection->name = $id;
+        $collection->setVirtualPath('/Modules/SupplierManagement/Suppliers');
+        $collection->setPath('/Modules/Media/Files/Modules/SupplierManagement/Suppliers/' . $id);
+        $collection->createdBy = new NullAccount($createdBy);
+
+        CollectionMapper::create()->execute($collection);
+
+        return $collection;
     }
 
     /**
@@ -343,8 +372,8 @@ final class ApiController extends Controller
             fileNames: $request->getDataList('filenames'),
             files: $uploadedFiles,
             account: $request->header->account,
-            basePath: __DIR__ . '/../../../Modules/Media/Files/Modules/SupplierManagement/' . ($request->getData('supplier') ?? '0'),
-            virtualPath: '/Modules/SupplierManagement/' . ($request->getData('supplier') ?? '0'),
+            basePath: __DIR__ . '/../../../Modules/Media/Files/Modules/SupplierManagement/Suppliers/' . ($request->getData('supplier') ?? '0'),
+            virtualPath: '/Modules/SupplierManagement/Suppliers/' . ($request->getData('supplier') ?? '0'),
             pathSettings: PathSettings::FILE_PATH
         );
 
@@ -393,7 +422,7 @@ final class ApiController extends Controller
      */
     public function apiNoteCreate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
-        $request->setData('virtualpath', '/Modules/SupplierManagement/' . $request->getData('id'), true);
+        $request->setData('virtualpath', '/Modules/SupplierManagement/Suppliers/' . $request->getData('id'), true);
         $this->app->moduleManager->get('Editor')->apiEditorCreate($request, $response, $data);
 
         $data = $response->getDataArray($request->uri->__toString());

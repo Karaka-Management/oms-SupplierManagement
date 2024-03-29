@@ -48,6 +48,7 @@ omsApp.Modules.SupplierManagement = class {
         const self = this;
         const data = JSON.parse(chart.getAttribute('data-chart'));
 
+         /** global: Chart */
         const myChart = new Chart(chart.getContext('2d'), data);
     };
 
@@ -59,6 +60,7 @@ omsApp.Modules.SupplierManagement = class {
             return;
         }
 
+         /** global: OpenLayers */
         const mapObj = new OpenLayers.Map(map.getAttribute('id'), {
             controls: [
                 new OpenLayers.Control.Navigation(

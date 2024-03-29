@@ -310,7 +310,7 @@
             { "value": "FI" },
             { "value": "FR" },
             { "value": "DE" },
-            { "value": "DE_0" },
+            { "value": "DE_S" },
             { "value": "GR" },
             { "value": "HU" },
             { "value": "IE" },
@@ -329,6 +329,7 @@
             { "value": "SE" },
             { "value": "GB" },
             { "value": "INT" },
+            { "value": "EU_S" },
             { "value": "EU" }
         ]
     },

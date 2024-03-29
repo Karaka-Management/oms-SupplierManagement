@@ -29,4 +29,6 @@ abstract class PermissionCategory extends Enum
     public const SUPPLIER = 1;
 
     public const ANALYSIS = 2;
+
+    public const ATTRIBUTE = 4;
 }

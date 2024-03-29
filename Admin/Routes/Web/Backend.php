@@ -25,18 +25,51 @@ return [
             'permission' => [
                 'module' => BackendController::NAME,
                 'type'   => PermissionType::READ,
-                'state'  => PermissionCategory::SUPPLIER,
+                'state'  => PermissionCategory::ATTRIBUTE,
             ],
         ],
     ],
-    '^.*/purchase/supplier/attribute/type(\?.*$|$)' => [
+    '^.*/purchase/supplier/attribute/type/view(\?.*$|$)' => [
         [
             'dest'       => '\Modules\SupplierManagement\Controller\BackendController:viewSupplierManagementAttributeType',
             'verb'       => RouteVerb::GET,
             'permission' => [
                 'module' => BackendController::NAME,
                 'type'   => PermissionType::READ,
-                'state'  => PermissionCategory::SUPPLIER,
+                'state'  => PermissionCategory::ATTRIBUTE,
+            ],
+        ],
+    ],
+    '^.*/purchase/supplier/attribute/type/create(\?.*$|$)' => [
+        [
+            'dest'       => '\Modules\SupplierManagement\Controller\BackendController:viewSupplierManagementAttributeType',
+            'verb'       => RouteVerb::GET,
+            'permission' => [
+                'module' => BackendController::NAME,
+                'type'   => PermissionType::CREATE,
+                'state'  => PermissionCategory::ATTRIBUTE,
+            ],
+        ],
+    ],
+    '^.*/purchase/supplier/attribute/value/view(\?.*$|$)' => [
+        [
+            'dest'       => '\Modules\SupplierManagement\Controller\BackendController:viewSupplierManagementAttributeValue',
+            'verb'       => RouteVerb::GET,
+            'permission' => [
+                'module' => BackendController::NAME,
+                'type'   => PermissionType::READ,
+                'state'  => PermissionCategory::ATTRIBUTE,
+            ],
+        ],
+    ],
+    '^.*/purchase/supplier/attribute/value/create(\?.*$|$)' => [
+        [
+            'dest'       => '\Modules\SupplierManagement\Controller\BackendController:viewSupplierManagementAttributeValueCreate',
+            'verb'       => RouteVerb::GET,
+            'permission' => [
+                'module' => BackendController::NAME,
+                'type'   => PermissionType::CREATE,
+                'state'  => PermissionCategory::ATTRIBUTE,
             ],
         ],
     ],

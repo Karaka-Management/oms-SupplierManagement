@@ -7,6 +7,13 @@
         "user": 1
     },
     {
+        "type": "collection",
+        "create_directory": true,
+        "name": "Suppliers",
+        "virtualPath": "/Modules/SupplierManagement",
+        "user": 1
+    },
+    {
         "type": "type",
         "name": "supplier_profile_image",
         "l11n": [

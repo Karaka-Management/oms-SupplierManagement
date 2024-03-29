@@ -19,6 +19,7 @@ use Modules\Media\Models\MediaMapper;
 use Modules\Media\Models\MediaTypeMapper;
 use Modules\SupplierManagement\Models\Attribute\SupplierAttributeTypeL11nMapper;
 use Modules\SupplierManagement\Models\Attribute\SupplierAttributeTypeMapper;
+use Modules\SupplierManagement\Models\Attribute\SupplierAttributeValueL11nMapper;
 use Modules\SupplierManagement\Models\Attribute\SupplierAttributeValueMapper;
 use Modules\SupplierManagement\Models\SupplierMapper;
 use phpOMS\Asset\AssetType;
@@ -56,17 +57,15 @@ final class BackendController extends Controller
      */
     public function viewSupplierManagementAttributeTypeList(RequestAbstract $request, ResponseAbstract $response, array $data = []) : RenderableInterface
     {
-        $view = new View($this->app->l11nManager, $request, $response);
-        $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/attribute-type-list');
-        $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1004801001, $request, $response);
+        $view = new \Modules\Attribute\Theme\Backend\Components\AttributeTypeListView($this->app->l11nManager, $request, $response);
+        $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1003203001, $request, $response);
 
-        /** @var \Modules\Attribute\Models\AttributeType[] $attributes */
-        $attributes = SupplierAttributeTypeMapper::getAll()
+        $view->attributes = SupplierAttributeTypeMapper::getAll()
             ->with('l11n')
             ->where('l11n/language', $response->header->l11n->language)
             ->execute();
 
-        $view->data['attributes'] = $attributes;
+        $view->path = 'purchase/supplier';
 
         return $view;
     }
@@ -87,7 +86,7 @@ final class BackendController extends Controller
     {
         $view = new View($this->app->l11nManager, $request, $response);
         $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/attribute-value-list');
-        $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1004801001, $request, $response);
+        $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1003203001, $request, $response);
 
         /** @var \Modules\Attribute\Models\AttributeValue[] $attributes */
         $attributes = SupplierAttributeValueMapper::getAll()
@@ -114,23 +113,55 @@ final class BackendController extends Controller
      */
     public function viewSupplierManagementAttributeType(RequestAbstract $request, ResponseAbstract $response, array $data = []) : RenderableInterface
     {
-        $view = new View($this->app->l11nManager, $request, $response);
-        $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/attribute-type');
-        $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1004801001, $request, $response);
+        $view = new \Modules\Attribute\Theme\Backend\Components\AttributeTypeView($this->app->l11nManager, $request, $response);
+        $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1003203001, $request, $response);
 
-        /** @var \Modules\Attribute\Models\AttributeType $attribute */
-        $attribute = SupplierAttributeTypeMapper::get()
+        $view->attribute = SupplierAttributeTypeMapper::get()
             ->with('l11n')
+            ->with('defaults')
+            ->with('defaults/l11n')
             ->where('id', (int) $request->getData('id'))
             ->where('l11n/language', $response->header->l11n->language)
+            ->where('defaults/l11n/language', [$response->header->l11n->language, null])
             ->execute();
 
-        $l11ns = SupplierAttributeTypeL11nMapper::getAll()
-            ->where('ref', $attribute->id)
+        $view->l11ns = SupplierAttributeTypeL11nMapper::getAll()
+            ->where('ref', $view->attribute->id)
             ->execute();
 
-        $view->data['attribute'] = $attribute;
-        $view->data['l11ns']     = $l11ns;
+            $view->path = 'purchase/supplier';
+
+        return $view;
+    }
+
+    /**
+     * Routing end-point for application behavior.
+     *
+     * @param RequestAbstract  $request  Request
+     * @param ResponseAbstract $response Response
+     * @param array            $data     Generic data
+     *
+     * @return RenderableInterface
+     *
+     * @since 1.0.0
+     * @codeCoverageIgnore
+     */
+    public function viewSupplierManagementAttributeValue(RequestAbstract $request, ResponseAbstract $response, array $data = []) : RenderableInterface
+    {
+        $view = new \Modules\Attribute\Theme\Backend\Components\AttributeValueView($this->app->l11nManager, $request, $response);
+        $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1003203001, $request, $response);
+
+        $view->attribute = SupplierAttributeValueMapper::get()
+            ->with('l11n')
+            ->where('id', (int) $request->getData('id'))
+            ->where('l11n/language', [$response->header->l11n->language, null])
+            ->execute();
+
+        $view->l11ns = SupplierAttributeValueL11nMapper::getAll()
+            ->where('ref', $view->attribute->id)
+            ->execute();
+
+        // @todo Also find the ItemAttributeType
 
         return $view;
     }
