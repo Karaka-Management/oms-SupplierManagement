@@ -89,7 +89,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         $this->app->accountManager->add($account);
         $this->app->router = new WebRouter();
 
-        $this->module = $this->app->moduleManager->get('SupplierManagement');
+        $this->module     = $this->app->moduleManager->get('SupplierManagement');
         $this->moduleAttr = $this->app->moduleManager->get('SupplierManagement', 'ApiAttribute');
 
         TestUtils::setMember($this->module, 'app', $this->app);

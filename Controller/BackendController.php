@@ -14,22 +14,25 @@ declare(strict_types=1);
 
 namespace Modules\SupplierManagement\Controller;
 
-use Modules\Billing\Models\PurchaseBillMapper;
+use Modules\Auditor\Models\AuditMapper;
 use Modules\Media\Models\MediaMapper;
 use Modules\Media\Models\MediaTypeMapper;
+use Modules\Organization\Models\Attribute\UnitAttributeMapper;
 use Modules\SupplierManagement\Models\Attribute\SupplierAttributeTypeL11nMapper;
 use Modules\SupplierManagement\Models\Attribute\SupplierAttributeTypeMapper;
 use Modules\SupplierManagement\Models\Attribute\SupplierAttributeValueL11nMapper;
 use Modules\SupplierManagement\Models\Attribute\SupplierAttributeValueMapper;
+use Modules\SupplierManagement\Models\PermissionCategory;
 use Modules\SupplierManagement\Models\SupplierMapper;
+use phpOMS\Account\PermissionType;
 use phpOMS\Asset\AssetType;
 use phpOMS\Contract\RenderableInterface;
 use phpOMS\DataStorage\Database\Query\Builder;
 use phpOMS\DataStorage\Database\Query\OrderType;
-use phpOMS\Localization\Money;
+use phpOMS\DataStorage\Database\Query\Where;
 use phpOMS\Message\RequestAbstract;
 use phpOMS\Message\ResponseAbstract;
-use phpOMS\Stdlib\Base\SmartDateTime;
+use phpOMS\Utils\StringUtils;
 use phpOMS\Views\View;
 
 /**
@@ -57,13 +60,13 @@ final class BackendController extends Controller
      */
     public function viewSupplierManagementAttributeTypeList(RequestAbstract $request, ResponseAbstract $response, array $data = []) : RenderableInterface
     {
-        $view = new \Modules\Attribute\Theme\Backend\Components\AttributeTypeListView($this->app->l11nManager, $request, $response);
+        $view              = new \Modules\Attribute\Theme\Backend\Components\AttributeTypeListView($this->app->l11nManager, $request, $response);
         $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1003203001, $request, $response);
 
         $view->attributes = SupplierAttributeTypeMapper::getAll()
             ->with('l11n')
             ->where('l11n/language', $response->header->l11n->language)
-            ->execute();
+            ->executeGetArray();
 
         $view->path = 'purchase/supplier';
 
@@ -92,7 +95,7 @@ final class BackendController extends Controller
         $attributes = SupplierAttributeValueMapper::getAll()
             ->with('l11n')
             ->where('l11n/language', $response->header->l11n->language)
-            ->execute();
+            ->executeGetArray();
 
         $view->data['attributes'] = $attributes;
 
@@ -113,7 +116,7 @@ final class BackendController extends Controller
      */
     public function viewSupplierManagementAttributeType(RequestAbstract $request, ResponseAbstract $response, array $data = []) : RenderableInterface
     {
-        $view = new \Modules\Attribute\Theme\Backend\Components\AttributeTypeView($this->app->l11nManager, $request, $response);
+        $view              = new \Modules\Attribute\Theme\Backend\Components\AttributeTypeView($this->app->l11nManager, $request, $response);
         $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1003203001, $request, $response);
 
         $view->attribute = SupplierAttributeTypeMapper::get()
@@ -127,7 +130,7 @@ final class BackendController extends Controller
 
         $view->l11ns = SupplierAttributeTypeL11nMapper::getAll()
             ->where('ref', $view->attribute->id)
-            ->execute();
+            ->executeGetArray();
 
             $view->path = 'purchase/supplier';
 
@@ -148,7 +151,7 @@ final class BackendController extends Controller
      */
     public function viewSupplierManagementAttributeValue(RequestAbstract $request, ResponseAbstract $response, array $data = []) : RenderableInterface
     {
-        $view = new \Modules\Attribute\Theme\Backend\Components\AttributeValueView($this->app->l11nManager, $request, $response);
+        $view              = new \Modules\Attribute\Theme\Backend\Components\AttributeValueView($this->app->l11nManager, $request, $response);
         $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1003203001, $request, $response);
 
         $view->attribute = SupplierAttributeValueMapper::get()
@@ -159,7 +162,7 @@ final class BackendController extends Controller
 
         $view->l11ns = SupplierAttributeValueL11nMapper::getAll()
             ->where('ref', $view->attribute->id)
-            ->execute();
+            ->executeGetArray();
 
         // @todo Also find the ItemAttributeType
 
@@ -189,7 +192,7 @@ final class BackendController extends Controller
             ->with('mainAddress')
             ->where('unit', $this->app->unitId)
             ->limit(25)
-            ->execute();
+            ->executeGetArray();
 
         $view->data['supplier'] = $supplier;
 
@@ -211,7 +214,7 @@ final class BackendController extends Controller
     public function viewSupplierManagementSupplierCreate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : RenderableInterface
     {
         $view = new View($this->app->l11nManager, $request, $response);
-        $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/supplier-create');
+        $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/supplier-view');
         $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1003202001, $request, $response);
 
         return $view;
@@ -243,17 +246,43 @@ final class BackendController extends Controller
         $view->setTemplate('/Modules/SupplierManagement/Theme/Backend/supplier-view');
         $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1003202001, $request, $response);
 
-        /** @var \Modules\SupplierManagement\Models\Supplier $supplier */
-        $supplier = SupplierMapper::get()
+        $pkType  = 'id';
+        $pkValue = $request->getDataInt('id');
+        if ($pkValue === null) {
+            $pkType  = 'number';
+            $pkValue = $request->getDataString('number');
+        }
+
+        $view->data['supplier'] = SupplierMapper::get()
             ->with('account')
-            ->with('contactElements')
+            ->with('account/addresses')
+            ->with('account/contacts')
             ->with('mainAddress')
             ->with('files')->limit(5, 'files')->sort('files/id', OrderType::DESC)
             ->with('notes')->limit(5, 'notes')->sort('notes/id', OrderType::DESC)
-            ->where('id', (int) $request->getData('id'))
+            ->with('attributes')
+            ->with('attributes/type')
+            ->with('attributes/type/l11n')
+            ->with('attributes/value')
+            //->with('attributes/value/l11n')
+            //->with('attributes/value/l11n')
+            ->where($pkType, $pkValue)
+            ->where('attributes/type/l11n/language', $response->header->l11n->language)
+            //->where('attributes/value/l11n/language', $response->header->l11n->language)
+            /*
+            ->where('attributes/value/l11n', (new Where($this->app->dbPool->get()))
+                ->where(SupplierAttributeValueL11nMapper::getColumnByMember('ref'), '=', null)
+                ->orWhere(SupplierAttributeValueL11nMapper::getColumnByMember('language'), '=', $response->header->l11n->language))
+            */
             ->execute();
 
-        $view->data['supplier'] = $supplier;
+        $view->data['attributeView']                               = new \Modules\Attribute\Theme\Backend\Components\AttributeView($this->app->l11nManager, $request, $response);
+        $view->data['attributeView']->data['default_localization'] = $this->app->l11nServer;
+
+        $view->data['attributeTypes'] = SupplierAttributeTypeMapper::getAll()
+            ->with('l11n')
+            ->where('l11n/language', $response->header->l11n->language)
+            ->executeGetArray();
 
         // Get item profile image
         // @feature Create a new read mapper function that returns relation models instead of its own model
@@ -269,38 +298,107 @@ final class BackendController extends Controller
                 ->on(MediaMapper::TABLE . '.' . MediaMapper::PRIMARYFIELD, '=', MediaMapper::HAS_MANY['types']['table'] . '.' . MediaMapper::HAS_MANY['types']['self'])
             ->leftJoin(MediaTypeMapper::TABLE)
                 ->on(MediaMapper::HAS_MANY['types']['table'] . '.' . MediaMapper::HAS_MANY['types']['external'], '=', MediaTypeMapper::TABLE . '.' . MediaTypeMapper::PRIMARYFIELD)
-            ->where(SupplierMapper::HAS_MANY['files']['self'], '=', $supplier->id)
+            ->where(SupplierMapper::HAS_MANY['files']['self'], '=', $view->data['supplier']->id)
             ->where(MediaTypeMapper::TABLE . '.' . MediaTypeMapper::getColumnByMember('name'), '=', 'supplier_profile_image');
 
-        $clientImage = MediaMapper::get()
+        $view->data['supplierImage'] = MediaMapper::get()
             ->where('id', $results)
             ->limit(1)
             ->execute();
 
-        $view->data['clientImage'] = $clientImage;
+        $businessStart = UnitAttributeMapper::get()
+            ->with('type')
+            ->with('value')
+            ->where('ref', $this->app->unitId)
+            ->where('type/name', 'business_year_start')
+            ->execute();
 
-        // stats
-        if ($this->app->moduleManager->isActive('Billing')) {
-            $ytd                  = PurchaseBillMapper::getPurchaseBySupplierId($supplier->id, new SmartDateTime('Y-01-01'), new SmartDateTime('now'));
-            $mtd                  = PurchaseBillMapper::getPurchaseBySupplierId($supplier->id, new SmartDateTime('Y-m-01'), new SmartDateTime('now'));
-            $lastOrder            = PurchaseBillMapper::getLastOrderDateBySupplierId($supplier->id);
-            $newestInvoices       = PurchaseBillMapper::getAll()->with('supplier')->where('supplier', $supplier->id)->sort('id', OrderType::DESC)->limit(5)->execute();
-            $monthlyPurchaseCosts = PurchaseBillMapper::getSupplierMonthlyPurchaseCosts($supplier->id, (new SmartDateTime('now'))->createModify(-1), new SmartDateTime('now'));
-        } else {
-            $ytd                  = new Money();
-            $mtd                  = new Money();
-            $lastOrder            = null;
-            $newestInvoices       = [];
-            $monthlyPurchaseCosts = [];
-        }
+        $view->data['business_start'] = $businessStart->id === 0 ? 1 : $businessStart->value->getValue();
 
-        $view->data['ytd']                  = $ytd;
-        $view->data['mtd']                  = $mtd;
-        $view->data['lastOrder']            = $lastOrder;
-        $view->data['newestInvoices']       = $newestInvoices;
-        $view->data['monthlyPurchaseCosts'] = $monthlyPurchaseCosts;
+        $view->data['hasBilling']    = $this->app->moduleManager->isActive('Billing');
+        $view->data['hasAccounting'] = $this->app->moduleManager->isActive('Accounting');
 
-        return $view;
+        $view->data['prices'] = $view->data['hasBilling']
+        ? \Modules\Billing\Models\Price\PriceMapper::getAll()
+            ->where('supplier', $view->data['supplier']->id)
+            ->where('type', \Modules\Billing\Models\Price\PriceType::PURCHASE)
+            ->executeGetArray()
+        : [];
+
+    /** @var \Modules\Attribute\Models\AttributeType[] $tmp */
+    $tmp = SupplierAttributeTypeMapper::getAll()
+        ->with('defaults')
+        ->with('defaults/l11n')
+        ->where('name', [
+            'segment', 'section', 'sales_group', 'product_group', 'product_type',
+            'sales_tax_code', 'purchase_tax_code',
+        ], 'IN')
+        ->where('defaults/l11n', (new Where($this->app->dbPool->get()))
+            ->where(SupplierAttributeValueL11nMapper::getColumnByMember('ref') ?? '', '=', null)
+            ->orWhere(SupplierAttributeValueL11nMapper::getColumnByMember('language') ?? '', '=', $response->header->l11n->language))
+        ->executeGetArray();
+
+    $defaultAttributeTypes = [];
+    foreach ($tmp as $t) {
+        $defaultAttributeTypes[$t->name] = $t;
+    }
+
+    $view->data['defaultAttributeTypes'] = $defaultAttributeTypes;
+
+    /** @var \Modules\Attribute\Models\AttributeType[] $tmp */
+    $tmp = SupplierAttributeTypeMapper::getAll()
+        ->with('defaults')
+        ->with('defaults/l11n')
+        ->where('name', [
+            'segment', 'section', 'supplier_group', 'supplier_type',
+            'sales_tax_code',
+        ], 'IN')
+        ->where('defaults/l11n', (new Where($this->app->dbPool->get()))
+            ->where(SupplierAttributeValueL11nMapper::getColumnByMember('ref') ?? '', '=', null)
+            ->orWhere(SupplierAttributeValueL11nMapper::getColumnByMember('language') ?? '', '=', $response->header->l11n->language))
+        ->executeGetArray();
+
+    $supplierSegmentationTypes = [];
+    foreach ($tmp as $t) {
+        $supplierSegmentationTypes[$t->name] = $t;
+    }
+
+    $view->data['supplierSegmentationTypes'] = $supplierSegmentationTypes;
+
+    $logs = [];
+    if ($this->app->accountManager->get($request->header->account)->hasPermission(
+            PermissionType::READ,
+            $this->app->unitId,
+            null,
+            self::NAME,
+            PermissionCategory::SUPPLIER_LOG,
+        )
+    ) {
+        /** @var \Modules\Auditor\Models\Audit[] */
+        $logs = AuditMapper::getAll()
+            ->where('type', StringUtils::intHash(SupplierMapper::class))
+            ->where('module', 'SupplierManagement')
+            ->where('ref', (string) $view->data['supplier']->id)
+            ->executeGetArray();
+    }
+
+    $view->data['logs'] = $logs;
+
+    // @todo join audit with files, attributes, localization, prices, notes, ...
+
+    $view->data['files'] = MediaMapper::getAll()
+        ->with('types')
+        ->join('id', SupplierMapper::class, 'files') // id = media id, files = supplier relations
+            ->on('id', $view->data['supplier']->id, relation: 'files') // id = item id
+        ->executeGetArray();
+
+    $view->data['media-upload'] = new \Modules\Media\Theme\Backend\Components\Upload\BaseView($this->app->l11nManager, $request, $response);
+    $view->data['note']         = new \Modules\Editor\Theme\Backend\Components\Note\BaseView($this->app->l11nManager, $request, $response);
+
+    $view->data['address-component'] = new \Modules\Admin\Theme\Backend\Components\AddressEditor\AddressView($this->app->l11nManager, $request, $response);
+    $view->data['contact-component'] = new \Modules\Admin\Theme\Backend\Components\ContactEditor\ContactView($this->app->l11nManager, $request, $response);
+
+    return $view;
     }
 
     /**
