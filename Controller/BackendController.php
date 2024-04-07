@@ -324,8 +324,8 @@ final class BackendController extends Controller
             ->executeGetArray()
         : [];
 
-    /** @var \Modules\Attribute\Models\AttributeType[] $tmp */
-    $tmp = SupplierAttributeTypeMapper::getAll()
+        /** @var \Modules\Attribute\Models\AttributeType[] $tmp */
+        $tmp = SupplierAttributeTypeMapper::getAll()
         ->with('defaults')
         ->with('defaults/l11n')
         ->where('name', [
@@ -337,15 +337,15 @@ final class BackendController extends Controller
             ->orWhere(SupplierAttributeValueL11nMapper::getColumnByMember('language') ?? '', '=', $response->header->l11n->language))
         ->executeGetArray();
 
-    $defaultAttributeTypes = [];
-    foreach ($tmp as $t) {
-        $defaultAttributeTypes[$t->name] = $t;
-    }
+        $defaultAttributeTypes = [];
+        foreach ($tmp as $t) {
+            $defaultAttributeTypes[$t->name] = $t;
+        }
 
-    $view->data['defaultAttributeTypes'] = $defaultAttributeTypes;
+        $view->data['defaultAttributeTypes'] = $defaultAttributeTypes;
 
-    /** @var \Modules\Attribute\Models\AttributeType[] $tmp */
-    $tmp = SupplierAttributeTypeMapper::getAll()
+        /** @var \Modules\Attribute\Models\AttributeType[] $tmp */
+        $tmp = SupplierAttributeTypeMapper::getAll()
         ->with('defaults')
         ->with('defaults/l11n')
         ->where('name', [
@@ -357,47 +357,47 @@ final class BackendController extends Controller
             ->orWhere(SupplierAttributeValueL11nMapper::getColumnByMember('language') ?? '', '=', $response->header->l11n->language))
         ->executeGetArray();
 
-    $supplierSegmentationTypes = [];
-    foreach ($tmp as $t) {
-        $supplierSegmentationTypes[$t->name] = $t;
-    }
+        $supplierSegmentationTypes = [];
+        foreach ($tmp as $t) {
+            $supplierSegmentationTypes[$t->name] = $t;
+        }
 
-    $view->data['supplierSegmentationTypes'] = $supplierSegmentationTypes;
+        $view->data['supplierSegmentationTypes'] = $supplierSegmentationTypes;
 
-    $logs = [];
-    if ($this->app->accountManager->get($request->header->account)->hasPermission(
+        $logs = [];
+        if ($this->app->accountManager->get($request->header->account)->hasPermission(
             PermissionType::READ,
             $this->app->unitId,
             null,
             self::NAME,
             PermissionCategory::SUPPLIER_LOG,
         )
-    ) {
-        /** @var \Modules\Auditor\Models\Audit[] */
-        $logs = AuditMapper::getAll()
+        ) {
+            /** @var \Modules\Auditor\Models\Audit[] */
+            $logs = AuditMapper::getAll()
             ->where('type', StringUtils::intHash(SupplierMapper::class))
             ->where('module', 'SupplierManagement')
             ->where('ref', (string) $view->data['supplier']->id)
             ->executeGetArray();
-    }
+        }
 
-    $view->data['logs'] = $logs;
+        $view->data['logs'] = $logs;
 
-    // @todo join audit with files, attributes, localization, prices, notes, ...
+        // @todo join audit with files, attributes, localization, prices, notes, ...
 
-    $view->data['files'] = MediaMapper::getAll()
+        $view->data['files'] = MediaMapper::getAll()
         ->with('types')
         ->join('id', SupplierMapper::class, 'files') // id = media id, files = supplier relations
             ->on('id', $view->data['supplier']->id, relation: 'files') // id = item id
         ->executeGetArray();
 
-    $view->data['media-upload'] = new \Modules\Media\Theme\Backend\Components\Upload\BaseView($this->app->l11nManager, $request, $response);
-    $view->data['note']         = new \Modules\Editor\Theme\Backend\Components\Note\BaseView($this->app->l11nManager, $request, $response);
+        $view->data['media-upload'] = new \Modules\Media\Theme\Backend\Components\Upload\BaseView($this->app->l11nManager, $request, $response);
+        $view->data['note']         = new \Modules\Editor\Theme\Backend\Components\Note\BaseView($this->app->l11nManager, $request, $response);
 
-    $view->data['address-component'] = new \Modules\Admin\Theme\Backend\Components\AddressEditor\AddressView($this->app->l11nManager, $request, $response);
-    $view->data['contact-component'] = new \Modules\Admin\Theme\Backend\Components\ContactEditor\ContactView($this->app->l11nManager, $request, $response);
+        $view->data['address-component'] = new \Modules\Admin\Theme\Backend\Components\AddressEditor\AddressView($this->app->l11nManager, $request, $response);
+        $view->data['contact-component'] = new \Modules\Admin\Theme\Backend\Components\ContactEditor\ContactView($this->app->l11nManager, $request, $response);
 
-    return $view;
+        return $view;
     }
 
     /**

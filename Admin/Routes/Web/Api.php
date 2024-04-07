@@ -23,7 +23,7 @@ return [
             'dest'       => '\Modules\SupplierManagement\Controller\ApiController:apiSupplierFind',
             'verb'       => RouteVerb::GET,
             'csrf'       => true,
-            'active' => true,
+            'active'     => true,
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::READ,
@@ -36,7 +36,7 @@ return [
             'dest'       => '\Modules\SupplierManagement\Controller\ApiAttributeController:apiSupplierAttributeCreate',
             'verb'       => RouteVerb::PUT,
             'csrf'       => true,
-            'active' => true,
+            'active'     => true,
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::READ,
@@ -47,7 +47,7 @@ return [
             'dest'       => '\Modules\SupplierManagement\Controller\ApiAttributeController:apiSupplierAttributeUpdate',
             'verb'       => RouteVerb::SET,
             'csrf'       => true,
-            'active' => true,
+            'active'     => true,
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::READ,
@@ -60,7 +60,7 @@ return [
             'dest'       => '\Modules\SupplierManagement\Controller\ApiAttributeController:apiSupplierAttributeTypeCreate',
             'verb'       => RouteVerb::PUT,
             'csrf'       => true,
-            'active' => true,
+            'active'     => true,
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::READ,
@@ -71,7 +71,7 @@ return [
             'dest'       => '\Modules\SupplierManagement\Controller\ApiAttributeController:apiSupplierAttributeTypeUpdate',
             'verb'       => RouteVerb::SET,
             'csrf'       => true,
-            'active' => true,
+            'active'     => true,
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::READ,
@@ -84,7 +84,7 @@ return [
             'dest'       => '\Modules\SupplierManagement\Controller\ApiAttributeController:apiSupplierAttributeTypeL11nCreate',
             'verb'       => RouteVerb::PUT,
             'csrf'       => true,
-            'active' => true,
+            'active'     => true,
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::READ,
@@ -95,7 +95,7 @@ return [
             'dest'       => '\Modules\SupplierManagement\Controller\ApiAttributeController:apiSupplierAttributeTypeL11nUpdate',
             'verb'       => RouteVerb::SET,
             'csrf'       => true,
-            'active' => true,
+            'active'     => true,
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::READ,
@@ -108,7 +108,7 @@ return [
             'dest'       => '\Modules\SupplierManagement\Controller\ApiAttributeController:apiSupplierAttributeValueCreate',
             'verb'       => RouteVerb::PUT,
             'csrf'       => true,
-            'active' => true,
+            'active'     => true,
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::READ,
@@ -119,7 +119,7 @@ return [
             'dest'       => '\Modules\SupplierManagement\Controller\ApiAttributeController:apiSupplierAttributeValueUpdate',
             'verb'       => RouteVerb::SET,
             'csrf'       => true,
-            'active' => true,
+            'active'     => true,
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::READ,
@@ -132,7 +132,7 @@ return [
             'dest'       => '\Modules\SupplierManagement\Controller\ApiAttributeController:apiSupplierAttributeValueL11nCreate',
             'verb'       => RouteVerb::PUT,
             'csrf'       => true,
-            'active' => true,
+            'active'     => true,
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::READ,
@@ -143,7 +143,7 @@ return [
             'dest'       => '\Modules\SupplierManagement\Controller\ApiAttributeController:apiSupplierAttributeValueL11nUpdate',
             'verb'       => RouteVerb::SET,
             'csrf'       => true,
-            'active' => true,
+            'active'     => true,
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::READ,
@@ -156,7 +156,7 @@ return [
             'dest'       => '\Modules\SupplierManagement\Controller\ApiController:apiSupplierL11nCreate',
             'verb'       => RouteVerb::PUT,
             'csrf'       => true,
-            'active' => true,
+            'active'     => true,
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::READ,
@@ -167,7 +167,7 @@ return [
             'dest'       => '\Modules\SupplierManagement\Controller\ApiController:apiSupplierL11nUpdate',
             'verb'       => RouteVerb::SET,
             'csrf'       => true,
-            'active' => true,
+            'active'     => true,
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::READ,
@@ -180,7 +180,7 @@ return [
             'dest'       => '\Modules\SupplierManagement\Controller\ApiController:apiSupplierL11nTypeCreate',
             'verb'       => RouteVerb::PUT,
             'csrf'       => true,
-            'active' => true,
+            'active'     => true,
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::READ,
@@ -191,7 +191,7 @@ return [
             'dest'       => '\Modules\SupplierManagement\Controller\ApiController:apiSupplierL11nTypeUpdate',
             'verb'       => RouteVerb::SET,
             'csrf'       => true,
-            'active' => true,
+            'active'     => true,
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::READ,

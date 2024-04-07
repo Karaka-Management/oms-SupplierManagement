@@ -22,7 +22,7 @@ return [
         [
             'dest'       => '\Modules\SupplierManagement\Controller\BackendController:viewSupplierManagementAttributeTypeList',
             'verb'       => RouteVerb::GET,
-            'active' => true,
+            'active'     => true,
             'permission' => [
                 'module' => BackendController::NAME,
                 'type'   => PermissionType::READ,
@@ -34,7 +34,7 @@ return [
         [
             'dest'       => '\Modules\SupplierManagement\Controller\BackendController:viewSupplierManagementAttributeType',
             'verb'       => RouteVerb::GET,
-            'active' => true,
+            'active'     => true,
             'permission' => [
                 'module' => BackendController::NAME,
                 'type'   => PermissionType::READ,
@@ -46,7 +46,7 @@ return [
         [
             'dest'       => '\Modules\SupplierManagement\Controller\BackendController:viewSupplierManagementAttributeType',
             'verb'       => RouteVerb::GET,
-            'active' => true,
+            'active'     => true,
             'permission' => [
                 'module' => BackendController::NAME,
                 'type'   => PermissionType::CREATE,
@@ -58,7 +58,7 @@ return [
         [
             'dest'       => '\Modules\SupplierManagement\Controller\BackendController:viewSupplierManagementAttributeValue',
             'verb'       => RouteVerb::GET,
-            'active' => true,
+            'active'     => true,
             'permission' => [
                 'module' => BackendController::NAME,
                 'type'   => PermissionType::READ,
@@ -70,7 +70,7 @@ return [
         [
             'dest'       => '\Modules\SupplierManagement\Controller\BackendController:viewSupplierManagementAttributeValueCreate',
             'verb'       => RouteVerb::GET,
-            'active' => true,
+            'active'     => true,
             'permission' => [
                 'module' => BackendController::NAME,
                 'type'   => PermissionType::CREATE,
@@ -82,7 +82,7 @@ return [
         [
             'dest'       => '\Modules\SupplierManagement\Controller\BackendController:viewSupplierManagementSupplierList',
             'verb'       => RouteVerb::GET,
-            'active' => true,
+            'active'     => true,
             'permission' => [
                 'module' => BackendController::NAME,
                 'type'   => PermissionType::READ,
@@ -94,7 +94,7 @@ return [
         [
             'dest'       => '\Modules\SupplierManagement\Controller\BackendController:viewSupplierManagementSupplierCreate',
             'verb'       => RouteVerb::GET,
-            'active' => true,
+            'active'     => true,
             'permission' => [
                 'module' => BackendController::NAME,
                 'type'   => PermissionType::CREATE,
@@ -106,7 +106,7 @@ return [
         [
             'dest'       => '\Modules\SupplierManagement\Controller\BackendController:viewSupplierManagementSupplierView',
             'verb'       => RouteVerb::GET,
-            'active' => true,
+            'active'     => true,
             'permission' => [
                 'module' => BackendController::NAME,
                 'type'   => PermissionType::READ,
@@ -118,7 +118,7 @@ return [
         [
             'dest'       => '\Modules\SupplierManagement\Controller\BackendController:viewSupplierManagementSupplierAnalysis',
             'verb'       => RouteVerb::GET,
-            'active' => true,
+            'active'     => true,
             'permission' => [
                 'module' => BackendController::NAME,
                 'type'   => PermissionType::READ,
