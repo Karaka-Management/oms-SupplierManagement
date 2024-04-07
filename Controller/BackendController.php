@@ -264,11 +264,10 @@ final class BackendController extends Controller
             ->with('attributes/type')
             ->with('attributes/type/l11n')
             ->with('attributes/value')
-            //->with('attributes/value/l11n')
-            //->with('attributes/value/l11n')
+            ->with('attributes/value/l11n')
             ->where($pkType, $pkValue)
             ->where('attributes/type/l11n/language', $response->header->l11n->language)
-            //->where('attributes/value/l11n/language', $response->header->l11n->language)
+            ->where('attributes/value/l11n/language', [$response->header->l11n->language, null])
             /*
             ->where('attributes/value/l11n', (new Where($this->app->dbPool->get()))
                 ->where(SupplierAttributeValueL11nMapper::getColumnByMember('ref'), '=', null)

@@ -47,7 +47,7 @@ use phpOMS\Message\ResponseAbstract;
 final class ApiController extends Controller
 {
     /**
-     * Api method to create news article
+     * Api method to create Supplier
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
@@ -94,7 +94,7 @@ final class ApiController extends Controller
     }
 
     /**
-     * Create directory for an account
+     * Create directory for a supplier
      *
      * @param int $id        Item number
      * @param int $createdBy Creator of the directory
@@ -117,7 +117,7 @@ final class ApiController extends Controller
     }
 
     /**
-     * Method to create news article from request.
+     * Method to create Supplier from request.
      *
      * @param RequestAbstract $request Request
      *
@@ -190,7 +190,7 @@ final class ApiController extends Controller
     }
 
     /**
-     * Validate news create request
+     * Validate Supplier create request
      *
      * @param RequestAbstract $request Request
      *
@@ -408,7 +408,7 @@ final class ApiController extends Controller
     }
 
     /**
-     * Api method to create supplier files
+     * Api method to create Note
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
