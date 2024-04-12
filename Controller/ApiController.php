@@ -18,7 +18,6 @@ use Modules\Admin\Models\Account;
 use Modules\Admin\Models\NullAccount;
 use Modules\Media\Models\Collection;
 use Modules\Media\Models\CollectionMapper;
-use Modules\Media\Models\MediaMapper;
 use Modules\Media\Models\PathSettings;
 use Modules\SupplierManagement\Models\Attribute\SupplierAttributeTypeMapper;
 use Modules\SupplierManagement\Models\SettingsEnum;
@@ -106,7 +105,7 @@ final class ApiController extends Controller
     private function createMediaDirForSupplier(int $id, int $createdBy) : Collection
     {
         $collection       = new Collection();
-        $collection->name = $id;
+        $collection->name = (string) $id;
         $collection->setVirtualPath('/Modules/SupplierManagement/Suppliers');
         $collection->setPath('/Modules/Media/Files/Modules/SupplierManagement/Suppliers/' . $id);
         $collection->createdBy = new NullAccount($createdBy);
@@ -358,11 +357,9 @@ final class ApiController extends Controller
      */
     public function apiFileCreate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
-        $uploadedFiles = $request->files;
-
-        if (empty($uploadedFiles)) {
+        if (empty($request->files)) {
             $response->header->status = RequestStatusCode::R_400;
-            $this->createInvalidAddResponse($request, $response, $uploadedFiles);
+            $this->createInvalidAddResponse($request, $response, $request->files);
 
             return;
         }
@@ -370,41 +367,24 @@ final class ApiController extends Controller
         $uploaded = $this->app->moduleManager->get('Media', 'Api')->uploadFiles(
             names: $request->getDataList('names'),
             fileNames: $request->getDataList('filenames'),
-            files: $uploadedFiles,
+            files: $request->files,
             account: $request->header->account,
             basePath: __DIR__ . '/../../../Modules/Media/Files/Modules/SupplierManagement/Suppliers/' . ($request->getData('supplier') ?? '0'),
             virtualPath: '/Modules/SupplierManagement/Suppliers/' . ($request->getData('supplier') ?? '0'),
-            pathSettings: PathSettings::FILE_PATH
+            pathSettings: PathSettings::FILE_PATH,
+            type: $request->getDataInt('type'),
+            rel: (int) $request->getData('supplier'),
+            mapper: SupplierMapper::class,
+            field: 'files'
         );
 
-        if ($request->hasData('type')) {
-            foreach ($uploaded as $file) {
-                $this->createModelRelation(
-                    $request->header->account,
-                    $file->id,
-                    $request->getDataInt('type'),
-                    MediaMapper::class,
-                    'types',
-                    '',
-                    $request->getOrigin()
-                );
-            }
-        }
-
-        if (empty($uploaded)) {
+        if (empty($uploaded->sources)) {
             $this->createInvalidAddResponse($request, $response, []);
 
             return;
         }
 
-        $this->createModelRelation(
-            $request->header->account,
-            (int) $request->getData('supplier'),
-            \reset($uploaded)->id,
-            SupplierMapper::class, 'files', '', $request->getOrigin()
-        );
-
-        $this->createStandardAddResponse($request, $response, $uploaded);
+        $this->createStandardAddResponse($request, $response, $uploaded->sources);
     }
 
     /**
