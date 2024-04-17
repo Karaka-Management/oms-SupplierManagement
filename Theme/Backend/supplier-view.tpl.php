@@ -237,7 +237,7 @@ echo $this->data['nav']->render();
 
                     <section class="portlet hl-4">
                         <div class="portlet-body">
-                            <textarea class="undecorated"><?= $this->printHtml($supplier->info); ?></textarea>
+                            <textarea class="undecorated"><?= $this->printTextarea($supplier->info); ?></textarea>
                         </div>
                     </section>
                     <?php endif; ?>

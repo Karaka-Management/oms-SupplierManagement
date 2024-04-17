@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Modules\SupplierManagement\Controller;
 
+use Modules\Attribute\Models\NullAttributeValue;
 use Modules\Auditor\Models\AuditMapper;
 use Modules\Media\Models\MediaMapper;
 use Modules\Media\Models\MediaTypeMapper;
@@ -29,7 +30,6 @@ use phpOMS\Asset\AssetType;
 use phpOMS\Contract\RenderableInterface;
 use phpOMS\DataStorage\Database\Query\Builder;
 use phpOMS\DataStorage\Database\Query\OrderType;
-use phpOMS\DataStorage\Database\Query\Where;
 use phpOMS\Message\RequestAbstract;
 use phpOMS\Message\ResponseAbstract;
 use phpOMS\Utils\StringUtils;
@@ -132,7 +132,7 @@ final class BackendController extends Controller
             ->where('ref', $view->attribute->id)
             ->executeGetArray();
 
-            $view->path = 'purchase/supplier';
+        $view->path = 'purchase/supplier';
 
         return $view;
     }
@@ -332,9 +332,7 @@ final class BackendController extends Controller
             'segment', 'section', 'sales_group', 'product_group', 'product_type',
             'sales_tax_code', 'purchase_tax_code',
         ], 'IN')
-        ->where('defaults/l11n', (new Where($this->app->dbPool->get()))
-            ->where(SupplierAttributeValueL11nMapper::getColumnByMember('ref') ?? '', '=', null)
-            ->orWhere(SupplierAttributeValueL11nMapper::getColumnByMember('language') ?? '', '=', $response->header->l11n->language))
+        ->where('defaults/l11n/language', [$response->header->l11n->language, null])
         ->executeGetArray();
 
         $defaultAttributeTypes = [];
@@ -352,9 +350,7 @@ final class BackendController extends Controller
             'segment', 'section', 'supplier_group', 'supplier_type',
             'sales_tax_code',
         ], 'IN')
-        ->where('defaults/l11n', (new Where($this->app->dbPool->get()))
-            ->where(SupplierAttributeValueL11nMapper::getColumnByMember('ref') ?? '', '=', null)
-            ->orWhere(SupplierAttributeValueL11nMapper::getColumnByMember('language') ?? '', '=', $response->header->l11n->language))
+        ->where('defaults/l11n/language', [$response->header->l11n->language, null])
         ->executeGetArray();
 
         $supplierSegmentationTypes = [];
@@ -412,8 +408,16 @@ final class BackendController extends Controller
      * @since 1.0.0
      * @codeCoverageIgnore
      */
-    public function viewSupplierManagementSupplierAnalysis(RequestAbstract $request, ResponseAbstract $response, array $data = []) : RenderableInterface
+    public function viewSupplierManagementAttributeValueCreate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : RenderableInterface
     {
-        return new View($this->app->l11nManager, $request, $response);
+        $view              = new \Modules\Attribute\Theme\Backend\Components\AttributeValueView($this->app->l11nManager, $request, $response);
+        $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1003203001, $request, $response);
+
+        $view->type      = SupplierAttributeTypeMapper::get()->where('id', (int) $request->getData('type'))->execute();
+        $view->attribute = new NullAttributeValue();
+
+        $view->path = 'purchase/supplier';
+
+        return $view;
     }
 }

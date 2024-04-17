@@ -20,7 +20,7 @@ $bills = $this->data['newestInvoices'] ?? [];
 
 <div class="row">
     <div class="col-xs-12">
-        <div class="portlet">
+        <section class="portlet">
             <div class="portlet-head"><?= $this->getHtml('Bills'); ?><i class="g-icon download btn end-xs">download</i></div>
             <table id="billList" class="default sticky">
                 <thead>
@@ -189,6 +189,6 @@ $bills = $this->data['newestInvoices'] ?? [];
                     <tr><td colspan="12" class="empty"><?= $this->getHtml('Empty', '0', '0'); ?>
                 <?php endif; ?>
             </table>
-        </div>
+        </section>
     </div>
 </div>

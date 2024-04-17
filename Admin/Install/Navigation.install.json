@@ -104,6 +104,7 @@
         "from": "SupplierManagement",
         "permission": { "permission": 2, "category": null, "element": null },
         "parent": 1002106001,
-        "children": []
+        "children": [],
+        "status": 3
     }
 ]
