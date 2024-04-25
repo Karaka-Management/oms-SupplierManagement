@@ -48,7 +48,7 @@ final class ApiController extends Controller
     /**
      * Api method to create Supplier
      *
-     * @param RequestAbstract  $request  Request
+     * @param HttpRequest      $request  Request
      * @param ResponseAbstract $response Response
      * @param array            $data     Generic data
      *
@@ -58,7 +58,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiSupplierCreate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
+    public function apiSupplierCreate(HttpRequest $request, ResponseAbstract $response, array $data = []) : void
     {
         if (!empty($val = $this->validateSupplierCreate($request))) {
             $response->header->status = RequestStatusCode::R_400;
