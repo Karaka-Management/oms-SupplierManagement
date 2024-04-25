@@ -125,6 +125,7 @@ return ['SupplierManagement' => [
     'ClientSection'    => 'Kundensparte',
     'ItemSalesGroup'   => 'Artikel Umsatzgruppe',
     'ClientGroup'      => 'Kundengruppe',
+    'ItemProductGroup' => 'Produktgruppe',
     'ClientType'       => 'Kundenart',
     'ItemType'         => 'Artikeltyp',
     'Item'             => 'Artikel',
