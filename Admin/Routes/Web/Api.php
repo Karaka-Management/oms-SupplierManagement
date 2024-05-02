@@ -31,7 +31,31 @@ return [
             ],
         ],
     ],
-    '^.*/supplier/attribute$' => [
+    '^.*/supplier(\?.*|$)$' => [
+        [
+            'dest'       => '\Modules\SupplierManagement\Controller\ApiController:apiSupplierCreate',
+            'verb'       => RouteVerb::PUT,
+            'csrf'       => true,
+            'active'     => true,
+            'permission' => [
+                'module' => ApiController::NAME,
+                'type'   => PermissionType::CREATE,
+                'state'  => PermissionCategory::SUPPLIER,
+            ],
+        ],
+        [
+            'dest'       => '\Modules\SupplierManagement\Controller\ApiController:apiSupplierUpdate',
+            'verb'       => RouteVerb::SET,
+            'csrf'       => true,
+            'active'     => true,
+            'permission' => [
+                'module' => ApiController::NAME,
+                'type'   => PermissionType::MODIFY,
+                'state'  => PermissionCategory::SUPPLIER,
+            ],
+        ],
+    ],
+    '^.*/supplier/attribute(\?.*|$)$' => [
         [
             'dest'       => '\Modules\SupplierManagement\Controller\ApiAttributeController:apiSupplierAttributeCreate',
             'verb'       => RouteVerb::PUT,
@@ -39,7 +63,7 @@ return [
             'active'     => true,
             'permission' => [
                 'module' => ApiController::NAME,
-                'type'   => PermissionType::READ,
+                'type'   => PermissionType::CREATE,
                 'state'  => PermissionCategory::SUPPLIER,
             ],
         ],
@@ -50,12 +74,12 @@ return [
             'active'     => true,
             'permission' => [
                 'module' => ApiController::NAME,
-                'type'   => PermissionType::READ,
+                'type'   => PermissionType::MODIFY,
                 'state'  => PermissionCategory::SUPPLIER,
             ],
         ],
     ],
-    '^.*/supplier/attribute/type$' => [
+    '^.*/supplier/attribute/type(\?.*|$)$' => [
         [
             'dest'       => '\Modules\SupplierManagement\Controller\ApiAttributeController:apiSupplierAttributeTypeCreate',
             'verb'       => RouteVerb::PUT,
@@ -64,7 +88,7 @@ return [
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::READ,
-                'state'  => PermissionCategory::SUPPLIER,
+                'state'  => PermissionCategory::ATTRIBUTE,
             ],
         ],
         [
@@ -75,11 +99,11 @@ return [
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::READ,
-                'state'  => PermissionCategory::SUPPLIER,
+                'state'  => PermissionCategory::ATTRIBUTE,
             ],
         ],
     ],
-    '^.*/supplier/attribute/type/l11n$' => [
+    '^.*/supplier/attribute/type/l11n(\?.*|$)$' => [
         [
             'dest'       => '\Modules\SupplierManagement\Controller\ApiAttributeController:apiSupplierAttributeTypeL11nCreate',
             'verb'       => RouteVerb::PUT,
@@ -87,8 +111,8 @@ return [
             'active'     => true,
             'permission' => [
                 'module' => ApiController::NAME,
-                'type'   => PermissionType::READ,
-                'state'  => PermissionCategory::SUPPLIER,
+                'type'   => PermissionType::CREATE,
+                'state'  => PermissionCategory::ATTRIBUTE,
             ],
         ],
         [
@@ -98,12 +122,12 @@ return [
             'active'     => true,
             'permission' => [
                 'module' => ApiController::NAME,
-                'type'   => PermissionType::READ,
-                'state'  => PermissionCategory::SUPPLIER,
+                'type'   => PermissionType::MODIFY,
+                'state'  => PermissionCategory::ATTRIBUTE,
             ],
         ],
     ],
-    '^.*/supplier/attribute/value$' => [
+    '^.*/supplier/attribute/value(\?.*|$)$' => [
         [
             'dest'       => '\Modules\SupplierManagement\Controller\ApiAttributeController:apiSupplierAttributeValueCreate',
             'verb'       => RouteVerb::PUT,
@@ -111,7 +135,7 @@ return [
             'active'     => true,
             'permission' => [
                 'module' => ApiController::NAME,
-                'type'   => PermissionType::READ,
+                'type'   => PermissionType::CREATE,
                 'state'  => PermissionCategory::SUPPLIER,
             ],
         ],
@@ -122,12 +146,12 @@ return [
             'active'     => true,
             'permission' => [
                 'module' => ApiController::NAME,
-                'type'   => PermissionType::READ,
+                'type'   => PermissionType::MODIFY,
                 'state'  => PermissionCategory::SUPPLIER,
             ],
         ],
     ],
-    '^.*/supplier/attribute/value/l11n$' => [
+    '^.*/supplier/attribute/value/l11n(\?.*|$)$' => [
         [
             'dest'       => '\Modules\SupplierManagement\Controller\ApiAttributeController:apiSupplierAttributeValueL11nCreate',
             'verb'       => RouteVerb::PUT,
@@ -135,7 +159,7 @@ return [
             'active'     => true,
             'permission' => [
                 'module' => ApiController::NAME,
-                'type'   => PermissionType::READ,
+                'type'   => PermissionType::CREATE,
                 'state'  => PermissionCategory::SUPPLIER,
             ],
         ],
@@ -146,12 +170,12 @@ return [
             'active'     => true,
             'permission' => [
                 'module' => ApiController::NAME,
-                'type'   => PermissionType::READ,
+                'type'   => PermissionType::MODIFY,
                 'state'  => PermissionCategory::SUPPLIER,
             ],
         ],
     ],
-    '^.*/supplier/l11n$' => [
+    '^.*/supplier/l11n(\?.*|$)$' => [
         [
             'dest'       => '\Modules\SupplierManagement\Controller\ApiController:apiSupplierL11nCreate',
             'verb'       => RouteVerb::PUT,
@@ -159,7 +183,7 @@ return [
             'active'     => true,
             'permission' => [
                 'module' => ApiController::NAME,
-                'type'   => PermissionType::READ,
+                'type'   => PermissionType::CREATE,
                 'state'  => PermissionCategory::SUPPLIER,
             ],
         ],
@@ -170,12 +194,12 @@ return [
             'active'     => true,
             'permission' => [
                 'module' => ApiController::NAME,
-                'type'   => PermissionType::READ,
+                'type'   => PermissionType::MODIFY,
                 'state'  => PermissionCategory::SUPPLIER,
             ],
         ],
     ],
-    '^.*/supplier/l11n/type$' => [
+    '^.*/supplier/l11n/type(\?.*|$)$' => [
         [
             'dest'       => '\Modules\SupplierManagement\Controller\ApiController:apiSupplierL11nTypeCreate',
             'verb'       => RouteVerb::PUT,
@@ -183,7 +207,7 @@ return [
             'active'     => true,
             'permission' => [
                 'module' => ApiController::NAME,
-                'type'   => PermissionType::READ,
+                'type'   => PermissionType::CREATE,
                 'state'  => PermissionCategory::SUPPLIER,
             ],
         ],
@@ -194,7 +218,7 @@ return [
             'active'     => true,
             'permission' => [
                 'module' => ApiController::NAME,
-                'type'   => PermissionType::READ,
+                'type'   => PermissionType::MODIFY,
                 'state'  => PermissionCategory::SUPPLIER,
             ],
         ],

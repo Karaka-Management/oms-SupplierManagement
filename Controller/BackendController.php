@@ -208,6 +208,13 @@ final class BackendController extends Controller
      *
      * @return RenderableInterface
      *
+     * @feature In the supplier and client view you should be able to select multiple bills and click print for printing
+     *      https://github.com/Karaka-Management/oms-Billing/issues/35
+     *
+     * @feature The send bill as email should have a global settings where you can either define a global email or
+     *      empty = user specific email
+     *      https://github.com/Karaka-Management/oms-Billing/issues/33
+     *
      * @since 1.0.0
      * @codeCoverageIgnore
      */

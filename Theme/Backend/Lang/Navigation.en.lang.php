@@ -16,4 +16,5 @@ return ['Navigation' => [
     'Create'    => 'Create',
     'List'      => 'List',
     'Suppliers' => 'Suppliers',
+    'Attributes' => 'Attributes',
 ]];
