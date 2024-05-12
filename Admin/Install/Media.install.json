@@ -12,19 +12,5 @@
         "name": "Suppliers",
         "virtualPath": "/Modules/SupplierManagement",
         "user": 1
-    },
-    {
-        "type": "type",
-        "name": "supplier_profile_image",
-        "l11n": [
-            {
-                "title": "Profile image",
-                "lang": "en"
-            },
-            {
-                "title": "Profilbild",
-                "lang": "de"
-            }
-        ]
     }
 ]

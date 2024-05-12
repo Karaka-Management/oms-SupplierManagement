@@ -372,7 +372,7 @@ final class ApiController extends Controller
             basePath: __DIR__ . '/../../../Modules/Media/Files/Modules/SupplierManagement/Suppliers/' . ($request->getData('supplier') ?? '0'),
             virtualPath: '/Modules/SupplierManagement/Suppliers/' . ($request->getData('supplier') ?? '0'),
             pathSettings: PathSettings::FILE_PATH,
-            type: $request->getDataInt('type'),
+            tag: $request->getDataInt('tag'),
             rel: (int) $request->getData('supplier'),
             mapper: SupplierMapper::class,
             field: 'files'

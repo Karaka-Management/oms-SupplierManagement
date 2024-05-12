@@ -87,7 +87,7 @@ trait ApiControllerSupplierTrait
         $request->header->account = 1;
         $request->setData('name', '123456 backend');
         $request->setData('supplier', 1);
-        $request->setData('type', '1');
+        $request->setData('tag', '1');
 
         TestUtils::setMember($request, 'files', [
             'file1' => [

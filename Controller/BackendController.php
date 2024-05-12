@@ -17,7 +17,6 @@ namespace Modules\SupplierManagement\Controller;
 use Modules\Attribute\Models\NullAttributeValue;
 use Modules\Auditor\Models\AuditMapper;
 use Modules\Media\Models\MediaMapper;
-use Modules\Media\Models\MediaTypeMapper;
 use Modules\Organization\Models\Attribute\UnitAttributeMapper;
 use Modules\SupplierManagement\Models\Attribute\SupplierAttributeTypeL11nMapper;
 use Modules\SupplierManagement\Models\Attribute\SupplierAttributeTypeMapper;
@@ -25,6 +24,7 @@ use Modules\SupplierManagement\Models\Attribute\SupplierAttributeValueL11nMapper
 use Modules\SupplierManagement\Models\Attribute\SupplierAttributeValueMapper;
 use Modules\SupplierManagement\Models\PermissionCategory;
 use Modules\SupplierManagement\Models\SupplierMapper;
+use Modules\Tag\Models\TagMapper;
 use phpOMS\Account\PermissionType;
 use phpOMS\Asset\AssetType;
 use phpOMS\Contract\RenderableInterface;
@@ -300,12 +300,12 @@ final class BackendController extends Controller
                 ->on(SupplierMapper::HAS_MANY['files']['table'] . '.' . SupplierMapper::HAS_MANY['files']['self'], '=', SupplierMapper::TABLE . '.' . SupplierMapper::PRIMARYFIELD)
             ->leftJoin(MediaMapper::TABLE)
                 ->on(SupplierMapper::HAS_MANY['files']['table'] . '.' . SupplierMapper::HAS_MANY['files']['external'], '=', MediaMapper::TABLE . '.' . MediaMapper::PRIMARYFIELD)
-             ->leftJoin(MediaMapper::HAS_MANY['types']['table'])
-                ->on(MediaMapper::TABLE . '.' . MediaMapper::PRIMARYFIELD, '=', MediaMapper::HAS_MANY['types']['table'] . '.' . MediaMapper::HAS_MANY['types']['self'])
-            ->leftJoin(MediaTypeMapper::TABLE)
-                ->on(MediaMapper::HAS_MANY['types']['table'] . '.' . MediaMapper::HAS_MANY['types']['external'], '=', MediaTypeMapper::TABLE . '.' . MediaTypeMapper::PRIMARYFIELD)
+             ->leftJoin(MediaMapper::HAS_MANY['tags']['table'])
+                ->on(MediaMapper::TABLE . '.' . MediaMapper::PRIMARYFIELD, '=', MediaMapper::HAS_MANY['tags']['table'] . '.' . MediaMapper::HAS_MANY['tags']['self'])
+            ->leftJoin(TagMapper::TABLE)
+                ->on(MediaMapper::HAS_MANY['tags']['table'] . '.' . MediaMapper::HAS_MANY['tags']['external'], '=', TagMapper::TABLE . '.' . TagMapper::PRIMARYFIELD)
             ->where(SupplierMapper::HAS_MANY['files']['self'], '=', $view->data['supplier']->id)
-            ->where(MediaTypeMapper::TABLE . '.' . MediaTypeMapper::getColumnByMember('name'), '=', 'supplier_profile_image');
+            ->where(TagMapper::TABLE . '.' . TagMapper::getColumnByMember('name'), '=', 'profile_image');
 
         $view->data['supplierImage'] = MediaMapper::get()
             ->where('id', $results)
