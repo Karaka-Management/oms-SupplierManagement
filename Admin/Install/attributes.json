@@ -290,7 +290,7 @@
     {
         "name": "purchase_tax_code",
         "l11n": {
-            "en": "Purchse tax code",
+            "en": "Purchase tax code",
             "de": "VSt. code"
         },
         "value_type": 2,
