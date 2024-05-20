@@ -350,7 +350,7 @@
         "name": "bill_match_pattern",
         "l11n": {
             "en": "Bill match pattern",
-            "de": "Beleg-Zeichenkette"
+            "de": "Beleg-Zuordnung"
         },
         "value_type": 2,
         "is_custom_allowed": true,
