@@ -55,6 +55,57 @@ return [
             ],
         ],
     ],
+
+    '^.*/supplier/file(\?.*|$)$' => [
+        [
+            'dest'       => '\Modules\SupplierManagement\Controller\ApiController:apiFileCreate',
+            'verb'       => RouteVerb::PUT,
+            'csrf'       => true,
+            'active'     => true,
+            'permission' => [
+                'module' => ApiController::NAME,
+                'type'   => PermissionType::CREATE,
+                'state'  => PermissionCategory::SUPPLIER,
+            ],
+        ],
+    ],
+
+    '^.*/supplier/note(\?.*|$)$' => [
+        [
+            'dest'       => '\Modules\SupplierManagement\Controller\ApiController:apiNoteCreate',
+            'verb'       => RouteVerb::PUT,
+            'csrf'       => true,
+            'active'     => true,
+            'permission' => [
+                'module' => ApiController::NAME,
+                'type'   => PermissionType::CREATE,
+                'state'  => PermissionCategory::SUPPLIER,
+            ],
+        ],
+        [
+            'dest'       => '\Modules\SupplierManagement\Controller\ApiController:apiNoteUpdate',
+            'verb'       => RouteVerb::SET,
+            'csrf'       => true,
+            'active'     => true,
+            'permission' => [
+                'module' => ApiController::NAME,
+                'type'   => PermissionType::MODIFY,
+                'state'  => PermissionCategory::SUPPLIER,
+            ],
+        ],
+        [
+            'dest'       => '\Modules\SupplierManagement\Controller\ApiController:apiNoteDelete',
+            'verb'       => RouteVerb::DELETE,
+            'csrf'       => true,
+            'active'     => true,
+            'permission' => [
+                'module' => ApiController::NAME,
+                'type'   => PermissionType::DELETE,
+                'state'  => PermissionCategory::SUPPLIER,
+            ],
+        ],
+    ],
+
     '^.*/supplier/attribute(\?.*|$)$' => [
         [
             'dest'       => '\Modules\SupplierManagement\Controller\ApiAttributeController:apiSupplierAttributeCreate',

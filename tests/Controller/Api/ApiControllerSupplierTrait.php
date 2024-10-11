@@ -86,7 +86,7 @@ trait ApiControllerSupplierTrait
 
         $request->header->account = 1;
         $request->setData('name', '123456 backend');
-        $request->setData('supplier', 1);
+        $request->setData('ref', 1);
         $request->setData('tag', '1');
 
         TestUtils::setMember($request, 'files', [
@@ -117,7 +117,7 @@ trait ApiControllerSupplierTrait
 
         $request->header->account = 1;
         $request->setData('name', 'test file backend');
-        $request->setData('supplier', 1);
+        $request->setData('ref', 1);
 
         TestUtils::setMember($request, 'files', [
             'file1' => [
@@ -147,7 +147,7 @@ trait ApiControllerSupplierTrait
 
         $MARKDOWN = "# Test Title\n\nThis is **some** text.";
 
-        $request->setData('id', 1);
+        $request->setData('ref', 1);
         $request->setData('title', \trim(\strtok($MARKDOWN, "\n"), ' #'));
         $request->setData('plain', \preg_replace('/^.+\n/', '', $MARKDOWN));
 

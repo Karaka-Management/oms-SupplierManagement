@@ -248,10 +248,10 @@ final class ApiController extends Controller
     private function createSupplierL11nFromRequest(RequestAbstract $request) : BaseStringL11n
     {
         $supplierL11n           = new BaseStringL11n();
-        $supplierL11n->ref      = $request->getDataInt('supplier') ?? 0;
+        $supplierL11n->ref      = $request->getDataInt('ref') ?? 0;
         $supplierL11n->type     = new NullBaseStringL11nType($request->getDataInt('type') ?? 0);
         $supplierL11n->language = ISO639x1Enum::tryFromValue($request->getDataString('language')) ?? $request->header->l11n->language;
-        $supplierL11n->content  = $request->getDataString('description') ?? '';
+        $supplierL11n->content  = $request->getDataString('content') ?? '';
 
         return $supplierL11n;
     }
@@ -268,9 +268,9 @@ final class ApiController extends Controller
     private function validateSupplierL11nCreate(RequestAbstract $request) : array
     {
         $val = [];
-        if (($val['supplier'] = !$request->hasData('supplier'))
+        if (($val['ref'] = !$request->hasData('ref'))
             || ($val['type'] = !$request->hasData('type'))
-            || ($val['description'] = !$request->hasData('description'))
+            || ($val['content'] = !$request->hasData('content'))
         ) {
             return $val;
         }
@@ -370,10 +370,10 @@ final class ApiController extends Controller
             files: $request->files,
             account: $request->header->account,
             basePath: __DIR__ . '/../../../Modules/Media/Files/Modules/SupplierManagement/Suppliers/' . ($request->getData('supplier') ?? '0'),
-            virtualPath: '/Modules/SupplierManagement/Suppliers/' . ($request->getData('supplier') ?? '0'),
+            virtualPath: '/Modules/SupplierManagement/Suppliers/' . ($request->getData('ref') ?? '0'),
             pathSettings: PathSettings::FILE_PATH,
             tag: $request->getDataInt('tag'),
-            rel: (int) $request->getData('supplier'),
+            rel: (int) $request->getData('ref'),
             mapper: SupplierMapper::class,
             field: 'files'
         );
@@ -402,7 +402,7 @@ final class ApiController extends Controller
      */
     public function apiNoteCreate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
-        $request->setData('virtualpath', '/Modules/SupplierManagement/Suppliers/' . $request->getData('id'), true);
+        $request->setData('virtualpath', '/Modules/SupplierManagement/Suppliers/' . $request->getData('ref'), true);
         $this->app->moduleManager->get('Editor')->apiEditorCreate($request, $response, $data);
 
         $data = $response->getDataArray($request->uri->__toString());
@@ -413,7 +413,7 @@ final class ApiController extends Controller
         $model = $data['response'];
         $this->createModelRelation(
             $request->header->account,
-            $request->getData('id'),
+            $request->getData('ref'),
             $model->id,
             SupplierMapper::class,
             'notes',
