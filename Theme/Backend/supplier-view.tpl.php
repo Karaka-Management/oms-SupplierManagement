@@ -878,7 +878,7 @@ echo $this->data['nav']->render();
 
         <input type="radio" id="c-tab-8" name="tabular-2"<?= $this->request->uri->fragment === 'c-tab-8' ? ' checked' : ''; ?>>
         <div class="tab col-simple">
-            <?= $this->data['media-upload']->render('supplier-file', 'files', '', $supplier->files, '{/api}supplier/file?csrf={$CSRF}', (string) $item->id); ?>
+            <?= $this->data['media-upload']->render('supplier-file', 'files', '', $supplier->files, '{/api}supplier/file?csrf={$CSRF}', (string) $supplier->id); ?>
         </div>
 
         <input type="radio" id="c-tab-9" name="tabular-2"<?= $this->request->uri->fragment === 'c-tab-9' ? ' checked' : ''; ?>>
