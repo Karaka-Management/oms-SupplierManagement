@@ -236,19 +236,6 @@
         "values": []
     },
     {
-        "name": "tax_id",
-        "l11n": {
-            "en": "Tax Id",
-            "de": "Steuernummer"
-        },
-        "value_type": 2,
-        "is_custom_allowed": true,
-        "validation_pattern": "",
-        "is_required": false,
-        "default_value": "",
-        "values": []
-    },
-    {
         "name": "legal_form",
         "l11n": {
             "en": "Legal form",
@@ -340,6 +327,19 @@
             "de": "Mindestbestellmenge"
         },
         "value_type": 1,
+        "is_custom_allowed": true,
+        "validation_pattern": "",
+        "is_required": false,
+        "default_value": "",
+        "values": []
+    },
+    {
+        "name": "bill_approval",
+        "l11n": {
+            "en": "Approval group",
+            "de": "Freigabegruppe"
+        },
+        "value_type": 2,
         "is_custom_allowed": true,
         "validation_pattern": "",
         "is_required": false,

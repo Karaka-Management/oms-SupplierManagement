@@ -49,6 +49,7 @@ Suppliers can be put in categories for horizontal and vertical grouping. By defa
 | Attribute | Description | Internal default value |
 | --------- | ----------- | ---------------------- |
 | minimum_order | Minimum order amount required | |
+| bill_approval | Default group that can approve the bill | |
 
 ### Accounting
 

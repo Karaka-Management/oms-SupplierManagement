@@ -243,7 +243,7 @@ final class ApiAttributeController extends Controller
             ->with('type')
             ->with('type/defaults')
             ->with('value')
-            ->where('id', (int) $request->getData('id'))
+            ->where('id', $request->getDataInt('id') ?? 0)
             ->execute();
 
         $new = $this->updateAttributeFromRequest($request, clone $old);
@@ -291,7 +291,7 @@ final class ApiAttributeController extends Controller
 
         $supplierAttribute = SupplierAttributeMapper::get()
             ->with('type')
-            ->where('id', (int) $request->getData('id'))
+            ->where('id', $request->getDataInt('id') ?? 0)
             ->execute();
 
         if ($supplierAttribute->type->isRequired) {
@@ -327,7 +327,7 @@ final class ApiAttributeController extends Controller
         }
 
         /** @var BaseStringL11n $old */
-        $old = SupplierAttributeTypeL11nMapper::get()->where('id', (int) $request->getData('id'))->execute();
+        $old = SupplierAttributeTypeL11nMapper::get()->where('id', $request->getDataInt('id') ?? 0)->execute();
         $new = $this->updateAttributeTypeL11nFromRequest($request, clone $old);
 
         $this->updateModel($request->header->account, $old, $new, SupplierAttributeTypeL11nMapper::class, 'supplier_attribute_type_l11n', $request->getOrigin());
@@ -357,7 +357,7 @@ final class ApiAttributeController extends Controller
         }
 
         /** @var BaseStringL11n $supplierAttributeTypeL11n */
-        $supplierAttributeTypeL11n = SupplierAttributeTypeL11nMapper::get()->where('id', (int) $request->getData('id'))->execute();
+        $supplierAttributeTypeL11n = SupplierAttributeTypeL11nMapper::get()->where('id', $request->getDataInt('id') ?? 0)->execute();
         $this->deleteModel($request->header->account, $supplierAttributeTypeL11n, SupplierAttributeTypeL11nMapper::class, 'supplier_attribute_type_l11n', $request->getOrigin());
         $this->createStandardDeleteResponse($request, $response, $supplierAttributeTypeL11n);
     }
@@ -385,7 +385,7 @@ final class ApiAttributeController extends Controller
         }
 
         /** @var AttributeType $old */
-        $old = SupplierAttributeTypeMapper::get()->with('defaults')->where('id', (int) $request->getData('id'))->execute();
+        $old = SupplierAttributeTypeMapper::get()->with('defaults')->where('id', $request->getDataInt('id') ?? 0)->execute();
         $new = $this->updateAttributeTypeFromRequest($request, clone $old);
 
         $this->updateModel($request->header->account, $old, $new, SupplierAttributeTypeMapper::class, 'supplier_attribute_type', $request->getOrigin());
@@ -417,7 +417,7 @@ final class ApiAttributeController extends Controller
         }
 
         /** @var AttributeType $supplierAttributeType */
-        $supplierAttributeType = SupplierAttributeTypeMapper::get()->with('defaults')->where('id', (int) $request->getData('id'))->execute();
+        $supplierAttributeType = SupplierAttributeTypeMapper::get()->with('defaults')->where('id', $request->getDataInt('id') ?? 0)->execute();
         $this->deleteModel($request->header->account, $supplierAttributeType, SupplierAttributeTypeMapper::class, 'supplier_attribute_type', $request->getOrigin());
         $this->createStandardDeleteResponse($request, $response, $supplierAttributeType);
     }
@@ -445,7 +445,7 @@ final class ApiAttributeController extends Controller
         }
 
         /** @var AttributeValue $old */
-        $old = SupplierAttributeValueMapper::get()->where('id', (int) $request->getData('id'))->execute();
+        $old = SupplierAttributeValueMapper::get()->where('id', $request->getDataInt('id') ?? 0)->execute();
 
         /** @var \Modules\Attribute\Models\Attribute $attr */
         $attr = SupplierAttributeMapper::get()
@@ -485,7 +485,7 @@ final class ApiAttributeController extends Controller
         // }
 
         // /** @var \Modules\SupplierManagement\Models\SupplierAttributeValue $supplierAttributeValue */
-        // $supplierAttributeValue = SupplierAttributeValueMapper::get()->where('id', (int) $request->getData('id'))->execute();
+        // $supplierAttributeValue = SupplierAttributeValueMapper::get()->where('id', $request->getDataInt('id') ?? 0)->execute();
         // $this->deleteModel($request->header->account, $supplierAttributeValue, SupplierAttributeValueMapper::class, 'supplier_attribute_value', $request->getOrigin());
         // $this->createStandardDeleteResponse($request, $response, $supplierAttributeValue);
     }
@@ -513,7 +513,7 @@ final class ApiAttributeController extends Controller
         }
 
         /** @var BaseStringL11n $old */
-        $old = SupplierAttributeValueL11nMapper::get()->where('id', (int) $request->getData('id'));
+        $old = SupplierAttributeValueL11nMapper::get()->where('id', $request->getDataInt('id') ?? 0);
         $new = $this->updateAttributeValueL11nFromRequest($request, clone $old);
 
         $this->updateModel($request->header->account, $old, $new, SupplierAttributeValueL11nMapper::class, 'supplier_attribute_value_l11n', $request->getOrigin());
@@ -543,7 +543,7 @@ final class ApiAttributeController extends Controller
         }
 
         /** @var BaseStringL11n $supplierAttributeValueL11n */
-        $supplierAttributeValueL11n = SupplierAttributeValueL11nMapper::get()->where('id', (int) $request->getData('id'))->execute();
+        $supplierAttributeValueL11n = SupplierAttributeValueL11nMapper::get()->where('id', $request->getDataInt('id') ?? 0)->execute();
         $this->deleteModel($request->header->account, $supplierAttributeValueL11n, SupplierAttributeValueL11nMapper::class, 'supplier_attribute_value_l11n', $request->getOrigin());
         $this->createStandardDeleteResponse($request, $response, $supplierAttributeValueL11n);
     }

@@ -44,7 +44,7 @@ $languages    = ISO639Enum::getConstants();
 $supplier = $this->data['supplier'] ?? new NullSupplier();
 $isNew    = $supplier->id === 0;
 
-$supplierImage = $this->getData('supplierImage') ?? new NullMedia();
+$supplierImage = $this->data['supplierImage'] ?? new NullMedia();
 
 $supplierStatus = SupplierStatus::getConstants();
 
@@ -246,7 +246,7 @@ echo $this->data['nav']->render();
 
                     <section class="portlet hl-4">
                         <div class="portlet-body">
-                            <textarea class="undecorated"><?= $this->printTextarea($supplier->info); ?></textarea>
+                            <textarea class="undecorated" aria-label="Info"><?= $this->printTextarea($supplier->info); ?></textarea>
                         </div>
                     </section>
                     <?php endif; ?>
@@ -682,7 +682,7 @@ echo $this->data['nav']->render();
                             <div class="portlet-body">
                                 <input id="iPriceId" class="vh" name="id" type="number" data-tpl-text="/id" data-tpl-value="/id">
                                 <input id="iPriceSupplierId" class="vh" name="supplier" type="text" value="<?= $supplier->id; ?>">
-                                <input id="iPriceItemType" class="vh" name="type" type="text" value="<?= PriceType::PURCHASE; ?>">
+                                <input id="iPriceType" class="vh" name="type" type="text" value="<?= PriceType::PURCHASE; ?>">
 
                                 <div class="form-group">
                                     <label for="iPriceName"><?= $this->getHtml('Name'); ?></label>
